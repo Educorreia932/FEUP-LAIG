@@ -1,11 +1,11 @@
 # LAIG 2020/2021 - TP1
 
-## Group: T0xG0y
+## Group T03G04
 
-| Name             | Number    | E-Mail             |
-| ---------------- | --------- | ------------------ |
-| John Doe         | 201801010 | ...                |
-| Jane Doe         | 201801011 | ...                |
+| Name            | Number    | E-Mail               |
+|-----------------|-----------|----------------------|
+| Eduardo Correia | 201806433 | up201806433@fe.up.pt |
+| Telmo Baptista  | 201806554 | up201806554@fe.up.pt |
 
 ----
 ## Project information

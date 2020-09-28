@@ -1,6 +1,7 @@
 # LAIG 2020/2021
 
-## Group T0xG0y
+## Group T03G04
+
 | Name            | Number    | E-Mail               |
 |-----------------|-----------|----------------------|
 | Eduardo Correia | 201806433 | up201806433@fe.up.pt |
