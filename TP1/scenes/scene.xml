@@ -1,0 +1,52 @@
+<lsf>
+    <initials>
+        <reference length="2" />
+        <root id="rootTP1" />
+    </initials>
+
+    <views default="defaultCamera">
+        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
+            <from x="30" y="15" z="30" />
+            <to x="0" y="-2" z="0" />
+        </perspective>
+
+        <ortho id="orthoCamera" near="0.2" far="100" left="-0.2" right="0.2" top="0.2" bottom="-0.2">
+            <from x="5" y="0" z="10" />
+            <to x="5" y="0" z="0" />
+            <up x="0" y="1" z="0" />
+        </ortho>
+    </views>
+
+    <illumination>
+        <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+        <background r="43.5" g="70.6" b="76.5" a="1.0" />
+    </illumination>
+
+    <lights>
+        <light id="firstLight">
+            <enable value="1" />
+            <position x="10" y="12" z="9.5" w="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </light>
+    </lights>
+
+    <textures>
+        <texture id="bodyR2D2Texture" path="./images/R2-D2 Body.png" />
+    </textures>
+
+    <materials>
+        <material id="bodyR2D2Material">
+            <shininess value="ff" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+    </materials>
+
+    <nodes>
+
+    </nodes>
+</lsf>
