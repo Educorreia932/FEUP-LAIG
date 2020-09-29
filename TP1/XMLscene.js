@@ -37,8 +37,6 @@ class XMLscene extends CGFscene {
         this.loadingProgress = 0;
 
         this.defaultAppearance = new CGFappearance(this);
-
-        this.testCylinder = new MyCylinder(this, 5, 5, 10, 20, 5);
     }
 
     /**
@@ -131,7 +129,6 @@ class XMLscene extends CGFscene {
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
 
-            this.testCylinder.display();
         }
 
         else {
