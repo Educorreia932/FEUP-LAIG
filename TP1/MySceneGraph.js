@@ -44,6 +44,8 @@ class MySceneGraph {
          * If any error occurs, the reader calls onXMLError on this object, with an error message
          */
         this.reader.open('scenes/' + filename, this);
+
+        this.testSphere = new MySphere(scene, 1, 10, 10);
     }
 
     /*
@@ -568,6 +570,8 @@ class MySceneGraph {
         
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         
-        //this.nodes[this.idRoot].display()
+        //this.nodes[this.idRoot].display();
+        
+        this.testSphere.display();
     }
 }
