@@ -25,9 +25,13 @@ class MyCylinder extends CGFobject {
         this.normals = [];
         this.texCoords = [];
 
-        var currentIndex = 0;
+        var currentIndex = 2; // Skip the lids'
         var phi = 0;
         const phiInc = (Math.PI * 2) / this.slices;
+
+        // Lids' center
+        this.vertices.push(0, 0, 0);
+        this.vertices.push(0, 0, this.height);
 
         for (let div = 0; div <= this.slices; div++) {
             let cosPhi = Math.cos(phi);
@@ -49,10 +53,20 @@ class MyCylinder extends CGFobject {
                 currentIndex += 2;
             }
 
-            this.normals.push(cosPhi * this.bottomRadius, sinPhi * this.bottomRadius, 0);
-            this.normals.push(cosPhi * this.topRadius, sinPhi * this.topRadius, 0);
+            this.normals.push(x0, y0, 0);
+            this.normals.push(x1, y1, this.height);
 
             phi += phiInc;
+        }
+
+        var currentIndex = 2;
+
+        // Lids
+        for (let div = 0; div <= this.slices; div++) {
+            this.indices.push(currentIndex + 2, currentIndex, 0); // Bottom lid
+            this.indices.push(1, currentIndex + 1, currentIndex + 3); // Top lid
+
+            currentIndex += 2;
         }
 
         this.primitiveType = this.scene.gl.TRIANGLES;
