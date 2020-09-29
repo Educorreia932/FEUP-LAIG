@@ -33,6 +33,9 @@ class MyCylinder extends CGFobject {
         this.vertices.push(0, 0, 0);
         this.vertices.push(0, 0, this.height);
 
+        this.normals.push(0, 0, 0);
+        this.normals.push(0, 0, 0);
+
         for (let div = 0; div <= this.slices; div++) {
             let cosPhi = Math.cos(phi);
             let sinPhi = Math.sin(phi);
@@ -49,12 +52,12 @@ class MyCylinder extends CGFobject {
             if (div < this.slices) {
                 this.indices.push(currentIndex + 2, currentIndex + 1, currentIndex);
                 this.indices.push(currentIndex + 1, currentIndex + 2, currentIndex + 3);
-    
+
                 currentIndex += 2;
             }
 
-            this.normals.push(x0, y0, 0);
-            this.normals.push(x1, y1, this.height);
+            this.normals.push(cosPhi, sinPhi, -1);
+            this.normals.push(cosPhi, sinPhi, 1);
 
             phi += phiInc;
         }
@@ -62,7 +65,7 @@ class MyCylinder extends CGFobject {
         var currentIndex = 2;
 
         // Lids
-        for (let div = 0; div <= this.slices; div++) {
+        for (let div = 0; div < this.slices; div++) {
             this.indices.push(currentIndex + 2, currentIndex, 0); // Bottom lid
             this.indices.push(1, currentIndex + 1, currentIndex + 3); // Top lid
 
@@ -81,6 +84,6 @@ class MyCylinder extends CGFobject {
 	updateTexCoords(coords) {
 		this.texCoords = [...coords];
 		this.updateTexCoordsGLBuffers();
-	}
+    }
 }
 
