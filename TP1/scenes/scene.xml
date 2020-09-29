@@ -47,6 +47,78 @@
     </materials>
 
     <nodes>
+        <node id="rootTP1">
+            <material id="bodyR2D2Material" />
 
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformation>
+                <translation x="2.0" y="0.0" z="0.0" />
+            </transformation>
+
+            <descendants>
+                <node id="head">
+                    <material id="null" />
+                    <texture id="null" />
+                    <transformations></transformations>
+
+                    <descendants>
+                        <leaf type="sphere" radius="ff" slices="ff" stacks="ff" />
+                    </descendants>
+                </node>
+
+                <node id="body">
+                    <descendants>
+                        <node id="bodyTop">
+                            <leaf type="cylinder"/>
+                        </node>
+
+                        <node id="bodyBottom">
+                            <leaf type="cylinder"/>
+                        </node>
+                    </descendants>
+                </node>
+
+                <node id="leftLeg">
+                    <descendants>
+                        <node id="leftLegTop">
+                            <descendants>
+                                <node>
+                                    <descendants>
+                                        <leaf type="cylinder"/>
+                                    </descendants>
+                                </node>
+
+                                <node>
+                                    <leaf type="cylinder"/>
+                                </node>
+                            </descendants>
+                        </node>
+
+                        <node id="leftLegBottom">
+                            <descendants>
+                                <leaf type="cylinder"/>
+                            </descendants>
+                        </node>
+
+                        <node id="leftFoot">
+                            <descendants>
+                                <leaf type="cylinder"/>
+                            </descendants>
+                        </node>
+                    </descendants>
+                </node>
+
+                <node id="rightLeg">
+     
+                </node>
+
+                <node id="middleLeg">
+
+                </node>
+            </descendants>
+        </node>
     </nodes>
 </lsf>
