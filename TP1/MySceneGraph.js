@@ -257,20 +257,42 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
-        var children = viewsMode.children;
-        var nodeNames = [];
+        const cameraNodes = viewsMode.children;
+        this.cameras = [];
 
         // Get default camera
-        var id = this.reader.getString(viewsNode, 'default');
+        const id = this.reader.getString(viewsNode, 'default');
 
         if (id == null)
             return "No default camera defined for scene." 
 
         this.idDefaultCamera = id;
 
-        for (let i = 0, i < children.length; i++) {
-            
+        for (let i = 0; i < cameraNodes.length; i++) {
+            let camera = {};
+
+            camera.type = cameraNodes[i].nodeName;
+            camera.id = this.reader.getString(cameraNodes[i], 'id');
+            camera.near = this.reader.getString(cameraNodes[i], 'near');
+            camera.far = this.reader.getString(cameraNodes[i], 'far');
+            camera.angle = this.reader.getString(cameraNodes[i], 'angle');
+            camera.left = this.reader.getString(cameraNodes[i], 'left');
+            camera.right = this.reader.getString(cameraNodes[i], 'right');
+            camera.top = this.reader.getString(cameraNodes[i], 'top');
+            camera.bottom = this.reader.getString(cameraNodes[i], 'bottom');
+
+            const cameraData = cameraNodes[i].children;
+
+            for (let j = 0; j < cameraData.length; j++) {
+                camera.from = this.reader.getString(cameraNodes[i], 'from');
+                camera.to = this.reader.getString(cameraNodes[i], 'to');
+                camera.up = this.reader.getString(cameraNodes[i], 'up');
+            }
+
+            this.cameras.push(camera);
         }
+
+        this.log("Parsed views");
 
         return null;
     }
