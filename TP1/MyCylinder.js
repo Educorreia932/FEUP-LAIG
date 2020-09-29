@@ -25,16 +25,9 @@ class MyCylinder extends CGFobject {
         this.normals = [];
         this.texCoords = [];
 
-        var currentIndex = 2; // Skip the lids'
+        var currentIndex = 0;
         var phi = 0;
         const phiInc = (Math.PI * 2) / this.slices;
-
-        // Lids' center
-        this.vertices.push(0, 0, 0);
-        this.vertices.push(0, 0, this.height);
-
-        this.normals.push(0, 0, 0);
-        this.normals.push(0, 0, 0);
 
         for (let div = 0; div <= this.slices; div++) {
             let cosPhi = Math.cos(phi);
@@ -49,28 +42,23 @@ class MyCylinder extends CGFobject {
             this.vertices.push(x0, y0, 0);
             this.vertices.push(x1, y1, this.height);
 
-            if (div < this.slices) {
-                this.indices.push(currentIndex + 2, currentIndex + 1, currentIndex);
-                this.indices.push(currentIndex + 1, currentIndex + 2, currentIndex + 3);
+            this.indices.push(currentIndex + 2, currentIndex + 1, currentIndex);
+            this.indices.push(currentIndex + 1, currentIndex + 2, currentIndex + 3);
 
-                currentIndex += 2;
-            }
+            this.indices.push(currentIndex + 2, currentIndex, this.slices * 2); // Bottom lid
+            this.indices.push(this.slices * 2 + 1, currentIndex + 1, currentIndex + 3); // Top lid
 
             this.normals.push(cosPhi, sinPhi, -1);
             this.normals.push(cosPhi, sinPhi, 1);
 
+            currentIndex += 2;
+
             phi += phiInc;
         }
 
-        var currentIndex = 2;
-
-        // Lids
-        for (let div = 0; div < this.slices; div++) {
-            this.indices.push(currentIndex + 2, currentIndex, 0); // Bottom lid
-            this.indices.push(1, currentIndex + 1, currentIndex + 3); // Top lid
-
-            currentIndex += 2;
-        }
+        // Lids' center
+        this.vertices.push(0, 0, 0);
+        this.vertices.push(0, 0, this.height);
 
         this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();

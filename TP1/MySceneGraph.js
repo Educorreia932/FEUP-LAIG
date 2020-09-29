@@ -45,7 +45,7 @@ class MySceneGraph {
          */
         this.reader.open('scenes/' + filename, this);
         
-        this.testCylinder = new MyCylinder(scene, 2, 1, 3, 20, 5);
+        this.testCylinder = new MyCylinder(scene, 2, 2, 3, 20, 5);
         // this.testCylinder.enableNormalViz();
     }
 
