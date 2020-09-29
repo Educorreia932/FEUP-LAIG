@@ -271,8 +271,12 @@ class MySceneGraph {
         for (let i = 0; i < cameraNodes.length; i++) {
             let camera = {};
 
+            const cameraID = this.reader.getString(cameraNodes[i], 'id');
+
+            if (cameraID == null)
+                return "no ID defined for camera";
+
             camera.type = cameraNodes[i].nodeName;
-            camera.id = this.reader.getString(cameraNodes[i], 'id');
             camera.near = this.reader.getString(cameraNodes[i], 'near');
             camera.far = this.reader.getString(cameraNodes[i], 'far');
             camera.angle = this.reader.getString(cameraNodes[i], 'angle');
@@ -289,7 +293,7 @@ class MySceneGraph {
                 camera.up = this.reader.getString(cameraNodes[i], 'up');
             }
 
-            this.cameras.push(camera);
+            this.cameras[idCamera] = camera;
         }
 
         this.log("Parsed views");
@@ -302,7 +306,6 @@ class MySceneGraph {
      * @param {illumination block element} illuminationsNode
      */
     parseIllumination(illuminationsNode) {
-
         var children = illuminationsNode.children;
 
         this.ambient = [];
@@ -348,7 +351,6 @@ class MySceneGraph {
 
         // Any number of lights.
         for (var i = 0; i < children.length; i++) {
-
             // Storing light information
             var global = [];
             var attributeNames = [];
@@ -359,6 +361,7 @@ class MySceneGraph {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
             }
+
             else {
                 attributeNames.push(...["enable", "position", "ambient", "diffuse", "specular"]);
                 attributeTypes.push(...["boolean","position", "color", "color", "color"]);
@@ -366,6 +369,7 @@ class MySceneGraph {
 
             // Get id of the current light.
             var lightId = this.reader.getString(children[i], 'id');
+
             if (lightId == null)
                 return "no ID defined for light";
 
@@ -374,9 +378,10 @@ class MySceneGraph {
                 return "ID must be unique for each light (conflict: ID = " + lightId + ")";
 
             grandChildren = children[i].children;
-            // Specifications for the current light.
 
+            // Specifications for the current light.
             nodeNames = [];
+
             for (var j = 0; j < grandChildren.length; j++) {
                 nodeNames.push(grandChildren[j].nodeName);
             }
@@ -387,8 +392,10 @@ class MySceneGraph {
                 if (attributeIndex != -1) {
                     if (attributeTypes[j] == "boolean")
                         var aux = this.parseBoolean(grandChildren[attributeIndex], "value", "enabled attribute for light of ID" + lightId);
+                    
                     else if (attributeTypes[j] == "position")
                         var aux = this.parseCoordinates4D(grandChildren[attributeIndex], "light position for ID" + lightId);
+                    
                     else
                         var aux = this.parseColor(grandChildren[attributeIndex], attributeNames[j] + " illumination for ID" + lightId);
 
@@ -397,15 +404,18 @@ class MySceneGraph {
 
                     global.push(aux);
                 }
+
                 else
                     return "light " + attributeNames[i] + " undefined for ID = " + lightId;
             }
+
             this.lights[lightId] = global;
             numLights++;
         }
 
         if (numLights == 0)
             return "at least one light must be defined";
+
         else if (numLights > 8)
             this.onXMLMinorError("too many lights defined; WebGL imposes a limit of 8 lights");
 
