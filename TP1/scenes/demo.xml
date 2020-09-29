@@ -24,7 +24,6 @@
         <background r="0.1" g="0.7" b="1.0" a="1.0" />        <!-- background color -->
     </illumination>
 
-
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
         <light id="demoLight">            <!-- light identifier -->
@@ -37,12 +36,10 @@
         </light>
     </lights>
 
-
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
         <texture id="demoTexture" path="./scenes/images/vidral.jpg" />
     </textures>
-
 
     <materials>
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material

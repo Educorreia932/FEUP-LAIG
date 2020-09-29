@@ -115,8 +115,10 @@ class MySceneGraph {
 
         // <initials>
         var index;
+
         if ((index = nodeNames.indexOf("initials")) == -1)
             return "tag <initials> missing";
+        
         else {
             if (index != INITIALS_INDEX)
                 this.onXMLMinorError("tag <initials> out of order " + index);
@@ -129,6 +131,7 @@ class MySceneGraph {
         // <views>
         if ((index = nodeNames.indexOf("views")) == -1)
             return "tag <views> missing";
+        
         else {
             if (index != VIEWS_INDEX)
                 this.onXMLMinorError("tag <views> out of order");
@@ -141,6 +144,7 @@ class MySceneGraph {
         // <illumination>
         if ((index = nodeNames.indexOf("illumination")) == -1)
             return "tag <illumination> missing";
+        
         else {
             if (index != ILLUMINATION_INDEX)
                 this.onXMLMinorError("tag <illumination> out of order");
@@ -153,6 +157,7 @@ class MySceneGraph {
         // <lights>
         if ((index = nodeNames.indexOf("lights")) == -1)
             return "tag <lights> missing";
+        
         else {
             if (index != LIGHTS_INDEX)
                 this.onXMLMinorError("tag <lights> out of order");
@@ -161,9 +166,11 @@ class MySceneGraph {
             if ((error = this.parseLights(nodes[index])) != null)
                 return error;
         }
+        
         // <textures>
         if ((index = nodeNames.indexOf("textures")) == -1)
             return "tag <textures> missing";
+        
         else {
             if (index != TEXTURES_INDEX)
                 this.onXMLMinorError("tag <textures> out of order");
@@ -176,6 +183,7 @@ class MySceneGraph {
         // <materials>
         if ((index = nodeNames.indexOf("materials")) == -1)
             return "tag <materials> missing";
+        
         else {
             if (index != MATERIALS_INDEX)
                 this.onXMLMinorError("tag <materials> out of order");
@@ -188,6 +196,7 @@ class MySceneGraph {
         // <nodes>
         if ((index = nodeNames.indexOf("nodes")) == -1)
             return "tag <nodes> missing";
+
         else {
             if (index != NODES_INDEX)
                 this.onXMLMinorError("tag <nodes> out of order");
@@ -196,6 +205,7 @@ class MySceneGraph {
             if ((error = this.parseNodes(nodes[index])) != null)
                 return error;
         }
+
         this.log("all parsed");
     }
 
@@ -219,6 +229,7 @@ class MySceneGraph {
 
         var rootNode = children[rootIndex];
         var id = this.reader.getString(rootNode, 'id');
+        
         if (id == null)
             return "No root id defined for scene.";
 
@@ -230,6 +241,7 @@ class MySceneGraph {
 
         var refNode = children[referenceIndex];
         var axis_length = this.reader.getFloat(refNode, 'length');
+
         if (axis_length == null)
             this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
 
@@ -245,7 +257,21 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
-        this.onXMLMinorError("To do: Parse views and create cameras.");
+        var children = viewsMode.children;
+        var nodeNames = [];
+
+        // Get default camera
+        var id = this.reader.getString(viewsNode, 'default');
+
+        if (id == null)
+            return "No default camera defined for scene." 
+
+        this.idDefaultCamera = id;
+
+        for (let i = 0, i < children.length; i++) {
+            
+        }
+
         return null;
     }
 
@@ -417,7 +443,7 @@ class MySceneGraph {
    * Parses the <nodes> block.
    * @param {nodes block element} nodesNode
    */
-  parseNodes(nodesNode) {
+    parseNodes(nodesNode) {
         var children = nodesNode.children;
 
         this.nodes = [];
@@ -466,7 +492,6 @@ class MySceneGraph {
         }
     }
 
-
     parseBoolean(node, name, messageError){
         var boolVal = true;
         boolVal = this.reader.getBoolean(node, name);
@@ -475,6 +500,7 @@ class MySceneGraph {
 
         return boolVal || 1;
     }
+
     /**
      * Parse the coordinates from a node with ID = id
      * @param {block element} node
@@ -571,3 +597,5 @@ class MySceneGraph {
         //this.nodes[this.idRoot].display()
     }
 }
+
+
