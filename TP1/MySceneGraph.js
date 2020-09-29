@@ -45,7 +45,7 @@ class MySceneGraph {
          */
         this.reader.open('scenes/' + filename, this);
         
-        this.testCylinder = new MyCylinder(scene, 1, 1, 3, 20, 5);
+        this.testCylinder = new MyCylinder(scene, 2, 1, 3, 20, 5);
     }
 
     /*
@@ -567,7 +567,6 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         
         this.testCylinder.display();

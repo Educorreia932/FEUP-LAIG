@@ -20,7 +20,6 @@ class MyCylinder extends CGFobject {
 	}
 	
 	initBuffers() {
-
 		this.vertices = [];
         this.indices = [];
         this.normals = [];
@@ -31,8 +30,8 @@ class MyCylinder extends CGFobject {
         const phiInc = (Math.PI * 2) / this.slices;
 
         for (let div = 0; div <= this.slices; div++) {
-            let sinPhi = Math.sin(phi);
             let cosPhi = Math.cos(phi);
+            let sinPhi = Math.sin(phi);
 
             var x0 = cosPhi * this.bottomRadius;
             var y0 = sinPhi * this.bottomRadius;
@@ -44,11 +43,14 @@ class MyCylinder extends CGFobject {
             this.vertices.push(x1, y1, this.height);
 
             if (div < this.slices) {
-                this.indices.push(currentIndex, currentIndex + 1, currentIndex + 2);
-                this.indices.push(currentIndex + 3, currentIndex + 2, currentIndex + 1);
+                this.indices.push(currentIndex + 2, currentIndex + 1, currentIndex);
+                this.indices.push(currentIndex + 1, currentIndex + 2, currentIndex + 3);
     
                 currentIndex += 2;
             }
+
+            this.normals.push(cosPhi * this.bottomRadius, sinPhi * this.bottomRadius, 0);
+            this.normals.push(cosPhi * this.topRadius, sinPhi * this.topRadius, 0);
 
             phi += phiInc;
         }
