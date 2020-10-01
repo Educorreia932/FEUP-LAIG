@@ -34,11 +34,15 @@ class MyCylinder extends CGFobject {
         this.normals = [];
         this.texCoords = [];
 
-        var currentIndex = 0;
-        var xCoord = 0.0;
-        var phi = 0;
-        var height = 0;
-        var radius = this.bottomRadius;
+        // Auxiliary variables
+        let currentIndex = 0;
+        let xCoord = 0.0;
+        let phi = 0;
+        let height = 0;
+        let radius = this.bottomRadius;
+        const slope = this.height / Math.abs(this.topRadius - this.bottomRadius);
+
+        // Increments
         const phiInc = (Math.PI * 2) / this.slices;
         const heightInc = this.height / this.stacks;
         const radiusInc = (this.topRadius - this.bottomRadius) / this.stacks;
@@ -51,11 +55,11 @@ class MyCylinder extends CGFobject {
                 let cosPhi = Math.cos(phi);
                 let sinPhi = Math.sin(phi);
     
-                var x = cosPhi * radius;
-                var y = sinPhi * radius;
+                let x = cosPhi * radius;
+                let y = sinPhi * radius;
                 
                 this.vertices.push(x, y, height);
-    
+                this.normals.push(cosPhi, sinPhi, -1 / slope);
                 this.texCoords.push(xCoord, 1 - height / this.height);
                 
                 if (stack > 0) {
@@ -65,11 +69,6 @@ class MyCylinder extends CGFobject {
                     currentIndex += 1;
                 }
                 
-                // this.indices.push(currentIndex + 2, currentIndex, this.slices * 2); // Bottom lid
-                // this.indices.push(this.slices * 2 + 1, currentIndex + 1, currentIndex + 3); // Top lid
-    
-                this.normals.push(cosPhi, sinPhi, -1 / (this.height / Math.abs(this.topRadius - this.bottomRadius) ));
-
                 phi += phiInc;
 
                 xCoord += 1 / this.slices;
@@ -77,6 +76,43 @@ class MyCylinder extends CGFobject {
 
             height += heightInc;
             radius += radiusInc;    
+        }
+
+        phi = 0;
+
+        this.vertices.push(0, 0, 0); // Bottom center 
+        this.vertices.push(0, 0, this.height); // Top center
+        this.normals.push(0, 0, 0);
+        this.normals.push(0, 0, 0);
+
+        currentIndex += this.slices;
+        
+        let bottomCenterIndex = currentIndex;
+        let topCenterIndex = currentIndex + 1;
+
+        // Lids
+        for (let div = 0; div <= this.slices; div++) {
+            let cosPhi = Math.cos(phi);
+            let sinPhi = Math.sin(phi);
+
+            let x = cosPhi * this.bottomRadius;
+            let y = sinPhi * this.bottomRadius;
+
+            this.vertices.push(x, y, 0);
+            this.normals.push(0, 0, -1);
+
+            x = cosPhi * this.topRadius;
+            y = sinPhi * this.topRadius;
+
+            this.vertices.push(x, y, this.height);
+            this.normals.push(0, 0, 1);
+
+            currentIndex += 2;
+
+                this.indices.push(currentIndex + 2, bottomCenterIndex, currentIndex);
+                this.indices.push(currentIndex + 3, currentIndex + 1, topCenterIndex);
+
+            phi += phiInc;
         }
 
         this.primitiveType = this.scene.gl.TRIANGLES;
