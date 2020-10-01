@@ -43,6 +43,7 @@ class MyCylinder extends CGFobject {
 
         for (let stack = 0; stack <= this.stacks; stack++) {
             phi = 0;
+            xCoord = 0;
 
             for (let div = 0; div <= this.slices; div++) {
                 let cosPhi = Math.cos(phi);
@@ -50,12 +51,11 @@ class MyCylinder extends CGFobject {
     
                 var x = cosPhi * this.bottomRadius;
                 var y = sinPhi * this.bottomRadius;
-    
-                this.texCoords.push(xCoord, (height + heightInc) / this.height);
-                this.texCoords.push(xCoord, height / this.height);
-    
+                
                 this.vertices.push(x, y, height);
     
+                this.texCoords.push(xCoord, 1 - height / this.height);
+                
                 if (stack > 0) {
                     this.indices.push(currentIndex, currentIndex + this.slices + 1, currentIndex + this.slices);
                     this.indices.push(currentIndex, currentIndex + 1, currentIndex + this.slices + 1);
