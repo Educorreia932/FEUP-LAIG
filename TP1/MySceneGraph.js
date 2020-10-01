@@ -48,6 +48,7 @@ class MySceneGraph {
         scene.enableTextures(true);
 
         this.testCylinder = new MyCylinder(scene, 2, 4, 3, 50, 5);
+        this.testSphere = new MySphere(scene, 1, 10, 10);
     }
 
     /*
@@ -571,6 +572,7 @@ class MySceneGraph {
     displayScene() {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         
+        this.testSphere.display();
         this.testCylinder.display();
     }
 }
