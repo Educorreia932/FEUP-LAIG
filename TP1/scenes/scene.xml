@@ -48,77 +48,159 @@
 
     <nodes>
         <node id="rootTP1">
-            <material id="bodyR2D2Material" />
+            <node id="R2D2">
+                <material id="R2D2BodyMaterial" />
 
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
+                <texture id="clear">
+                    <amplification afs="1.0" aft="1.0" />
+                </texture>
 
-            <transformation>
-                <translation x="2.0" y="0.0" z="0.0" />
-            </transformation>
+                <transformation>
+                    <translation x="2.0" y="0.0" z="0.0" />
+                </transformation>
 
-            <descendants>
-                <node id="head">
-                    <material id="null" />
-                    <texture id="null" />
-                    <transformations></transformations>
+                <descendants>
+                    <node id="head">
+                        <material id="null" />
+                        <texture id="null" />
+                        <transformations></transformations>
 
-                    <descendants>
-                        <leaf type="sphere" radius="ff" slices="ff" stacks="ff" />
-                    </descendants>
-                </node>
+                        <descendants>
+                            <leaf type="sphere" radius="3.5" slices="50" stacks="50" />
+                        </descendants>
+                    </node>
 
-                <node id="body">
-                    <descendants>
-                        <node id="bodyTop">
-                            <leaf type="cylinder"/>
-                        </node>
+                    <node id="body">
+                        <descendants>
+                            <material id="null" />
+                            <texture id="null" />
+                            <transformations></transformations>
 
-                        <node id="bodyBottom">
-                            <leaf type="cylinder"/>
-                        </node>
-                    </descendants>
-                </node>
+                            <node id="bodyTop">
+                                <leaf type="cylinder" bottomRadius="3.5" topRadius="3.5" height="10" slices="50" stacks="50" />
+                            </node>
 
-                <node id="leftLeg">
-                    <descendants>
-                        <node id="leftLegTop">
+                            <node id="bodyBottom">
+                                <leaf type="cylinder" bottomRadius="3" topRadius="3.5" height="2" slices="50" stacks="50" />
+                            </node>
+                        </descendants>
+                    </node>
+
+                    <node id="leftLeg">
+                        <descendants>
+                            <node id="leftLegTop">
+                                <material id="null" />
+                                <texture id="null" />
+
+                                <descendants>
+                                    <node id="leftLegTopCircle">
+                                        <material id="null" />
+                                        <texture id="null" />
+
+                                        <descendants>
+                                            <leaf type="cylinder" bottomRadius="2" topRadius="2" height="2" slices="50" stacks="50" />
+                                        </descendants>
+                                    </node>
+
+                                    <node id="leftLegTopRectangle">
+                                        <material id="null" />
+                                        <texture id="null" />
+
+                                        <descendants>
+                                            <leaf type="cylinder" bottomRadius="1.41421" topRadius="1.41421" height="5" slices="4" stacks="50" />
+                                        </descendants>
+                                    </node>
+                                </descendants>
+                            </node>
+
+                            <node id="leftLegBottom">
+                                <material id="null" />
+                                <texture id="null" />
+
+                                <descendants>
+                                    <leaf type="cylinder" bottomRadius="0.70711" topRadius="0.70711" height="3" slices="4" stacks="50" />
+                                </descendants>
+                            </node>
+
+                            <node id="leftFoot">
+                                <material id="null" />
+                                <texture id="null" />
+
+                                <descendants>
+                                    <leaf type="cylinder" bottomRadius="1.7678" topRadius="0.70711" height="2" slices="4" stacks="50" />
+                                </descendants>
+                            </node>
+                        </descendants>
+                    </node>
+
+                    <node id="rightLeg">
+                        <descendants>
+                            <node id="rightLegTop">
+                                <material id="null" />
+                                <texture id="null" />
+
+                                <descendants>
+                                    <node id="rightLegTopCircle">
+                                        <material id="null" />
+                                        <texture id="null" />
+
+                                        <descendants>
+                                            <leaf type="cylinder" bottomRadius="2" topRadius="2" height="2" slices="50" stacks="50" />
+                                        </descendants>
+                                    </node>
+
+                                    <node id="rightLegTopRectangle">
+                                        <material id="null" />
+                                        <texture id="null" />
+
+                                        <descendants>
+                                            <leaf type="cylinder" bottomRadius="1.41421" topRadius="1.41421" height="5" slices="4" stacks="50" />
+                                        </descendants>
+                                    </node>
+                                </descendants>
+                            </node>
+
+                            <node id="rightLegBottom">
+                                <material id="null" />
+                                <texture id="null" />
+
+                                <descendants>
+                                    <leaf type="cylinder" bottomRadius="0.70711" topRadius="0.70711" height="3" slices="4" stacks="50" />
+                                </descendants>
+                            </node>
+
+                            <node id="rightFoot">
+                                <material id="null" />
+                                <texture id="null" />
+
+                                <descendants>
+                                    <leaf type="cylinder" bottomRadius="1.7678" topRadius="0.70711" height="2" slices="4" stacks="50" />
+                                </descendants>
+                            </node>
+                        </descendants>
+                    </node>
+
+                    <node id="middleLeg">
+                        <node id="middleFootSupport">
+                            <material id="null" />
+                            <texture id="null" />
+
                             <descendants>
-                                <node>
-                                    <descendants>
-                                        <leaf type="cylinder"/>
-                                    </descendants>
-                                </node>
-
-                                <node>
-                                    <leaf type="cylinder"/>
-                                </node>
+                                <leaf type="cylinder" bottomRadius="0.4" topRadius="0.4" height="1" slices="50" stacks="50" />
                             </descendants>
                         </node>
 
-                        <node id="leftLegBottom">
+                        <node id="middleFoot">
+                            <material id="null" />
+                            <texture id="null" />
+
                             <descendants>
-                                <leaf type="cylinder"/>
+                                <leaf type="cylinder" bottomRadius="1.7678" topRadius="0.70711" height="2" slices="4" stacks="50" />
                             </descendants>
                         </node>
-
-                        <node id="leftFoot">
-                            <descendants>
-                                <leaf type="cylinder"/>
-                            </descendants>
-                        </node>
-                    </descendants>
-                </node>
-
-                <node id="rightLeg">
-     
-                </node>
-
-                <node id="middleLeg">
-
-                </node>
-            </descendants>
+                    </node>
+                </descendants>
+            </node>
         </node>
     </nodes>
 </lsf>
