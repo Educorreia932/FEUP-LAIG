@@ -9,12 +9,21 @@
  */
 class MyCylinder extends CGFobject {
 	constructor(scene, bottomRadius, topRadius, height, slices, stacks) {
-		super(scene);
+        super(scene);
+        
 		this.bottomRadius = bottomRadius;
 		this.topRadius = topRadius;
 		this.height = height;
         this.slices = slices;
         this.stacks = stacks;
+
+        this.material = new CGFappearance(this.scene);	
+        this.material.setAmbient(1.0, 1.0, 1.0, 1.0);
+        this.material.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.material.setSpecular(0.1, 0.1, 0.1, 1);
+        this.material.setShininess(10.0);
+        this.terrainTexture = new CGFtexture(this.scene, "scenes/images/earth.jpg");
+        this.material.setTexture(this.terrainTexture);
 
 		this.initBuffers();
 	}
@@ -26,6 +35,7 @@ class MyCylinder extends CGFobject {
         this.texCoords = [];
 
         var currentIndex = 0;
+        var xCoord = 0.0;
         var phi = 0;
         const phiInc = (Math.PI * 2) / this.slices;
 
@@ -38,6 +48,9 @@ class MyCylinder extends CGFobject {
 
             var x1 = cosPhi * this.topRadius;
             var y1 = sinPhi * this.topRadius;
+
+            this.texCoords.push(xCoord, 1);
+            this.texCoords.push(xCoord, 0);
 
             this.vertices.push(x0, y0, 0);
             this.vertices.push(x1, y1, this.height);
@@ -54,6 +67,7 @@ class MyCylinder extends CGFobject {
             currentIndex += 2;
 
             phi += phiInc;
+            xCoord += phiInc / (2 * Math.PI);
         }
 
         // Lids' center
@@ -72,6 +86,11 @@ class MyCylinder extends CGFobject {
 	updateTexCoords(coords) {
 		this.texCoords = [...coords];
 		this.updateTexCoordsGLBuffers();
+    }
+
+    display() {
+        this.material.apply();
+        super.display();
     }
 }
 

@@ -44,8 +44,10 @@ class MySceneGraph {
          * If any error occurs, the reader calls onXMLError on this object, with an error message
          */
         this.reader.open('scenes/' + filename, this);
-        
-        this.testCylinder = new MyCylinder(scene, 2, 2, 3, 20, 5);
+
+        scene.enableTextures(true);
+
+        this.testCylinder = new MyCylinder(scene, 2, 2, 3, 100, 5);
         // this.testCylinder.enableNormalViz();
     }
 
