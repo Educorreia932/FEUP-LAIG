@@ -37,37 +37,44 @@ class MyCylinder extends CGFobject {
         var currentIndex = 0;
         var xCoord = 0.0;
         var phi = 0;
+        var height = 0;
         const phiInc = (Math.PI * 2) / this.slices;
+        const heightInc = this.height / this.stacks;
 
-        for (let div = 0; div <= this.slices; div++) {
-            let cosPhi = Math.cos(phi);
-            let sinPhi = Math.sin(phi);
+        for (let stack = 0; stack <= this.stacks; stack++) {
+            phi = 0;
 
-            var x0 = cosPhi * this.bottomRadius;
-            var y0 = sinPhi * this.bottomRadius;
+            for (let div = 0; div <= this.slices; div++) {
+                let cosPhi = Math.cos(phi);
+                let sinPhi = Math.sin(phi);
+    
+                var x = cosPhi * this.bottomRadius;
+                var y = sinPhi * this.bottomRadius;
+    
+                this.texCoords.push(xCoord, (height + heightInc) / this.height);
+                this.texCoords.push(xCoord, height / this.height);
+    
+                this.vertices.push(x, y, height);
+    
+                if (stack > 0) {
+                    this.indices.push(currentIndex, currentIndex + this.slices + 1, currentIndex + this.slices);
+                    this.indices.push(currentIndex, currentIndex + 1, currentIndex + this.slices + 1);
 
-            var x1 = cosPhi * this.topRadius;
-            var y1 = sinPhi * this.topRadius;
+                    currentIndex += 1;
+                }
+                
+                // this.indices.push(currentIndex + 2, currentIndex, this.slices * 2); // Bottom lid
+                // this.indices.push(this.slices * 2 + 1, currentIndex + 1, currentIndex + 3); // Top lid
+    
+                this.normals.push(cosPhi, sinPhi, -1);
+                this.normals.push(cosPhi, sinPhi, 1);
 
-            this.texCoords.push(xCoord, 1);
-            this.texCoords.push(xCoord, 0);
+                phi += phiInc;
 
-            this.vertices.push(x0, y0, 0);
-            this.vertices.push(x1, y1, this.height);
+                xCoord += 1 / this.slices;
+            }
 
-            this.indices.push(currentIndex + 2, currentIndex + 1, currentIndex);
-            this.indices.push(currentIndex + 1, currentIndex + 2, currentIndex + 3);
-
-            this.indices.push(currentIndex + 2, currentIndex, this.slices * 2); // Bottom lid
-            this.indices.push(this.slices * 2 + 1, currentIndex + 1, currentIndex + 3); // Top lid
-
-            this.normals.push(cosPhi, sinPhi, -1);
-            this.normals.push(cosPhi, sinPhi, 1);
-
-            currentIndex += 2;
-
-            phi += phiInc;
-            xCoord += phiInc / (2 * Math.PI);
+            height += heightInc;
         }
 
         // Lids' center
