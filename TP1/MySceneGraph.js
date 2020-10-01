@@ -48,7 +48,7 @@ class MySceneGraph {
         scene.enableTextures(true);
 
         this.testCylinder = new MyCylinder(scene, 2, 4, 3, 10, 5);
-        // this.testCylinder.enableNormalViz();
+        this.testCylinder.enableNormalViz();
     }
 
     /*

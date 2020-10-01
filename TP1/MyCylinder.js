@@ -38,8 +38,10 @@ class MyCylinder extends CGFobject {
         var xCoord = 0.0;
         var phi = 0;
         var height = 0;
+        var radius = this.bottomRadius;
         const phiInc = (Math.PI * 2) / this.slices;
         const heightInc = this.height / this.stacks;
+        const radiusInc = (this.topRadius - this.bottomRadius) / this.stacks;
 
         for (let stack = 0; stack <= this.stacks; stack++) {
             phi = 0;
@@ -49,8 +51,8 @@ class MyCylinder extends CGFobject {
                 let cosPhi = Math.cos(phi);
                 let sinPhi = Math.sin(phi);
     
-                var x = cosPhi * this.bottomRadius;
-                var y = sinPhi * this.bottomRadius;
+                var x = cosPhi * radius;
+                var y = sinPhi * radius;
                 
                 this.vertices.push(x, y, height);
     
@@ -66,8 +68,7 @@ class MyCylinder extends CGFobject {
                 // this.indices.push(currentIndex + 2, currentIndex, this.slices * 2); // Bottom lid
                 // this.indices.push(this.slices * 2 + 1, currentIndex + 1, currentIndex + 3); // Top lid
     
-                this.normals.push(cosPhi, sinPhi, -1);
-                this.normals.push(cosPhi, sinPhi, 1);
+                this.normals.push(cosPhi, sinPhi, -1 / (this.height / Math.abs(this.topRadius - this.bottomRadius) ));
 
                 phi += phiInc;
 
@@ -75,11 +76,8 @@ class MyCylinder extends CGFobject {
             }
 
             height += heightInc;
+            radius += radiusInc;    
         }
-
-        // Lids' center
-        this.vertices.push(0, 0, 0);
-        this.vertices.push(0, 0, this.height);
 
         this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
