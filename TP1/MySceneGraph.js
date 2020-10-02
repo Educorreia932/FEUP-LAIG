@@ -257,7 +257,7 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
-        const cameraNodes = viewsMode.children;
+        const cameraNodes = viewsNode.children;
         this.cameras = [];
 
         // Get default camera
@@ -429,6 +429,30 @@ class MySceneGraph {
      */
     parseTextures(texturesNode) {
 
+        var children = texturesNode.children;
+
+        this.textures = [];
+
+        //var grandChildren = [];
+        //var nodeNames = [];
+
+        for (var i = 0; i < children.length; i++) {
+
+            if (children[i].nodeName != "texture") {
+                this.onXMLMinorError("unknown tag <")
+            }//basically tou a tentar descobrir oq e o grandChildren+nodenames
+
+            var textureID;
+
+            textureID = this.reader.getString(children[i], 'id');
+
+            if (this.textures[textureID] != null) {
+                // not unique shit
+            }
+        }
+
+
+
         //For each texture in textures block, check ID and file URL
         this.onXMLMinorError("To do: Parse textures.");
         return null;
@@ -501,6 +525,8 @@ class MySceneGraph {
             if (this.nodes[nodeID] != null)
                 return "ID must be unique for each node (conflict: ID = " + nodeID + ")";
 
+            var node = {};
+
             grandChildren = children[i].children;
 
             nodeNames = [];
@@ -515,13 +541,52 @@ class MySceneGraph {
 
             this.onXMLMinorError("To do: Parse nodes.");
             // Transformations
+            var transfMatrix;
+
+            if (transformationsIndex != -1) {
+                mat4.identity(transfMatrix);
+
+                grandgrandChildren = grandChildren[transformationsIndex].children;
+
+                for (var t = grandgrandChildren.length - 1; t >= 0; t--) {
+                    var aux = this.parseTransfMatrix(grandgrandChildren[t], "node of ID " + nodeID);
+
+                    if (typeof aux === 'string')
+                        return aux;
+
+                    var res;
+                    mat4.multiply(res, aux, transfMatrix);
+
+                    transfMatrix = res;
+                }
+            }
+
+            node.transfMatrix = transfMatrix;
 
             // Material
+            var material;
+
+            if (materialIndex != -1)
+                material = this.reader.getString(grandChildren[materialIndex], 'id');
+
+            node.material = material;
 
             // Texture
+            var texture = {};
+            texture.id = null;
+            texture.warpS = 1.0;
+            texture.warpT = 1.0;
+
+            if (textureIndex != -1) {
+
+            }
+
+
 
             // Descendants
         }
+
+        return null;
     }
 
     parseBoolean(node, name, messageError){
@@ -617,6 +682,73 @@ class MySceneGraph {
         color.push(...[r, g, b, a]);
 
         return color;
+    }
+
+    /**
+     * Parse a transformation matrix of a node
+     * @param {block element} node
+     * @param {message to be displayed in case of error} messageError
+     */
+    parseTransfMatrix(node, messageError) {
+        var matrix;
+
+        if (node.nodeName == "translation") {
+            // x
+            var x = this.reader.getFloat(node, 'x');
+            if (x == null || isNaN(x))
+                return "unable to parse X component of the translation matrix of the " + messageError;
+
+            // y
+            var y = this.reader.getFloat(node, 'y');
+            if (y == null || isNaN(y))
+                return "unable to parse Y component of the translation matrix of the " + messageError;
+
+            // z
+            var z = this.reader.getFloat(node, 'z');
+            if (z == null || isNaN(z))
+                return "unable to parse Z component of the translation matrix of the " + messageError;
+
+            mat4.fromTranslation(matrix, [x, y, z]);
+
+        } else if (node.nodeName == "rotation") {
+            // angle
+            var angle = this.reader.getFloat(node, 'angle');
+
+            // axis
+            var axis = this.reader.getString(node, 'axis');
+
+            if (axis == null)
+                return "unable to parse axis component of the rotation matrix of the " + messageError;
+
+            var x = (axis == "xx") ? 1 : 0;
+            var y = (axis == "yy") ? 1 : 0;
+            var z = (axis == "zz") ? 1 : 0;
+
+            mat4.fromRotation(matrix, angle * DEGREE_TO_RAD, [x, y, z]);
+
+        } else if (node.nodeName == "scale") {
+            // Scale x
+            var sx = this.reader.getFloat(node, 'sx');
+            if (sx == null || isNaN(sx))
+                return "unable to parse X component of the scale matrix of the " + messageError;
+
+            // Scale y
+            var sy = this.reader.getFloat(node, 'sy');
+            if (sy == null || isNaN(sy))
+                return "unable to parse Y component of the scale matrix of the " + messageError;
+
+            // Scale z
+            var sz = this.reader.getFloat(node, 'sz');
+            if (sz == null || isNaN(sz))
+                return "unable to parse Z component of the scale matrix of the " + messageError;
+
+            mat4.fromScaling(matrix, [sx, sy, sz]);
+
+        } else {
+            return "unable to identify type of transformation matrix of the " + messageError;
+        }
+
+        return matrix;
     }
 
     /**
