@@ -80,15 +80,10 @@ class MyCylinder extends CGFobject {
 
         phi = 0;
 
-        this.vertices.push(0, 0, 0); // Bottom center 
-        this.vertices.push(0, 0, this.height); // Top center
-        this.normals.push(0, 0, -1);
-        this.normals.push(0, 0, 1);
-
         currentIndex += this.slices;
         
-        let bottomCenterIndex = currentIndex;
-        let topCenterIndex = currentIndex + 1;
+        let bottomCenterIndex = currentIndex + this.slices * 2;
+        let topCenterIndex =  currentIndex + this.slices * 2 + 1;
 
         // Lids
         for (let div = 0; div <= this.slices; div++) {
@@ -98,22 +93,27 @@ class MyCylinder extends CGFobject {
             let x = cosPhi * this.bottomRadius;
             let y = sinPhi * this.bottomRadius;
 
+            // Bottom lid
             this.vertices.push(x, y, 0);
             this.normals.push(0, 0, -1);
 
             x = cosPhi * this.topRadius;
             y = sinPhi * this.topRadius;
 
+            // Top lid
             this.vertices.push(x, y, this.height);
             this.normals.push(0, 0, 1);
 
+            this.indices.push(bottomCenterIndex, currentIndex, currentIndex + 2);
+            this.indices.push(currentIndex + 3, currentIndex + 1, topCenterIndex);
+            
             currentIndex += 2;
-
-                this.indices.push(currentIndex + 2, bottomCenterIndex, currentIndex);
-                this.indices.push(currentIndex + 3, currentIndex + 1, topCenterIndex);
 
             phi += phiInc;
         }
+
+        this.vertices.push(0, 0, 0); // Bottom center 
+        this.vertices.push(0, 0, this.height); // Top center
 
         this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
