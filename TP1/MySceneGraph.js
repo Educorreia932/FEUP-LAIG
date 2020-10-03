@@ -27,6 +27,8 @@ class MySceneGraph {
         scene.graph = this;
 
         this.nodes = [];
+        this.textures = [];
+        this.materials = [];
 
         this.idRoot = null; // The id of the root element.
 
@@ -44,6 +46,18 @@ class MySceneGraph {
          * If any error occurs, the reader calls onXMLError on this object, with an error message
          */
         this.reader.open('scenes/' + filename, this);
+
+        scene.enableTextures(true);
+
+        // R2-D2 
+        this.head = new MySphere(scene, 3.5, 50, 50);
+        this.bodyTop = new MyCylinder(scene, 3.5, 3.5, 10, 50, 5);
+        this.bodyBottom = new MyCylinder(scene, 3, 3.5, 2, 50, 5);
+        this.legTopCircle = new MyCylinder(scene, 2, 2, 2, 50, 5);
+        this.legTopRectangle = new MyCylinder(scene, 1.41421, 1.41421, 5, 4, 5);
+        this.legBottom = new MyCylinder(scene, 0.70711, 0.70711, 3, 4, 5);
+        this.foot = new MyCylinder(scene, 1.7678, 0.70711, 2, 4, 5);
+        this.footSupport = new MyCylinder(scene, 0.4, 0.4, 1, 50, 5);
     }
 
     /*
@@ -115,8 +129,10 @@ class MySceneGraph {
 
         // <initials>
         var index;
+
         if ((index = nodeNames.indexOf("initials")) == -1)
             return "tag <initials> missing";
+        
         else {
             if (index != INITIALS_INDEX)
                 this.onXMLMinorError("tag <initials> out of order " + index);
@@ -129,6 +145,7 @@ class MySceneGraph {
         // <views>
         if ((index = nodeNames.indexOf("views")) == -1)
             return "tag <views> missing";
+        
         else {
             if (index != VIEWS_INDEX)
                 this.onXMLMinorError("tag <views> out of order");
@@ -141,6 +158,7 @@ class MySceneGraph {
         // <illumination>
         if ((index = nodeNames.indexOf("illumination")) == -1)
             return "tag <illumination> missing";
+        
         else {
             if (index != ILLUMINATION_INDEX)
                 this.onXMLMinorError("tag <illumination> out of order");
@@ -153,6 +171,7 @@ class MySceneGraph {
         // <lights>
         if ((index = nodeNames.indexOf("lights")) == -1)
             return "tag <lights> missing";
+        
         else {
             if (index != LIGHTS_INDEX)
                 this.onXMLMinorError("tag <lights> out of order");
@@ -161,9 +180,11 @@ class MySceneGraph {
             if ((error = this.parseLights(nodes[index])) != null)
                 return error;
         }
+        
         // <textures>
         if ((index = nodeNames.indexOf("textures")) == -1)
             return "tag <textures> missing";
+        
         else {
             if (index != TEXTURES_INDEX)
                 this.onXMLMinorError("tag <textures> out of order");
@@ -176,6 +197,7 @@ class MySceneGraph {
         // <materials>
         if ((index = nodeNames.indexOf("materials")) == -1)
             return "tag <materials> missing";
+        
         else {
             if (index != MATERIALS_INDEX)
                 this.onXMLMinorError("tag <materials> out of order");
@@ -188,6 +210,7 @@ class MySceneGraph {
         // <nodes>
         if ((index = nodeNames.indexOf("nodes")) == -1)
             return "tag <nodes> missing";
+
         else {
             if (index != NODES_INDEX)
                 this.onXMLMinorError("tag <nodes> out of order");
@@ -196,6 +219,7 @@ class MySceneGraph {
             if ((error = this.parseNodes(nodes[index])) != null)
                 return error;
         }
+
         this.log("all parsed");
     }
 
@@ -219,6 +243,7 @@ class MySceneGraph {
 
         var rootNode = children[rootIndex];
         var id = this.reader.getString(rootNode, 'id');
+        
         if (id == null)
             return "No root id defined for scene.";
 
@@ -230,6 +255,7 @@ class MySceneGraph {
 
         var refNode = children[referenceIndex];
         var axis_length = this.reader.getFloat(refNode, 'length');
+
         if (axis_length == null)
             this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
 
@@ -254,7 +280,6 @@ class MySceneGraph {
      * @param {illumination block element} illuminationsNode
      */
     parseIllumination(illuminationsNode) {
-
         var children = illuminationsNode.children;
 
         this.ambient = [];
@@ -300,7 +325,6 @@ class MySceneGraph {
 
         // Any number of lights.
         for (var i = 0; i < children.length; i++) {
-
             // Storing light information
             var global = [];
             var attributeNames = [];
@@ -311,6 +335,7 @@ class MySceneGraph {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
             }
+
             else {
                 attributeNames.push(...["enable", "position", "ambient", "diffuse", "specular"]);
                 attributeTypes.push(...["boolean","position", "color", "color", "color"]);
@@ -318,6 +343,7 @@ class MySceneGraph {
 
             // Get id of the current light.
             var lightId = this.reader.getString(children[i], 'id');
+
             if (lightId == null)
                 return "no ID defined for light";
 
@@ -326,9 +352,10 @@ class MySceneGraph {
                 return "ID must be unique for each light (conflict: ID = " + lightId + ")";
 
             grandChildren = children[i].children;
-            // Specifications for the current light.
 
+            // Specifications for the current light.
             nodeNames = [];
+
             for (var j = 0; j < grandChildren.length; j++) {
                 nodeNames.push(grandChildren[j].nodeName);
             }
@@ -339,8 +366,10 @@ class MySceneGraph {
                 if (attributeIndex != -1) {
                     if (attributeTypes[j] == "boolean")
                         var aux = this.parseBoolean(grandChildren[attributeIndex], "value", "enabled attribute for light of ID" + lightId);
+                    
                     else if (attributeTypes[j] == "position")
                         var aux = this.parseCoordinates4D(grandChildren[attributeIndex], "light position for ID" + lightId);
+                    
                     else
                         var aux = this.parseColor(grandChildren[attributeIndex], attributeNames[j] + " illumination for ID" + lightId);
 
@@ -349,15 +378,18 @@ class MySceneGraph {
 
                     global.push(aux);
                 }
+
                 else
                     return "light " + attributeNames[i] + " undefined for ID = " + lightId;
             }
+
             this.lights[lightId] = global;
             numLights++;
         }
 
         if (numLights == 0)
             return "at least one light must be defined";
+
         else if (numLights > 8)
             this.onXMLMinorError("too many lights defined; WebGL imposes a limit of 8 lights");
 
@@ -370,6 +402,30 @@ class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
+
+        var children = texturesNode.children;
+
+        this.textures = [];
+
+        //var grandChildren = [];
+        //var nodeNames = [];
+
+        for (var i = 0; i < children.length; i++) {
+
+            if (children[i].nodeName != "texture") {
+                this.onXMLMinorError("unknown tag <")
+            }//basically tou a tentar descobrir oq e o grandChildren+nodenames
+
+            var textureID;
+
+            textureID = this.reader.getString(children[i], 'id');
+
+            if (this.textures[textureID] != null) {
+                // not unique shit
+            }
+        }
+
+
 
         //For each texture in textures block, check ID and file URL
         this.onXMLMinorError("To do: Parse textures.");
@@ -417,7 +473,7 @@ class MySceneGraph {
    * Parses the <nodes> block.
    * @param {nodes block element} nodesNode
    */
-  parseNodes(nodesNode) {
+    parseNodes(nodesNode) {
         var children = nodesNode.children;
 
         this.nodes = [];
@@ -443,6 +499,9 @@ class MySceneGraph {
             if (this.nodes[nodeID] != null)
                 return "ID must be unique for each node (conflict: ID = " + nodeID + ")";
 
+            var node = new MyNode(this.scene);
+            node.id = nodeID;
+
             grandChildren = children[i].children;
 
             nodeNames = [];
@@ -455,17 +514,90 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
-            this.onXMLMinorError("To do: Parse nodes.");
             // Transformations
+            var transfMatrix = mat4.create();
+
+            if (transformationsIndex != -1) {
+                grandgrandChildren = grandChildren[transformationsIndex].children;
+
+                for (var t = grandgrandChildren.length - 1; t >= 0; t--) {
+                    var aux = this.parseTransfMatrix(grandgrandChildren[t], transfMatrix, "node of ID " + nodeID);
+
+                    if (typeof aux === 'string')
+                        return aux;
+
+                    transfMatrix = aux;
+                }
+            }
+
+            node.transformation = transfMatrix;
 
             // Material
+            var material;
+
+            if (materialIndex != -1)
+                material = this.reader.getString(grandChildren[materialIndex], 'id');
+
+            node.material = material;
 
             // Texture
+            var texture = {};
+            texture.id = null;
+            texture.ampS = 1.0;
+            texture.ampT = 1.0;
+
+            if (textureIndex != -1) {
+                grandgrandChildren = grandChildren[textureIndex].children;
+
+                texture.id = this.reader.getString(grandChildren[textureIndex], 'id');
+
+                if (grandgrandChildren.length < 1 || grandgrandChildren[0].nodeName != "amplification") {
+                    this.onXMLMinorError("unable to parse texture amplification" + texture.id + "; assuming amplication of 1.0"); 
+                }
+
+                texture.ampS = this.reader.getFloat(grandgrandChildren[0], 'afs') || 1.0;
+                texture.ampS = this.reader.getFloat(grandgrandChildren[0], 'aft') || 1.0;
+            }
+
+            node.texture = texture;
 
             // Descendants
-        }
-    }
+            if (descendantsIndex != -1) {
+                grandgrandChildren = grandChildren[descendantsIndex].children;
 
+                for (let i = 0; i < grandgrandChildren.length; i++) {
+
+                    if (grandgrandChildren[i].nodeName == "noderef") {
+                        var aux = this.reader.getString(grandgrandChildren[i], 'id');
+
+                        node.addDescedant(aux);
+                    } else if (grandgrandChildren[i].nodeName == "leaf") {
+                        var aux = this.parsePrimitive(grandgrandChildren[i], "node of ID " + nodeID);
+                    
+                        if (typeof aux == "string") {
+                            return aux;
+                        }
+
+                        node.addObject(aux);
+                    }
+
+                }
+            }
+
+            if (node.descendants.length < 1) {
+                this.onXMLMinorError("node of ID " + nodeID + " must have atleast one descedant");
+                continue;
+            }
+
+            this.nodes[nodeID] = node;
+        }
+
+        this.nodes[this.idRoot].initialize(this.nodes, this.materials, this.textures);
+
+        this.log("Parsed Nodes.");
+
+        return null;
+    }
 
     parseBoolean(node, name, messageError){
         var boolVal = true;
@@ -475,6 +607,7 @@ class MySceneGraph {
 
         return boolVal || 1;
     }
+
     /**
      * Parse the coordinates from a node with ID = id
      * @param {block element} node
@@ -562,12 +695,158 @@ class MySceneGraph {
     }
 
     /**
+     * Parse a transformation matrix of a node
+     * @param {block element} node
+     * @param {matrix where result is stored} out
+     * @param {message to be displayed in case of error} messageError
+     */
+    parseTransfMatrix(node, out, messageError) {
+        if (node.nodeName == "translation") {
+            // x
+            var x = this.reader.getFloat(node, 'x');
+            if (x == null || isNaN(x))
+                return "unable to parse X component of the translation matrix of the " + messageError;
+
+            // y
+            var y = this.reader.getFloat(node, 'y');
+            if (y == null || isNaN(y))
+                return "unable to parse Y component of the translation matrix of the " + messageError;
+
+            // z
+            var z = this.reader.getFloat(node, 'z');
+            if (z == null || isNaN(z))
+                return "unable to parse Z component of the translation matrix of the " + messageError;
+
+            mat4.translate(out, out, [x, y, z]);
+
+        } else if (node.nodeName == "rotation") {
+            // angle
+            var angle = this.reader.getFloat(node, 'angle');
+
+            // axis
+            var axis = this.reader.getString(node, 'axis');
+
+            if (axis == null)
+                return "unable to parse axis component of the rotation matrix of the " + messageError;
+
+            var x = (axis == "x") ? 1 : 0;
+            var y = (axis == "y") ? 1 : 0;
+            var z = (axis == "z") ? 1 : 0;
+
+            mat4.rotate(out, out, angle * DEGREE_TO_RAD, [x, y, z]);
+
+        } else if (node.nodeName == "scale") {
+            // Scale x
+            var sx = this.reader.getFloat(node, 'sx');
+            if (sx == null || isNaN(sx))
+                return "unable to parse X component of the scale matrix of the " + messageError;
+
+            // Scale y
+            var sy = this.reader.getFloat(node, 'sy');
+            if (sy == null || isNaN(sy))
+                return "unable to parse Y component of the scale matrix of the " + messageError;
+
+            // Scale z
+            var sz = this.reader.getFloat(node, 'sz');
+            if (sz == null || isNaN(sz))
+                return "unable to parse Z component of the scale matrix of the " + messageError;
+
+            mat4.scale(out, out, [sx, sy, sz]);
+
+        } else {
+            return "unable to identify type of transformation matrix of the " + messageError;
+        }
+
+        return out;
+    }
+
+    parsePrimitive(node, messageError) {
+        var out;
+
+        var type = this.reader.getString(node, 'type');
+
+        if (type == "rectangle") {
+            // x1
+            var x1 = this.reader.getFloat(node, 'x1');
+            if (x1 == null || isNaN(x1))
+                return "unable to parse X1 component from the rectangle of the " + messageError;
+
+            // y1
+            var y1 = this.reader.getFloat(node, 'y1');
+            if (y1 == null || isNaN(y1))
+                return "unable to parse Y1 component from the rectangle of the " + messageError;
+
+            // x2
+            var x2 = this.reader.getFloat(node, 'x2');
+            if (x2 == null || isNaN(x2))
+                return "unable to parse X2 component from the rectangle of the " + messageError;
+
+            // y2
+            var y2 = this.reader.getFloat(node, 'y2');
+            if (y2 == null || isNaN(y2))
+                return "unable to parse Y2 component from the rectangle of the " + messageError;
+
+            out = new MyRectangle(this.scene, x1, y1, x2, y2);
+        
+        } 
+        
+        else if (type == "triangle") {
+            // x1
+            var x1 = this.reader.getFloat(node, 'x1');
+
+            if (x1 == null || isNaN(x1))
+                return "unable to parse X1 component from the triangle of the " + messageError;
+
+            // y1
+            var y1 = this.reader.getFloat(node, 'y1');
+
+            if (y1 == null || isNaN(y1))
+                return "unable to parse Y1 component from the triangle of the " + messageError;
+
+            // x2
+            var x2 = this.reader.getFloat(node, 'x2');
+
+            if (x2 == null || isNaN(x2))
+                return "unable to parse X2 component from the triangle of the " + messageError;
+
+            // y2
+            var y2 = this.reader.getFloat(node, 'y2');
+
+            if (y2 == null || isNaN(y2))
+                return "unable to parse Y2 component from the triangle of the " + messageError;
+
+            // x3
+            var x3 = this.reader.getFloat(node, 'x3');
+
+            if (x3 == null || isNaN(x3))
+                return "unable to parse X3 component from the triangle of the " + messageError;
+
+            // y3
+            var y3 = this.reader.getFloat(node, 'y3');
+
+            if (y3 == null || isNaN(y3))
+                return "unable to parse Y3 component from the triangle of the " + messageError;
+
+            out = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
+        } 
+        
+        else 
+            return "unable to process primitive of the " + messageError;
+
+        return out;
+    }
+
+    /**
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
         
-        //To do: Create display loop for transversing the scene graph, calling the root node's display function
-        
-        //this.nodes[this.idRoot].display()
+        if (this.nodes[this.idRoot] != null) {
+            // console.log(this.nodes[this.idRoot]);
+
+            this.nodes[this.idRoot].display();
+        }
     }
 }
+
+
