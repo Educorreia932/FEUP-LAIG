@@ -82,8 +82,8 @@ class MyCylinder extends CGFobject {
 
         this.vertices.push(0, 0, 0); // Bottom center 
         this.vertices.push(0, 0, this.height); // Top center
-        this.normals.push(0, 0, 0);
-        this.normals.push(0, 0, 0);
+        this.normals.push(0, 0, -1);
+        this.normals.push(0, 0, 1);
 
         currentIndex += this.slices;
         
@@ -127,11 +127,6 @@ class MyCylinder extends CGFobject {
 	updateTexCoords(coords) {
 		this.texCoords = [...coords];
 		this.updateTexCoordsGLBuffers();
-    }
-
-    display() {
-        this.material.apply();
-        super.display();
     }
 }
 

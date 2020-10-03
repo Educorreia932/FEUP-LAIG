@@ -47,8 +47,15 @@ class MySceneGraph {
 
         scene.enableTextures(true);
 
-        this.testCylinder = new MyCylinder(scene, 2, 4, 3, 50, 5);
-        this.testSphere = new MySphere(scene, 1, 10, 10);
+        // R2-D2 
+        this.head = new MySphere(scene, 3.5, 50, 50);
+        this.bodyTop = new MyCylinder(scene, 3.5, 3.5, 10, 50, 5);
+        this.bodyBottom = new MyCylinder(scene, 3, 3.5, 2, 50, 5);
+        this.legTopCircle = new MyCylinder(scene, 2, 2, 2, 50, 5);
+        this.legTopRectangle = new MyCylinder(scene, 1.41421, 1.41421, 5, 4, 5);
+        this.legBottom = new MyCylinder(scene, 0.70711, 0.70711, 3, 4, 5);
+        this.foot = new MyCylinder(scene, 1.7678, 0.70711, 2, 4, 5);
+        this.footSupport = new MyCylinder(scene, 0.4, 0.4, 1, 50, 5);
     }
 
     /*
@@ -422,7 +429,7 @@ class MySceneGraph {
    * Parses the <nodes> block.
    * @param {nodes block element} nodesNode
    */
-  parseNodes(nodesNode) {
+    parseNodes(nodesNode) {
         var children = nodesNode.children;
 
         this.nodes = [];
@@ -471,7 +478,6 @@ class MySceneGraph {
         }
     }
 
-
     parseBoolean(node, name, messageError){
         var boolVal = true;
         boolVal = this.reader.getBoolean(node, name);
@@ -480,6 +486,7 @@ class MySceneGraph {
 
         return boolVal || 1;
     }
+
     /**
      * Parse the coordinates from a node with ID = id
      * @param {block element} node
@@ -571,8 +578,65 @@ class MySceneGraph {
      */
     displayScene() {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
-        
-        this.testSphere.display();
-        this.testCylinder.display();
+        this.material = new CGFappearance(this.scene);
+		this.material.setAmbient(0.3, 0.3, 0.3, 1);
+        this.material.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.material.setSpecular(0.1, 0.1, 0.1, 1);
+        this.material.setShininess(10.0);
+        this.material.apply();
+
+        this.scene.pushMatrix();
+
+        this.scene.translate(0, 10, 0);
+        this.head.display();
+
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.bodyTop.display();
+
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+
+        this.scene.translate(0, -2, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.bodyBottom.display();
+
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+
+        this.scene.translate(0, 7, 3.5);
+        this.legTopCircle.display();
+
+        this.scene.translate(0, 0, -9);
+        this.legTopCircle.display();
+
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+
+        this.scene.translate(0, 2, 4.5);
+        this.scene.scale(2, 1, 1);
+        this.scene.rotate(Math.PI / 4, 0, 1, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.legTopRectangle.display();
+
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+
+        this.foot.display();
+
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+
+        this.footSupport.display();
+
+        this.scene.popMatrix();
     }
 }
