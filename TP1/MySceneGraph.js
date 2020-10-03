@@ -484,7 +484,6 @@ class MySceneGraph {
 
         // Any number of nodes.
         for (var i = 0; i < children.length; i++) {
-
             if (children[i].nodeName != "node") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
@@ -492,6 +491,7 @@ class MySceneGraph {
 
             // Get id of the current node.
             var nodeID = this.reader.getString(children[i], 'id');
+
             if (nodeID == null)
                 return "no ID defined for nodeID";
 
@@ -505,6 +505,7 @@ class MySceneGraph {
             grandChildren = children[i].children;
 
             nodeNames = [];
+
             for (var j = 0; j < grandChildren.length; j++) {
                 nodeNames.push(grandChildren[j].nodeName);
             }
@@ -557,6 +558,8 @@ class MySceneGraph {
 
                 texture.ampS = this.reader.getFloat(grandgrandChildren[0], 'afs') || 1.0;
                 texture.ampS = this.reader.getFloat(grandgrandChildren[0], 'aft') || 1.0;
+
+                //TODO: Se texture for null ou clear é preciso amplification?
             }
 
             node.texture = texture;
@@ -566,12 +569,13 @@ class MySceneGraph {
                 grandgrandChildren = grandChildren[descendantsIndex].children;
 
                 for (let i = 0; i < grandgrandChildren.length; i++) {
-
                     if (grandgrandChildren[i].nodeName == "noderef") {
                         var aux = this.reader.getString(grandgrandChildren[i], 'id');
 
-                        node.addDescedant(aux);
-                    } else if (grandgrandChildren[i].nodeName == "leaf") {
+                        node.addDescendant(aux);
+                    } 
+                    
+                    else if (grandgrandChildren[i].nodeName == "leaf") {
                         var aux = this.parsePrimitive(grandgrandChildren[i], "node of ID " + nodeID);
                     
                         if (typeof aux == "string") {
@@ -580,19 +584,19 @@ class MySceneGraph {
 
                         node.addObject(aux);
                     }
-
                 }
             }
 
             if (node.descendants.length < 1) {
-                this.onXMLMinorError("node of ID " + nodeID + " must have atleast one descedant");
+                this.onXMLMinorError("node of ID " + nodeID + " must have atleast one descendant");
                 continue;
             }
 
             this.nodes[nodeID] = node;
         }
 
-        this.nodes[this.idRoot].initialize(this.nodes, this.materials, this.textures);
+        for (let key in this.nodes)
+            this.nodes[key].initialize(this.nodes, this.materials, this.textures);
 
         this.log("Parsed Nodes.");
 
@@ -743,11 +747,13 @@ class MySceneGraph {
 
             // Scale y
             var sy = this.reader.getFloat(node, 'sy');
+
             if (sy == null || isNaN(sy))
                 return "unable to parse Y component of the scale matrix of the " + messageError;
 
             // Scale z
             var sz = this.reader.getFloat(node, 'sz');
+
             if (sz == null || isNaN(sz))
                 return "unable to parse Z component of the scale matrix of the " + messageError;
 
@@ -829,6 +835,24 @@ class MySceneGraph {
 
             out = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
         } 
+
+        else if (type == "sphere") {
+            let radius = this.reader.getFloat(node, "radius");
+            let slices = this.reader.getFloat(node, "slices");
+            let stacks = this.reader.getFloat(node, "stacks");
+
+            out = new MySphere(this.scene, radius, slices, stacks);
+        }
+
+        else if (type == "cylinder") {
+            let bottomRadius = this.reader.getFloat(node, "bottomRadius");
+            let topRadius = this.reader.getFloat(node, "topRadius");
+            let height = this.reader.getFloat(node, "height"); 
+            let slices = this.reader.getFloat(node, "slices"); 
+            let stacks = this.reader.getFloat(node, "stacks");
+
+            out = new MyCylinder(this.scene, bottomRadius, topRadius, height, slices, stacks);
+        }
         
         else 
             return "unable to process primitive of the " + messageError;

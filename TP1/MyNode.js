@@ -34,7 +34,7 @@ class MyNode {
         this.objects = [];
     }
 
-    addDescedant(descendant) {
+    addDescendant(descendant) {
         this.descendants.push(descendant);
     }
 
@@ -60,9 +60,13 @@ class MyNode {
 
         for (let i = 0; i < this.descendants.length; i++) {
             if (typeof this.descendants[i] == "string") {
-                if (nodes[this.descendants[i]] != null)
-                    aux.push(nodes[this.descendants[i]]);
-            } else {
+                if (nodes[this.descendants[i]] != null) {
+                    let descendant = this.descendants[i];
+                    aux.push(nodes[descendant]);
+                }
+            } 
+            
+            else {
                 aux.push(this.descendants[i]);
             }
         }
@@ -75,8 +79,9 @@ class MyNode {
 
         this.scene.multMatrix(this.transformation);
 
-        for (let i = 0; i < this.descendants.length; i++)
+        for (let i = 0; i < this.descendants.length; i++) {
             this.descendants[i].display();
+        }
 
         this.scene.popMatrix();
     }
