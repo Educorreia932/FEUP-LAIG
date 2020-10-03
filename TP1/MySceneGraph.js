@@ -46,6 +46,18 @@ class MySceneGraph {
          * If any error occurs, the reader calls onXMLError on this object, with an error message
          */
         this.reader.open('scenes/' + filename, this);
+
+        scene.enableTextures(true);
+
+        // R2-D2 
+        this.head = new MySphere(scene, 3.5, 50, 50);
+        this.bodyTop = new MyCylinder(scene, 3.5, 3.5, 10, 50, 5);
+        this.bodyBottom = new MyCylinder(scene, 3, 3.5, 2, 50, 5);
+        this.legTopCircle = new MyCylinder(scene, 2, 2, 2, 50, 5);
+        this.legTopRectangle = new MyCylinder(scene, 1.41421, 1.41421, 5, 4, 5);
+        this.legBottom = new MyCylinder(scene, 0.70711, 0.70711, 3, 4, 5);
+        this.foot = new MyCylinder(scene, 1.7678, 0.70711, 2, 4, 5);
+        this.footSupport = new MyCylinder(scene, 0.4, 0.4, 1, 50, 5);
     }
 
     /*
