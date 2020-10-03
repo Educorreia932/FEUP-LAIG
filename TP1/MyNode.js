@@ -28,19 +28,19 @@ class MyNode {
         this.transformation = null;
 
         // Descendants
-        this.descedants = [];
+        this.descendants = [];
 
         // Primitives
         this.objects = [];
     }
 
     addDescedant(descendant) {
-        this.descedants.push(descendant);
+        this.descendants.push(descendant);
     }
 
     addObject(object) {
         this.objects.push(object);
-        this.descedants.push(object);
+        this.descendants.push(object);
     }
 
     initialize(nodes, materials, textures) {
@@ -58,16 +58,16 @@ class MyNode {
 
         var aux = [];
 
-        for (let i = 0; i < this.descedants.length; i++) {
-            if (typeof this.descedants[i] == "string") {
-                if (nodes[this.descedants[i]] != null)
-                    aux.push(nodes[this.descedants[i]]);
+        for (let i = 0; i < this.descendants.length; i++) {
+            if (typeof this.descendants[i] == "string") {
+                if (nodes[this.descendants[i]] != null)
+                    aux.push(nodes[this.descendants[i]]);
             } else {
-                aux.push(this.descedants[i]);
+                aux.push(this.descendants[i]);
             }
         }
 
-        this.descedants = aux;
+        this.descendants = aux;
     }
 
     display() {
@@ -75,8 +75,8 @@ class MyNode {
 
         this.scene.multMatrix(this.transformation);
 
-        for (let i = 0; i < this.descedants.length; i++)
-            this.descedants[i].display();
+        for (let i = 0; i < this.descendants.length; i++)
+            this.descendants[i].display();
 
         this.scene.popMatrix();
     }

@@ -584,7 +584,7 @@ class MySceneGraph {
                 }
             }
 
-            if (node.descedants.length < 1) {
+            if (node.descendants.length < 1) {
                 this.onXMLMinorError("node of ID " + nodeID + " must have atleast one descedant");
                 continue;
             }
@@ -788,43 +788,50 @@ class MySceneGraph {
 
             out = new MyRectangle(this.scene, x1, y1, x2, y2);
         
-        } else if (type == "triangle") {
+        } 
+        
+        else if (type == "triangle") {
             // x1
             var x1 = this.reader.getFloat(node, 'x1');
+
             if (x1 == null || isNaN(x1))
                 return "unable to parse X1 component from the triangle of the " + messageError;
 
             // y1
             var y1 = this.reader.getFloat(node, 'y1');
+
             if (y1 == null || isNaN(y1))
                 return "unable to parse Y1 component from the triangle of the " + messageError;
 
             // x2
             var x2 = this.reader.getFloat(node, 'x2');
+
             if (x2 == null || isNaN(x2))
                 return "unable to parse X2 component from the triangle of the " + messageError;
 
             // y2
             var y2 = this.reader.getFloat(node, 'y2');
+
             if (y2 == null || isNaN(y2))
                 return "unable to parse Y2 component from the triangle of the " + messageError;
 
             // x3
             var x3 = this.reader.getFloat(node, 'x3');
+
             if (x3 == null || isNaN(x3))
                 return "unable to parse X3 component from the triangle of the " + messageError;
 
             // y3
             var y3 = this.reader.getFloat(node, 'y3');
+
             if (y3 == null || isNaN(y3))
                 return "unable to parse Y3 component from the triangle of the " + messageError;
 
-            //out = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
-            out = new MyRectangle(this.scene, -5, -5, -10, -10);
+            out = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
+        } 
         
-        } else {
+        else 
             return "unable to process primitive of the " + messageError;
-        }
 
         return out;
     }
@@ -835,11 +842,10 @@ class MySceneGraph {
     displayScene() {
         
         if (this.nodes[this.idRoot] != null) {
-            console.log(this.nodes[this.idRoot]);
+            // console.log(this.nodes[this.idRoot]);
 
             this.nodes[this.idRoot].display();
         }
-
     }
 }
 

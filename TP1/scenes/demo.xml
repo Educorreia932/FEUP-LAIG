@@ -97,7 +97,7 @@
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
-                <leaf type="triangle" x1="1.0" y1="1.0" x2="0.0" y2="0.0" x3="2.0" y3="2.0" z3="ff"/>
+                <leaf type="triangle" x1="1.0" y1="1.0" x2="0.0" y2="0.0" x3="2.0" y3="0.0"/>
                 <!-- x y z coordinates of each vertex -->
             </descendants>
         </node>
