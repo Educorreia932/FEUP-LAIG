@@ -40,7 +40,7 @@ class MyNode {
     }
 
     initialize(nodes, materials, textures) {
-        /**if (typeof this.material == "string") {
+        if (typeof this.material == "string") {
             if (materials[this.material] != null) {
                 this.material = materials[this.material];
             }
@@ -50,7 +50,7 @@ class MyNode {
             if (materials[this.material] != null) {
                 this.material = materials[this.material];
             }
-        }**/
+        }
 
         var aux = [];
 
@@ -74,6 +74,10 @@ class MyNode {
         this.scene.pushMatrix(); 
 
         this.scene.multMatrix(this.transformation);
+
+        if (typeof this.material != "string") {
+            this.material.apply();
+        }
 
         for (let i = 0; i < this.descendants.length; i++) 
             this.descendants[i].display();

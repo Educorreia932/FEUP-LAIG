@@ -441,19 +441,19 @@ class MySceneGraph {
 
         this.materials = [];
 
-        var grandChildren = [];
+        var components = [];
         var nodeNames = [];
 
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
-
             if (children[i].nodeName != "material") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
             }
 
             // Get id of the current material.
-            var materialID = this.reader.getString(children[i], 'id');
+            let materialID = this.reader.getString(children[i], 'id');
+
             if (materialID == null)
                 return "no ID defined for material";
 
@@ -461,8 +461,50 @@ class MySceneGraph {
             if (this.materials[materialID] != null)
                 return "ID must be unique for each light (conflict: ID = " + materialID + ")";
 
-            //Continue here
-            this.onXMLMinorError("To do: Parse materials.");
+            components = children[i].children;
+
+            for (var j = 0; j < components.length; j++) {
+                nodeNames.push(components[j].nodeName);
+            }
+
+            let material = new CGFappearance(this.scene);
+
+            let ambientIndex = nodeNames.indexOf("ambient");
+            var diffuseIndex = nodeNames.indexOf("diffuse");
+            var specularIndex = nodeNames.indexOf("specular");
+            var shininessIndex = nodeNames.indexOf("shininess");
+
+            console.log(components[ambientIndex])
+            // Ambient component
+            let r = this.reader.getString(components[ambientIndex], "r");
+            let g = this.reader.getString(components[ambientIndex], "g");
+            let b = this.reader.getString(components[ambientIndex], "b");
+            let a = this.reader.getString(components[ambientIndex], "a");
+
+            material.setAmbient(r, g, b, a);
+
+            // Diffuse component
+            r = this.reader.getString(components[diffuseIndex], "r");
+            g = this.reader.getString(components[diffuseIndex], "g");
+            b = this.reader.getString(components[diffuseIndex], "b");
+            a = this.reader.getString(components[diffuseIndex], "a");
+            
+            material.setDiffuse(r, g, b, a);
+
+            // Specular component
+            r = this.reader.getString(components[specularIndex], "r");
+            g = this.reader.getString(components[specularIndex], "g");
+            b = this.reader.getString(components[specularIndex], "b");
+            a = this.reader.getString(components[specularIndex], "a");
+
+            material.setSpecular(r, g, b, a);
+
+            // Shininess component
+            let value = this.reader.getString(components[shininessIndex], "value");
+
+            material.setShininess(value);
+
+            this.materials[materialID] = material;
         }
 
         //this.log("Parsed materials");
@@ -606,7 +648,9 @@ class MySceneGraph {
 
     parseBoolean(node, name, messageError){
         var boolVal = true;
+        
         boolVal = this.reader.getBoolean(node, name);
+
         if (!(boolVal != null && !isNaN(boolVal) && (boolVal == true || boolVal == false)))
             this.onXMLMinorError("unable to parse value component " + messageError + "; assuming 'value = 1'");
 
