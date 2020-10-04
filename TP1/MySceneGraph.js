@@ -489,7 +489,7 @@ class MySceneGraph {
                 continue;
             }
 
-            // Get id of the current node.
+            // Get ID of the current node.
             var nodeID = this.reader.getString(children[i], 'id');
 
             if (nodeID == null)
@@ -519,12 +519,13 @@ class MySceneGraph {
             var transfMatrix = mat4.create();
 
             if (transformationsIndex != -1) {
-                grandgrandChildren = grandChildren[transformationsIndex].children;
+                let transformations = grandChildren[transformationsIndex].children;
 
-                for (var t = grandgrandChildren.length - 1; t >= 0; t--) {
-                    var aux = this.parseTransfMatrix(grandgrandChildren[t], transfMatrix, "node of ID " + nodeID);
+                // Iterate over transformations
+                for (let t = transformations.length - 1; t >= 0; t--) {
+                    var aux = this.parseTransfMatrix(transformations[t], transfMatrix, "node of ID " + nodeID);
 
-                    if (typeof aux === 'string')
+                    if (typeof aux === 'string') // An error occurred
                         return aux;
 
                     transfMatrix = aux;
@@ -705,29 +706,35 @@ class MySceneGraph {
      * @param {message to be displayed in case of error} messageError
      */
     parseTransfMatrix(node, out, messageError) {
+        // Translation
         if (node.nodeName == "translation") {
             // x
             var x = this.reader.getFloat(node, 'x');
+
             if (x == null || isNaN(x))
                 return "unable to parse X component of the translation matrix of the " + messageError;
 
             // y
             var y = this.reader.getFloat(node, 'y');
+
             if (y == null || isNaN(y))
                 return "unable to parse Y component of the translation matrix of the " + messageError;
 
             // z
             var z = this.reader.getFloat(node, 'z');
+
             if (z == null || isNaN(z))
                 return "unable to parse Z component of the translation matrix of the " + messageError;
 
             mat4.translate(out, out, [x, y, z]);
-
-        } else if (node.nodeName == "rotation") {
-            // angle
+        } 
+        
+        // Rotation
+        else if (node.nodeName == "rotation") {
+            // Angle
             var angle = this.reader.getFloat(node, 'angle');
 
-            // axis
+            // Axis
             var axis = this.reader.getString(node, 'axis');
 
             if (axis == null)
@@ -738,8 +745,10 @@ class MySceneGraph {
             var z = (axis == "z") ? 1 : 0;
 
             mat4.rotate(out, out, angle * DEGREE_TO_RAD, [x, y, z]);
-
-        } else if (node.nodeName == "scale") {
+        }
+        
+        // Scaling
+        else if (node.nodeName == "scale") {
             // Scale x
             var sx = this.reader.getFloat(node, 'sx');
             if (sx == null || isNaN(sx))
@@ -759,7 +768,9 @@ class MySceneGraph {
 
             mat4.scale(out, out, [sx, sy, sz]);
 
-        } else {
+        }
+        
+        else {
             return "unable to identify type of transformation matrix of the " + messageError;
         }
 
@@ -771,6 +782,7 @@ class MySceneGraph {
 
         var type = this.reader.getString(node, 'type');
 
+        // Rectangle
         if (type == "rectangle") {
             // x1
             var x1 = this.reader.getFloat(node, 'x1');
@@ -796,6 +808,7 @@ class MySceneGraph {
         
         } 
         
+        // Triangle
         else if (type == "triangle") {
             // x1
             var x1 = this.reader.getFloat(node, 'x1');
@@ -836,6 +849,7 @@ class MySceneGraph {
             out = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
         } 
 
+        // Sphere
         else if (type == "sphere") {
             let radius = this.reader.getFloat(node, "radius");
             let slices = this.reader.getFloat(node, "slices");
@@ -844,6 +858,7 @@ class MySceneGraph {
             out = new MySphere(this.scene, radius, slices, stacks);
         }
 
+        // Cylinder
         else if (type == "cylinder") {
             let bottomRadius = this.reader.getFloat(node, "bottomRadius");
             let topRadius = this.reader.getFloat(node, "topRadius");
@@ -864,7 +879,6 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        
         if (this.nodes[this.idRoot] != null) {
             // console.log(this.nodes[this.idRoot]);
 
