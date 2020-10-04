@@ -40,18 +40,6 @@ class MyNode {
     }
 
     initialize(nodes, materials, textures) {
-        if (typeof this.material == "string") {
-            if (materials[this.material] != null) {
-                this.material = materials[this.material];
-            }
-        }
-
-        if (typeof this.texture.id == "string") {
-            if (materials[this.material] != null) {
-                this.material = materials[this.material];
-            }
-        }
-
         var aux = [];
 
         for (let i = 0; i < this.descendants.length; i++) {
@@ -68,6 +56,26 @@ class MyNode {
         }
 
         this.descendants = aux;
+
+         // Material
+         if (typeof this.material == "string") {
+            if (materials[this.material] != null) {
+                this.material = materials[this.material];
+            }
+        }
+
+        for (let i = 0; i < this.descendants.length; i++) {
+            if (this.descendants[i].material == "null") {
+                this.descendants[i].material = this.material;
+            }
+        }
+
+        // Texture
+        if (typeof this.texture.id == "string") {
+            if (textures[this.texture] != null) {
+                this.texture = textures[this.texture];
+            }
+        }
     }
 
     display() {

@@ -474,7 +474,6 @@ class MySceneGraph {
             var specularIndex = nodeNames.indexOf("specular");
             var shininessIndex = nodeNames.indexOf("shininess");
 
-            console.log(components[ambientIndex])
             // Ambient component
             let r = this.reader.getString(components[ambientIndex], "r");
             let g = this.reader.getString(components[ambientIndex], "g");
