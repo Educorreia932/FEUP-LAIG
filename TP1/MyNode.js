@@ -89,7 +89,6 @@ class MyNode {
         }
 
         if (this.texture instanceof CGFtexture) {
-            console.log(this.texture instanceof CGFtexture)
             this.texture.bind();
         }
 
