@@ -130,9 +130,7 @@
             </transformations>
 
             <descendants>
-                <noderef id="legTop" />
-                <!-- <noderef id="legBottom" /> -->
-                <!-- <noderef id="leftFoot" /> -->
+                <noderef id="leg" />
             </descendants>
         </node>
 
@@ -143,9 +141,15 @@
             </transformations>
 
             <descendants>
+                <noderef id="leg" />
+            </descendants>
+        </node>
+
+        <node id="leg">
+            <descendants>
                 <noderef id="legTop" />
-                <!-- <noderef id="legBottom" /> -->
-                <!-- <noderef id="leftFoot" /> -->
+                <noderef id="legBottom" />
+                <noderef id="foot" />
             </descendants>
         </node>
 
@@ -195,12 +199,75 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="-5"/>
+                <translation x="0.0" y="0.5" z="0.5"/>
+                <scale sx="4.0" sy="4" sz="1.7"/>
             </transformations>
 
             <descendants>
                 <noderef id="cube"/>
             </descendants>  
+        </node>
+
+        <node id="legBottom">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="3.0" sy="1.3" sz="5"/>
+                <translation x="0.0" y="-0.95" z="-7.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="foot">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="45"/> 
+                <scale sx="3.0" sy="1.3" sz="1"/>
+                <translation x="0.0" y="-0.95" z="-11.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="1.5" topRadius="0.70711" height="3" slices="4" stacks="50" />
+            </descendants>
+        </node>
+
+        <node id="middleLeg">
+            <descendants>
+                <noderef id="middleFootSupport" />
+                <noderef id="middleFoot" />
+            </descendants>
+        </node>
+
+        <node id="middleFoot">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="1.7678" topRadius="0.70711" height="2" slices="4" stacks="50" />
+            </descendants>
+        </node>
+
+        <node id="middleFootSupport">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.4" topRadius="0.4" height="1" slices="50" stacks="50" />
+            </descendants>
         </node>
 
         <node id="cube">
@@ -314,55 +381,6 @@
             </descendants>
         </node>
 
-        <node id="legBottom">
-            <material id="null" />
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <descendants>
-                <leaf type="cylinder" bottomRadius="0.70711" topRadius="0.70711" height="3" slices="4" stacks="50" />
-            </descendants>
-        </node>
-
-        <node id="leftFoot">
-            <material id="null" />
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <descendants>
-                <leaf type="cylinder" bottomRadius="1.7678" topRadius="0.70711" height="2" slices="4" stacks="50" />
-            </descendants>
-        </node>
-
-        <node id="middleLeg">
-            <descendants>
-                <noderef id="middleFootSupport" />
-                <noderef id="middleFoot" />
-            </descendants>
-        </node>
-
-        <node id="middleFoot">
-            <material id="null" />
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <descendants>
-                <leaf type="cylinder" bottomRadius="1.7678" topRadius="0.70711" height="2" slices="4" stacks="50" />
-            </descendants>
-        </node>
-
-        <node id="middleFootSupport">
-            <material id="null" />
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <descendants>
-                <leaf type="cylinder" bottomRadius="0.4" topRadius="0.4" height="1" slices="50" stacks="50" />
-            </descendants>
-        </node>
+        
     </nodes>
 </lsf>
