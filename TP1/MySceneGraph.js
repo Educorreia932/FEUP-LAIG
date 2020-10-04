@@ -26,6 +26,10 @@ class MySceneGraph {
         this.scene = scene;
         scene.graph = this;
 
+        this.cameras = [];
+
+        this.defaultCamera = null; // The id of the default camera.
+
         this.nodes = [];
         this.textures = [];
         this.materials = [];
@@ -271,7 +275,40 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
-        this.onXMLMinorError("To do: Parse views and create cameras.");
+        var children = viewsNode.children;
+
+        var defaultCam = this.reader.getString(viewsNode, 'default');
+
+        if (defaultCam == null) {
+            return "No default camera defined for scene.";
+        }
+
+        var numcams = 0;
+
+        for (let i = 0; i < children.length; i++) {
+            var cameraID = this.reader.getString(children[i], 'id');
+
+            if (cameraID == null)
+                return "no ID defined for camera";
+
+            // Checks for repeated IDs.
+            if (this.cameras[cameraID] != null)
+                return "ID must be unique for each camera (conflict: ID = " + cameraID + ")";
+
+            var camera = this.parseCamera(children[i], "ID " + cameraID);
+
+            if (typeof camera == "string")
+                continue;
+
+            this.cameras[cameraID] = camera;
+            numcams++;
+        }
+
+        if (numcams == 0)
+            return "at least one camera must be defined";
+
+        this.log("Parsed Views");
+
         return null;
     }
 
@@ -766,6 +803,94 @@ class MySceneGraph {
         return out;
     }
 
+    parseCamera(node, messageError) {
+        var out;
+
+        var type = node.nodeName;
+
+        if (type == "perspective") {
+            var near = this.reader.getFloat(node, 'near');
+            var far = this.reader.getFloat(node, 'far');
+            var angle = this.reader.getFloat(node, 'angle');
+        
+            var nodeNames = [];
+            var children = node.children;
+            
+            for (let i = 0; i < children.length; i++)
+                nodeNames.push(children[i].nodeName);
+
+            var fromIndex = nodeNames.indexOf("from");
+            var toIndex = nodeNames.indexOf("to");
+            
+            if (fromIndex == -1) {
+                return "unable to parse position from the camera of " + messageError;
+            }
+
+            if (toIndex == -1) {
+                return "unable to parse target for the camera of " + messageError;
+            }
+
+            var from = this.parseCoordinates3D(children[fromIndex], " camera of " + messageError);
+            
+            if (typeof from == "string")
+                return from;
+            
+            var to = this.parseCoordinates3D(children[fromIndex], " camera of " + messageError);
+            if (typeof to == "string")
+                return to;
+
+            return new CGFcamera(angle || 0, near || 0, far || 0, from, to);
+
+        } else if (type == "ortho") {
+            var near = this.reader.getFloat(node, 'near');
+            var far = this.reader.getFloat(node, 'far');
+            var left = this.reader.getFloat(node, 'left');
+            var right = this.reader.getFloat(node, 'right');
+            var top = this.reader.getFloat(node, 'top');
+            var bottom = this.reader.getFloat(node, 'bottom');
+        
+            var nodeNames = [];
+            var children = node.children;
+            
+            for (let i = 0; i < children.length; i++)
+                nodeNames.push(children[i].nodeName);
+
+            var fromIndex = nodeNames.indexOf("from");
+            var toIndex = nodeNames.indexOf("to");
+            var upIndex = nodeNames.indexOf("up");
+            
+            if (fromIndex == -1) {
+                return "unable to parse position from the camera of " + messageError;
+            }
+
+            if (toIndex == -1) {
+                return "unable to parse target for the camera of " + messageError;
+            }
+
+            var from = this.parseCoordinates3D(children[fromIndex], " camera of " + messageError);
+            
+            if (typeof from == "string")
+                return from;
+            
+            var to = this.parseCoordinates3D(children[fromIndex], " camera of " + messageError);
+            if (typeof to == "string")
+                return to;
+
+            var up = [0, 1, 0];
+
+            if (upIndex != -1) {
+                up = this.parseCoordinates3D(children[upIndex], "camera of " + messageError);
+                if (typeof up == "string")
+                    return up;
+            }
+
+            return new CGFcameraOrtho(left || 0, right || 0, bottom || 0, top || 0, near || 0, far || 0, from, to, up);
+
+        } else {
+            return "unable to identify camera of " + messageError; 
+        }
+    }
+
     parsePrimitive(node, messageError) {
         var out;
 
@@ -838,18 +963,41 @@ class MySceneGraph {
 
         else if (type == "sphere") {
             let radius = this.reader.getFloat(node, "radius");
+            if (radius == null || isNaN(radius))
+                return "unable to parse radius component from the sphere of the " + messageError;
+
             let slices = this.reader.getFloat(node, "slices");
+            if (slices == null || isNaN(slices))
+                return "unable to parse slices component from the sphere of the " + messageError;
+            
             let stacks = this.reader.getFloat(node, "stacks");
+            if (stacks == null || isNaN(stacks))
+                return "unable to parse stacks component from the sphere of the " + messageError;
 
             out = new MySphere(this.scene, radius, slices, stacks);
         }
 
         else if (type == "cylinder") {
             let bottomRadius = this.reader.getFloat(node, "bottomRadius");
+            if (bottomRadius == null || isNaN(bottomRadius))
+                return "unable to parse bottomRadius component from the cylinder of the " + messageError;
+
             let topRadius = this.reader.getFloat(node, "topRadius");
-            let height = this.reader.getFloat(node, "height"); 
-            let slices = this.reader.getFloat(node, "slices"); 
+            if (topRadius == null || isNaN(topRadius))
+                return "unable to parse topRadius component from the cylinder of the " + messageError;
+
+            let height = this.reader.getFloat(node, "height");
+            if (height == null || isNaN(height))
+                return "unable to parse height component from the cylinder of the " + messageError;
+
+            let slices = this.reader.getFloat(node, "slices");
+            if (slices == null || isNaN(slices))
+                return "unable to parse slices component from the cylinder of the " + messageError;
+
             let stacks = this.reader.getFloat(node, "stacks");
+            if (stacks == null || isNaN(stacks))
+                return "unable to parse stacks component from the cylinder of the " + messageError;
+
 
             out = new MyCylinder(this.scene, bottomRadius, topRadius, height, slices, stacks);
         }
