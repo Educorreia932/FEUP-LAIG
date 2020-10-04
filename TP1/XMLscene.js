@@ -33,11 +33,10 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.setUpdatePeriod(100);
 
-        this.loadingProgressObject=new MyRectangle(this, -1, -.1, 1, .1);
-        this.loadingProgress=0;
+        this.loadingProgressObject = new MyRectangle(this, -1, -.1, 1, .1);
+        this.loadingProgress = 0;
 
-        this.defaultAppearance=new CGFappearance(this);
-
+        this.defaultAppearance = new CGFappearance(this);
     }
 
     /**
@@ -46,6 +45,7 @@ class XMLscene extends CGFscene {
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
+
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
@@ -67,8 +67,10 @@ class XMLscene extends CGFscene {
                 this.lights[i].setSpecular(...graphLight[4]);
 
                 this.lights[i].setVisible(true);
+                
                 if (graphLight[0])
                     this.lights[i].enable();
+
                 else
                     this.lights[i].disable();
 
@@ -121,19 +123,20 @@ class XMLscene extends CGFscene {
         if (this.sceneInited) {
             // Draw axis
             this.axis.display();
- 
+
             this.defaultAppearance.apply();
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
+
         }
-        else
-        {
+
+        else {
             // Show some "loading" visuals
             this.defaultAppearance.apply();
 
-            this.rotate(-this.loadingProgress/10.0,0,0,1);
-            
+            this.rotate(-this.loadingProgress / 10.0, 0, 0, 1);
+
             this.loadingProgressObject.display();
             this.loadingProgress++;
         }
