@@ -444,28 +444,30 @@ class MySceneGraph {
 
         this.textures = [];
 
-        //var grandChildren = [];
-        //var nodeNames = [];
+        let grandChildren = [];
+        let nodeNames = [];
 
         for (var i = 0; i < children.length; i++) {
-
             if (children[i].nodeName != "texture") {
                 this.onXMLMinorError("unknown tag <")
             }//basically tou a tentar descobrir oq e o grandChildren+nodenames
 
-            var textureID;
-
-            textureID = this.reader.getString(children[i], 'id');
+            let textureID = this.reader.getString(children[i], 'id');
 
             if (this.textures[textureID] != null) {
                 // not unique shit
             }
+
+            let texturePath = this.reader.getString(children[i], 'path');
+
+            let texture = new CGFtexture(this.scene, texturePath);
+
+            this.textures[textureID] = texture;
+
+            this.textures.push(texture);
         }
 
-
-
         //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
         return null;
     }
 
@@ -478,19 +480,19 @@ class MySceneGraph {
 
         this.materials = [];
 
-        var grandChildren = [];
+        var components = [];
         var nodeNames = [];
 
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
-
             if (children[i].nodeName != "material") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
             }
 
             // Get id of the current material.
-            var materialID = this.reader.getString(children[i], 'id');
+            let materialID = this.reader.getString(children[i], 'id');
+
             if (materialID == null)
                 return "no ID defined for material";
 
@@ -498,11 +500,51 @@ class MySceneGraph {
             if (this.materials[materialID] != null)
                 return "ID must be unique for each light (conflict: ID = " + materialID + ")";
 
-            //Continue here
-            this.onXMLMinorError("To do: Parse materials.");
+            components = children[i].children;
+
+            for (var j = 0; j < components.length; j++) {
+                nodeNames.push(components[j].nodeName);
+            }
+
+            let material = new CGFappearance(this.scene);
+
+            let ambientIndex = nodeNames.indexOf("ambient");
+            var diffuseIndex = nodeNames.indexOf("diffuse");
+            var specularIndex = nodeNames.indexOf("specular");
+            var shininessIndex = nodeNames.indexOf("shininess");
+
+            // Ambient component
+            let r = this.reader.getString(components[ambientIndex], "r");
+            let g = this.reader.getString(components[ambientIndex], "g");
+            let b = this.reader.getString(components[ambientIndex], "b");
+            let a = this.reader.getString(components[ambientIndex], "a");
+
+            material.setAmbient(r, g, b, a);
+
+            // Diffuse component
+            r = this.reader.getString(components[diffuseIndex], "r");
+            g = this.reader.getString(components[diffuseIndex], "g");
+            b = this.reader.getString(components[diffuseIndex], "b");
+            a = this.reader.getString(components[diffuseIndex], "a");
+            
+            material.setDiffuse(r, g, b, a);
+
+            // Specular component
+            r = this.reader.getString(components[specularIndex], "r");
+            g = this.reader.getString(components[specularIndex], "g");
+            b = this.reader.getString(components[specularIndex], "b");
+            a = this.reader.getString(components[specularIndex], "a");
+
+            material.setSpecular(r, g, b, a);
+
+            // Shininess component
+            let value = this.reader.getString(components[shininessIndex], "value");
+
+            material.setShininess(value);
+
+            this.materials[materialID] = material;
         }
 
-        //this.log("Parsed materials");
         return null;
     }
 
@@ -526,7 +568,7 @@ class MySceneGraph {
                 continue;
             }
 
-            // Get id of the current node.
+            // Get ID of the current node.
             var nodeID = this.reader.getString(children[i], 'id');
 
             if (nodeID == null)
@@ -556,12 +598,13 @@ class MySceneGraph {
             var transfMatrix = mat4.create();
 
             if (transformationsIndex != -1) {
-                grandgrandChildren = grandChildren[transformationsIndex].children;
+                let transformations = grandChildren[transformationsIndex].children;
 
-                for (var t = grandgrandChildren.length - 1; t >= 0; t--) {
-                    var aux = this.parseTransfMatrix(grandgrandChildren[t], transfMatrix, "node of ID " + nodeID);
+                // Iterate over transformations
+                for (let t = transformations.length - 1; t >= 0; t--) {
+                    var aux = this.parseTransfMatrix(transformations[t], transfMatrix, "node of ID " + nodeID);
 
-                    if (typeof aux === 'string')
+                    if (typeof aux === 'string') // An error occurred
                         return aux;
 
                     transfMatrix = aux;
@@ -642,7 +685,9 @@ class MySceneGraph {
 
     parseBoolean(node, name, messageError){
         var boolVal = true;
+        
         boolVal = this.reader.getBoolean(node, name);
+
         if (!(boolVal != null && !isNaN(boolVal) && (boolVal == true || boolVal == false)))
             this.onXMLMinorError("unable to parse value component " + messageError + "; assuming 'value = 1'");
 
@@ -742,29 +787,35 @@ class MySceneGraph {
      * @param {message to be displayed in case of error} messageError
      */
     parseTransfMatrix(node, out, messageError) {
+        // Translation
         if (node.nodeName == "translation") {
             // x
             var x = this.reader.getFloat(node, 'x');
+
             if (x == null || isNaN(x))
                 return "unable to parse X component of the translation matrix of the " + messageError;
 
             // y
             var y = this.reader.getFloat(node, 'y');
+
             if (y == null || isNaN(y))
                 return "unable to parse Y component of the translation matrix of the " + messageError;
 
             // z
             var z = this.reader.getFloat(node, 'z');
+
             if (z == null || isNaN(z))
                 return "unable to parse Z component of the translation matrix of the " + messageError;
 
             mat4.translate(out, out, [x, y, z]);
-
-        } else if (node.nodeName == "rotation") {
-            // angle
+        } 
+        
+        // Rotation
+        else if (node.nodeName == "rotation") {
+            // Angle
             var angle = this.reader.getFloat(node, 'angle');
 
-            // axis
+            // Axis
             var axis = this.reader.getString(node, 'axis');
 
             if (axis == null)
@@ -775,8 +826,10 @@ class MySceneGraph {
             var z = (axis == "z") ? 1 : 0;
 
             mat4.rotate(out, out, angle * DEGREE_TO_RAD, [x, y, z]);
-
-        } else if (node.nodeName == "scale") {
+        }
+        
+        // Scaling
+        else if (node.nodeName == "scale") {
             // Scale x
             var sx = this.reader.getFloat(node, 'sx');
             if (sx == null || isNaN(sx))
@@ -796,7 +849,9 @@ class MySceneGraph {
 
             mat4.scale(out, out, [sx, sy, sz]);
 
-        } else {
+        }
+        
+        else {
             return "unable to identify type of transformation matrix of the " + messageError;
         }
 
@@ -896,6 +951,7 @@ class MySceneGraph {
 
         var type = this.reader.getString(node, 'type');
 
+        // Rectangle
         if (type == "rectangle") {
             // x1
             var x1 = this.reader.getFloat(node, 'x1');
@@ -921,6 +977,7 @@ class MySceneGraph {
         
         } 
         
+        // Triangle
         else if (type == "triangle") {
             // x1
             var x1 = this.reader.getFloat(node, 'x1');
@@ -961,6 +1018,7 @@ class MySceneGraph {
             out = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
         } 
 
+        // Sphere
         else if (type == "sphere") {
             let radius = this.reader.getFloat(node, "radius");
             if (radius == null || isNaN(radius))
@@ -977,6 +1035,7 @@ class MySceneGraph {
             out = new MySphere(this.scene, radius, slices, stacks);
         }
 
+        // Cylinder
         else if (type == "cylinder") {
             let bottomRadius = this.reader.getFloat(node, "bottomRadius");
             if (bottomRadius == null || isNaN(bottomRadius))
@@ -1012,7 +1071,6 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        
         if (this.nodes[this.idRoot] != null) {
             // console.log(this.nodes[this.idRoot]);
 

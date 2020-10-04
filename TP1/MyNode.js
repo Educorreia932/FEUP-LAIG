@@ -2,10 +2,6 @@
  * MyNode
  * @constructor
  * @param scene - Reference to MyScene object
- * @param x1 - x coordinate corner 1
- * @param y1 - y coordinate corner 1
- * @param x2 - x coordinate corner 2
- * @param y2 - y coordinate corner 2
  */
 
 // Node Type
@@ -44,18 +40,6 @@ class MyNode {
     }
 
     initialize(nodes, materials, textures) {
-        /**if (typeof this.material == "string") {
-            if (materials[this.material] != null) {
-                this.material = materials[this.material];
-            }
-        }
-
-        if (typeof this.texture.id == "string") {
-            if (materials[this.material] != null) {
-                this.material = materials[this.material];
-            }
-        }**/
-
         var aux = [];
 
         for (let i = 0; i < this.descendants.length; i++) {
@@ -72,16 +56,45 @@ class MyNode {
         }
 
         this.descendants = aux;
+
+         // Material
+         if (typeof this.material == "string")
+            if (materials[this.material] != null)
+                this.material = materials[this.material];
+
+        // Texture
+        if (typeof this.texture.id == "string") {
+            if (textures[this.texture.id] != null) {
+                this.texture = textures[this.texture.id];
+            }
+        }
+
+        // Apply to descendants
+        for (let i = 0; i < this.descendants.length; i++) {
+            if (this.descendants[i].texture == "null")
+                this.descendants[i].texture = this.texture ;
+
+            if (this.descendants[i].material == "null")
+                this.descendants[i].material = this.material;
+        }
     }
 
     display() {
-        this.scene.pushMatrix();
+        this.scene.pushMatrix(); 
 
         this.scene.multMatrix(this.transformation);
 
-        for (let i = 0; i < this.descendants.length; i++) {
-            this.descendants[i].display();
+        if (typeof this.material != "string") {
+            this.material.apply();
         }
+
+        if (this.texture instanceof CGFtexture) {
+            console.log(this.texture instanceof CGFtexture)
+            this.texture.bind();
+        }
+
+        for (let i = 0; i < this.descendants.length; i++) 
+            this.descendants[i].display();
 
         this.scene.popMatrix();
     }
