@@ -407,28 +407,30 @@ class MySceneGraph {
 
         this.textures = [];
 
-        //var grandChildren = [];
-        //var nodeNames = [];
+        let grandChildren = [];
+        let nodeNames = [];
 
         for (var i = 0; i < children.length; i++) {
-
             if (children[i].nodeName != "texture") {
                 this.onXMLMinorError("unknown tag <")
             }//basically tou a tentar descobrir oq e o grandChildren+nodenames
 
-            var textureID;
-
-            textureID = this.reader.getString(children[i], 'id');
+            let textureID = this.reader.getString(children[i], 'id');
 
             if (this.textures[textureID] != null) {
                 // not unique shit
             }
+
+            let texturePath = this.reader.getString(children[i], 'path');
+
+            let texture = new CGFtexture(this.scene, texturePath);
+
+            this.textures[textureID] = texture;
+
+            this.textures.push(texture);
         }
 
-
-
         //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
         return null;
     }
 
@@ -506,7 +508,6 @@ class MySceneGraph {
             this.materials[materialID] = material;
         }
 
-        //this.log("Parsed materials");
         return null;
     }
 
