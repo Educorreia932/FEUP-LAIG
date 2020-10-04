@@ -450,7 +450,7 @@ class MySceneGraph {
         for (var i = 0; i < children.length; i++) {
             if (children[i].nodeName != "texture") {
                 this.onXMLMinorError("unknown tag <")
-            }//basically tou a tentar descobrir oq e o grandChildren+nodenames
+            }
 
             let textureID = this.reader.getString(children[i], 'id');
 
