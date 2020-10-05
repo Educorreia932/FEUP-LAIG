@@ -17,14 +17,6 @@ class MyCylinder extends CGFobject {
         this.slices = slices;
         this.stacks = stacks;
 
-        this.material = new CGFappearance(this.scene);	
-        this.material.setAmbient(1.0, 1.0, 1.0, 1.0);
-        this.material.setDiffuse(0.9, 0.9, 0.9, 1);
-        this.material.setSpecular(0.1, 0.1, 0.1, 1);
-        this.material.setShininess(10.0);
-        this.terrainTexture = new CGFtexture(this.scene, "scenes/images/earth.jpg");
-        this.material.setTexture(this.terrainTexture);
-
 		this.initBuffers();
 	}
 	
@@ -43,9 +35,9 @@ class MyCylinder extends CGFobject {
         const slope = this.height / Math.abs(this.topRadius - this.bottomRadius);
 
         // Increments
-        const phiInc = (Math.PI * 2) / this.slices;
-        const heightInc = this.height / this.stacks;
-        const radiusInc = (this.topRadius - this.bottomRadius) / this.stacks;
+        const phiIncrement = (Math.PI * 2) / this.slices;
+        const heightIncrement = this.height / this.stacks;
+        const radiusIncrement = (this.topRadius - this.bottomRadius) / this.stacks;
 
         for (let stack = 0; stack <= this.stacks; stack++) {
             phi = 0;
@@ -69,13 +61,13 @@ class MyCylinder extends CGFobject {
                     currentIndex += 1;
                 }
                 
-                phi += phiInc;
+                phi += phiIncrement;
 
                 xCoord += 1 / this.slices;
             }
 
-            height += heightInc;
-            radius += radiusInc;    
+            height += heightIncrement;
+            radius += radiusIncrement;    
         }
 
         phi = 0;
@@ -111,7 +103,7 @@ class MyCylinder extends CGFobject {
 
             currentIndex += 2;
 
-            phi += phiInc;
+            phi += phiIncrement;
         }
 
         this.vertices.push(0, 0, 0); // Bottom center 
