@@ -48,15 +48,13 @@ class MyTorus extends CGFobject {
                 let y = (this.outer + this.inner * cosTheta) * sinPhi;
                 let z = this.inner * sinTheta; 
 
-                console.log(z)
-
                 this.vertices.push(x, y, z);
-                this.normals.push(cosTheta, sinPhi, sinTheta)
+                this.normals.push(cosTheta * cosPhi, cosTheta * sinPhi, z);
 
                 // Connect the current loop with the previous one
                 if (loop > 0) {
-                    this.indices.push(currentIndex, currentIndex + this.slices + 1, currentIndex + this.slices);
-                    this.indices.push(currentIndex, currentIndex + 1, currentIndex + this.slices + 1);
+                    this.indices.push(currentIndex, currentIndex + this.slices, currentIndex + this.slices + 1);
+                    this.indices.push(currentIndex, currentIndex + this.slices + 1, currentIndex + 1) ;
 
                     currentIndex += 1;
                 }
@@ -69,7 +67,6 @@ class MyTorus extends CGFobject {
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
-        this.enableNormalViz();
     }
 
     /**

@@ -35,10 +35,10 @@
 
     <materials>
         <material id="demoMaterial">
-            <shininess value="ff" />
+            <shininess value="10.0" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
-            <diffuse r="0.6" g="1.0" b="1.0" a="1.0" />
-            <specular r="0.6" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.8"  g="0.8" b="0.8" a="1.0" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
     </materials>
@@ -55,7 +55,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="2" outer="10" slices="20" loops="5"/>
+                <leaf type="torus" inner="2" outer="10" slices="20" loops="50"/>
             </descendants>
         </node>
     </nodes>
