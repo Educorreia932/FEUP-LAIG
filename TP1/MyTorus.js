@@ -15,6 +15,8 @@ class MyTorus extends CGFobject {
         this.slices = slices;
         this.loops = loops;
 
+        this.r = outer - inner;
+
         this.initBuffers();
     }
 
@@ -32,21 +34,24 @@ class MyTorus extends CGFobject {
         const thetaIncrement = (Math.PI * 2) / this.slices;
         const phiIncrement = (Math.PI * 2) / this.loops;
 
-        for (let loop = 0; loop < this.loops; loop++) {
+        for (let loop = 0; loop <= this.loops; loop++) {
             theta = 0;
 
-            for (let slice = 0; slice < this.slices; slice++) {
+            let cosPhi = Math.cos(phi);
+            let sinPhi = Math.sin(phi);
+
+            for (let slice = 0; slice <= this.slices; slice++) {
                 let cosTheta = Math.cos(theta);
                 let sinTheta = Math.sin(theta);
 
-                let cosPhi = Math.cos(phi);
-                let sinPhi = Math.sin(phi);
+                let x = (this.outer + this.inner * cosTheta) * cosPhi;
+                let y = (this.outer + this.inner * cosTheta) * sinPhi;
+                let z = this.inner * sinTheta; 
 
-                let x = cosTheta * this.inner * cosPhi * this.outer;
-                let y = sinPhi * this.outer;
-                let z = sinTheta * this.inner * cosPhi * this.outer;
+                console.log(z)
 
                 this.vertices.push(x, y, z);
+                this.normals.push(cosTheta, sinPhi, sinTheta)
 
                 // Connect the current loop with the previous one
                 if (loop > 0) {
@@ -57,12 +62,14 @@ class MyTorus extends CGFobject {
                 }
 
                 theta += thetaIncrement;
-                phi += phiIncrement;
             }
+
+            phi += phiIncrement;
         }
 
         this.primitiveType = this.scene.gl.TRIANGLES;
-		this.initGLBuffers();
+        this.initGLBuffers();
+        this.enableNormalViz();
     }
 
     /**

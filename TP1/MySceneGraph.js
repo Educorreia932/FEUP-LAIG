@@ -912,6 +912,16 @@ class MySceneGraph {
 
             out = new MyCylinder(this.scene, bottomRadius, topRadius, height, slices, stacks);
         }
+
+        // Torus
+        else if (type == "torus") {
+            let inner = this.reader.getFloat(node, "inner");
+            let outer = this.reader.getFloat(node, "outer");
+            let slices = this.reader.getFloat(node, "slices"); 
+            let loops = this.reader.getFloat(node, "loops");
+
+            out = new MyTorus(this.scene, inner, outer, slices, loops);
+        }
         
         else 
             return "unable to process primitive of the " + messageError;
