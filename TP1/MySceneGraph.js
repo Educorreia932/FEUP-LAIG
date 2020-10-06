@@ -444,30 +444,33 @@ class MySceneGraph {
 
         this.textures = [];
 
-        let grandChildren = [];
-        let nodeNames = [];
-
         for (var i = 0; i < children.length; i++) {
             if (children[i].nodeName != "texture") {
-                this.onXMLMinorError("unknown tag <")
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
             }
 
             let textureID = this.reader.getString(children[i], 'id');
 
+            if (textureID == null) {
+                return "no ID defined for texture";
+            }
+
             if (this.textures[textureID] != null) {
-                // not unique shit
+                return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
             }
 
             let texturePath = this.reader.getString(children[i], 'path');
 
-            let texture = new CGFtexture(this.scene, texturePath);
+            if (texturePath == null) {
+                return "no path defined for texture";
+            }
+
+            var texture = new CGFtexture(this.scene, texturePath);
 
             this.textures[textureID] = texture;
-
-            this.textures.push(texture);
         }
 
-        //For each texture in textures block, check ID and file URL
         return null;
     }
 
@@ -619,27 +622,44 @@ class MySceneGraph {
             if (materialIndex != -1)
                 material = this.reader.getString(grandChildren[materialIndex], 'id');
 
+                if (material == null) {
+                    this.onXMLMinorError("unable to parse material for node " + nodeID);
+                }
+
             node.material = material;
 
             // Texture
             var texture = {};
             texture.id = null;
-            texture.ampS = 1.0;
-            texture.ampT = 1.0;
+            texture.afs;
+            texture.aft;
 
             if (textureIndex != -1) {
                 grandgrandChildren = grandChildren[textureIndex].children;
 
                 texture.id = this.reader.getString(grandChildren[textureIndex], 'id');
 
-                if (grandgrandChildren.length < 1 || grandgrandChildren[0].nodeName != "amplification") {
-                    this.onXMLMinorError("unable to parse texture amplification" + texture.id + "; assuming amplication of 1.0"); 
+                if (texture.id == null) {
+                    this.onXMLMinorError("unable to parse texture ID for node " + nodeID);
                 }
 
-                texture.ampS = this.reader.getFloat(grandgrandChildren[0], 'afs') || 1.0;
-                texture.ampS = this.reader.getFloat(grandgrandChildren[0], 'aft') || 1.0;
+                if (grandgrandChildren.length < 1 || grandgrandChildren[0].nodeName != "amplification") {
+                    this.onXMLMinorError("unable to parse texture amplification" + texture.id + "for node " + nodeID + "; assuming amplication of 1.0"); 
+                }
 
-                //TODO: Se texture for null ou clear é preciso amplification?
+                let auxS = this.reader.getFloat(grandgrandChildren[0], 'afs');
+                let auxT = this.reader.getFloat(grandgrandChildren[0], 'aft');
+
+                if (auxS == null) {
+                    this.onXMLMinorError("unable to parse afs component from the texture of ID " + texture.id + "of the node " + nodeID);
+                }
+
+                if (auxT == null) {
+                    this.onXMLMinorError("unable to parse aft component from the texture of ID " + texture.id + "of the node " + nodeID);
+                }
+
+                texture.afs = auxS || 1.0;
+                texture.aft = auxT || 1.0;
             }
 
             node.texture = texture;

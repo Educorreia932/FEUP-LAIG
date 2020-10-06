@@ -58,16 +58,36 @@ class MyNode {
         this.descendants = aux;
 
          // Material
+        var material;
+
          if (typeof this.material == "string")
             if (materials[this.material] != null)
-                this.material = materials[this.material];
+                material = materials[this.material];
 
+        this.material = material;
         // Texture
+        var texture;
+
         if (typeof this.texture.id == "string") {
-            if (textures[this.texture.id] != null) {
-                this.texture = textures[this.texture.id];
+
+            for (let i = 0; i < this.objects.length; i++) {
+                var newTexCoords = [];
+                var current = this.objects[i].texCoords;
+                for (let j = 0; j < current.length; j+=2) {
+                    newTexCoords.push(current[j] / this.texture.afs, current[j + 1] / this.texture.aft);
+                }
+
+                this.objects[i].updateTexCoords(newTexCoords);
+            }
+
+            if (this.texture.id == "null" || this.texture.id == "clear") {
+                texture = this.texture.id;
+            } else if (textures[this.texture.id] != null) {
+                texture = textures[this.texture.id];
             }
         }
+
+        this.texture = texture;
 
         // Apply to descendants
         for (let i = 0; i < this.descendants.length; i++) {
@@ -84,7 +104,7 @@ class MyNode {
 
         this.scene.multMatrix(this.transformation);
 
-        if (typeof this.material != "string") {
+        if (this.material != null && this.material != "null" && this.material) {
             this.material.apply();
         }
 
