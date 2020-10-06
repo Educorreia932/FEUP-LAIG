@@ -34,8 +34,11 @@ class MyTorus extends CGFobject {
         const thetaIncrement = (Math.PI * 2) / this.slices;
         const phiIncrement = (Math.PI * 2) / this.loops;
 
+        let xCoord = 0;
+
         for (let loop = 0; loop <= this.loops; loop++) {
             theta = 0;
+            xCoord = 0;
 
             let cosPhi = Math.cos(phi);
             let sinPhi = Math.sin(phi);
@@ -50,6 +53,7 @@ class MyTorus extends CGFobject {
 
                 this.vertices.push(x, y, z);
                 this.normals.push(cosTheta * cosPhi, cosTheta * sinPhi, z);
+                this.texCoords.push(xCoord, loop / this.loops);
 
                 // Connect the current loop with the previous one
                 if (loop > 0) {
@@ -60,6 +64,7 @@ class MyTorus extends CGFobject {
                 }
 
                 theta += thetaIncrement;
+                xCoord += 1 / this.slices;
             }
 
             phi += phiIncrement;

@@ -3,6 +3,7 @@
         <reference length="2" />
         <root id="demoRoot" />
     </initials>
+
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
             <from x="30" y="15" z="30" />
@@ -31,6 +32,7 @@
     </lights>
 
     <textures>
+        <texture id="Earth" path="./scenes/images/earth.jpg" />
     </textures>
 
     <materials>
@@ -47,7 +49,7 @@
         <node id="demoRoot">            
             <material id="demoMaterial" />
 
-            <texture id="null">
+            <texture id="Earth">
                 <amplification afs="2.0" aft="2.0" />
             </texture>
 
