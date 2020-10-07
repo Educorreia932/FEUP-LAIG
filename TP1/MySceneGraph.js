@@ -31,6 +31,7 @@ class MySceneGraph {
         this.defaultCamera = null; // The id of the default camera.
 
         this.nodes = [];
+        this.parents = [];
         this.textures = [];
         this.materials = [];
 
@@ -514,36 +515,68 @@ class MySceneGraph {
             let ambientIndex = nodeNames.indexOf("ambient");
             var diffuseIndex = nodeNames.indexOf("diffuse");
             var specularIndex = nodeNames.indexOf("specular");
+            var emissiveIndex = nodeNames.indexOf("emissive");
             var shininessIndex = nodeNames.indexOf("shininess");
 
             // Ambient component
-            let r = this.reader.getString(components[ambientIndex], "r");
-            let g = this.reader.getString(components[ambientIndex], "g");
-            let b = this.reader.getString(components[ambientIndex], "b");
-            let a = this.reader.getString(components[ambientIndex], "a");
+            if (ambientIndex != -1) {
+                let aux = this.parseColor(components[ambientIndex], "material of ID " + materialID);
 
-            material.setAmbient(r, g, b, a);
+                if (typeof aux == "string")
+                    return aux;
+
+                material.setAmbient(...aux);
+            } else {
+                return "compenent ambient undefined for material of ID = " + materialID;
+            }
 
             // Diffuse component
-            r = this.reader.getString(components[diffuseIndex], "r");
-            g = this.reader.getString(components[diffuseIndex], "g");
-            b = this.reader.getString(components[diffuseIndex], "b");
-            a = this.reader.getString(components[diffuseIndex], "a");
-            
-            material.setDiffuse(r, g, b, a);
+            if (diffuseIndex != -1) {
+                let aux = this.parseColor(components[diffuseIndex], "material of ID " + materialID);
+
+                if (typeof aux == "string")
+                    return aux;
+
+                material.setDiffuse(...aux);
+            } else {
+                return "compenent diffuse undefined for material of ID = " + materialID;
+            }
 
             // Specular component
-            r = this.reader.getString(components[specularIndex], "r");
-            g = this.reader.getString(components[specularIndex], "g");
-            b = this.reader.getString(components[specularIndex], "b");
-            a = this.reader.getString(components[specularIndex], "a");
+            if (specularIndex != -1) {
+                let aux = this.parseColor(components[specularIndex], "material of ID " + materialID);
 
-            material.setSpecular(r, g, b, a);
+                if (typeof aux == "string")
+                    return aux;
+
+                material.setSpecular(...aux);
+            } else {
+                return "compenent specular undefined for material of ID = " + materialID;
+            }
+
+            // Emissive component
+            if (emissiveIndex != -1) {
+                let aux = this.parseColor(components[emissiveIndex], "material of ID " + materialID);
+
+                if (typeof aux == "string")
+                    return aux;
+
+                material.setEmission(...aux);
+            } else {
+                return "compenent emissive undefined for material of ID = " + materialID;
+            }
 
             // Shininess component
-            let value = this.reader.getString(components[shininessIndex], "value");
+            if (emissiveIndex != -1) {
+                let aux = this.reader.getFloat(components[shininessIndex], 'value');
 
-            material.setShininess(value);
+                if (typeof aux == null || isNaN(aux))
+                    return "invalid value for shininess component of material of ID " + materialID;
+
+                material.setShininess(aux);
+            } else {
+                return "compenent shininess undefined for material of ID = " + materialID;
+            }
 
             this.materials[materialID] = material;
         }
@@ -559,6 +592,7 @@ class MySceneGraph {
         var children = nodesNode.children;
 
         this.nodes = [];
+        this.parents = [];
 
         var grandChildren = [];
         var grandgrandChildren = [];
@@ -575,7 +609,7 @@ class MySceneGraph {
             var nodeID = this.reader.getString(children[i], 'id');
 
             if (nodeID == null)
-                return "no ID defined for nodeID";
+                return "no ID defined for node number #" + i;
 
             // Checks for repeated IDs.
             if (this.nodes[nodeID] != null)
@@ -619,12 +653,16 @@ class MySceneGraph {
             // Material
             var material;
 
-            if (materialIndex != -1)
+            if (materialIndex != -1) {
                 material = this.reader.getString(grandChildren[materialIndex], 'id');
 
-                if (material == null) {
-                    this.onXMLMinorError("unable to parse material for node " + nodeID);
+                if (material == null || this.materials[material] == null) {
+                    this.onXMLMinorError("no valid material found for node " + nodeID);
+                    material = null;
                 }
+            } else {
+                return "material undefined for node " + nodeID;
+            }
 
             node.material = material;
 
@@ -640,7 +678,7 @@ class MySceneGraph {
                 texture.id = this.reader.getString(grandChildren[textureIndex], 'id');
 
                 if (texture.id == null) {
-                    this.onXMLMinorError("unable to parse texture ID for node " + nodeID);
+                    return "unable to parse texture ID for node " + nodeID;
                 }
 
                 if (grandgrandChildren.length < 1 || grandgrandChildren[0].nodeName != "amplification") {
@@ -660,6 +698,8 @@ class MySceneGraph {
 
                 texture.afs = auxS || 1.0;
                 texture.aft = auxT || 1.0;
+            } else {
+                return "texture undefined for node of ID " + nodeID;
             }
 
             node.texture = texture;
@@ -673,6 +713,7 @@ class MySceneGraph {
                         var aux = this.reader.getString(grandgrandChildren[i], 'id');
 
                         node.addDescendant(aux);
+                        this.parents[aux] = nodeID;
                     } 
                     
                     else if (grandgrandChildren[i].nodeName == "leaf") {
@@ -688,15 +729,14 @@ class MySceneGraph {
             }
 
             if (node.descendants.length < 1) {
-                this.onXMLMinorError("node of ID " + nodeID + " must have atleast one descendant");
-                continue;
+                return "node of ID " + nodeID + " must have atleast one descendant";
             }
 
             this.nodes[nodeID] = node;
         }
 
         for (let key in this.nodes)
-            this.nodes[key].initialize(this.nodes, this.materials, this.textures);
+            this.nodes[key].initialize(this.nodes, this.parents, this.materials, this.textures);
 
         this.log("Parsed Nodes.");
 
@@ -1092,7 +1132,7 @@ class MySceneGraph {
      */
     displayScene() {
         if (this.nodes[this.idRoot] != null) {
-            // console.log(this.nodes[this.idRoot]);
+            console.log(this.nodes[this.idRoot]);
 
             this.nodes[this.idRoot].display();
         }
