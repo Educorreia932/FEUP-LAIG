@@ -52,7 +52,7 @@ class MyTorus extends CGFobject {
                 let z = this.inner * sinTheta; 
 
                 this.vertices.push(x, y, z);
-                this.normals.push(cosTheta * cosPhi, cosTheta * sinPhi, z);
+                this.normals.push(cosTheta * cosPhi, cosTheta * sinPhi, sinTheta);
                 this.texCoords.push(xCoord, loop / this.loops);
 
                 // Connect the current loop with the previous one

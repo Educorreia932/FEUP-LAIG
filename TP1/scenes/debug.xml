@@ -1,6 +1,6 @@
 <lsf>
     <initials>
-        <reference length="2" />
+        <reference length="10" />
         <root id="demoRoot" />
     </initials>
 
@@ -57,7 +57,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="2" outer="10" slices="20" loops="50"/>
+                <leaf type="triangle" x1="1" x2="3" x3="2" y1="0" y2="0" y3="2"/>
             </descendants>
         </node>
     </nodes>

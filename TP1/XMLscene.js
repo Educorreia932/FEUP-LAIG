@@ -37,6 +37,8 @@ class XMLscene extends CGFscene {
         this.loadingProgress = 0;
 
         this.defaultAppearance = new CGFappearance(this);
+
+        this.debugTexture = new CGFtexture(this, "./scenes/images/earth.jpg");
     }
 
     /**
@@ -125,6 +127,8 @@ class XMLscene extends CGFscene {
             this.axis.display();
 
             this.defaultAppearance.apply();
+
+            this.debugTexture.bind();
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();

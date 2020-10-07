@@ -88,7 +88,7 @@ class MyCylinder extends CGFobject {
             // Bottom lid
             this.vertices.push(x, y, 0);
             this.normals.push(0, 0, -1);
-            this.texCoords.push(cosPhi/ 2 - 0.5, sinPhi / 2 + 0.5);
+            this.texCoords.push(1 - (cosPhi/ 2 + 0.5), 1 - (sinPhi / 2 + 0.5));
 
             x = cosPhi * this.topRadius;
             y = sinPhi * this.topRadius;
@@ -96,7 +96,7 @@ class MyCylinder extends CGFobject {
             // Top lid
             this.vertices.push(x, y, this.height);
             this.normals.push(0, 0, 1);
-            this.texCoords.push(1 - cosPhi/ 2 + 0.5, sinPhi / 2 - 0.5);
+            this.texCoords.push(cosPhi/ 2 + 0.5, 1 - (sinPhi / 2 + 0.5));
 
             this.indices.push(bottomCenterIndex, currentIndex, currentIndex + 2);
             this.indices.push(currentIndex + 3, currentIndex + 1, topCenterIndex);

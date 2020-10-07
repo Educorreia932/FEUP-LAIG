@@ -92,8 +92,12 @@ class MyNode {
             this.texture.bind();
         }
 
-        for (let i = 0; i < this.descendants.length; i++) 
+        for (let i = 0; i < this.descendants.length; i++) {
+            if (this.descendants[i] instanceof CGFobject) {
+                this.descendants[i].enableNormalViz();
+            }
             this.descendants[i].display();
+        }
 
         this.scene.popMatrix();
     }
