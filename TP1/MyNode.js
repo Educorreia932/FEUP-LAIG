@@ -129,10 +129,9 @@ class MyNode {
             this.texture.bind();
         }
 
+        this.scene.multMatrix(this.transformation);
+
         for (let i = 0; i < this.descendants.length; i++) {
-            if (this.descendants[i] instanceof CGFobject) {
-                this.descendants[i].enableNormalViz();
-            }
             this.descendants[i].display();
         }
 
