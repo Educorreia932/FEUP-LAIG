@@ -638,7 +638,7 @@ class MySceneGraph {
                 let transformations = grandChildren[transformationsIndex].children;
 
                 // Iterate over transformations
-                for (let t = transformations.length - 1; t >= 0; t--) {
+                for (let t = 0; t < transformations.length; t++) {
                     var aux = this.parseTransfMatrix(transformations[t], transfMatrix, "node of ID " + nodeID);
 
                     if (typeof aux === 'string') // An error occurred
