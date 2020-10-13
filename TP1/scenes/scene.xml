@@ -326,13 +326,88 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="-0.95" z="-11.5" />
-                <scale sx="3.0" sy="1.3" sz="1"/>
-                <rotation axis="z" angle="45"/> 
+                <translation x="5" y="-0.5" z="-10"/>
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" bottomRadius="1.5" topRadius="0.70711" height="3" slices="4" stacks="50" />
+                <noderef id="footTopFace"/>
+                <noderef id="footBottomFace"/>
+                <noderef id="footRightFace"/>
+                <noderef id="footLeftFace"/>
+            </descendants>
+        </node>
+
+        <node id="footTopFace">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+        </node>
+
+        <node id="footBottomFace">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="2.0" sy="2-0" sz="1"/>
+                <translation x="0" y="0" z="-1"/>
+                <!-- <rotation axis="x" angle="180"/> -->
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+        </node>
+
+        <node id="footRightFace">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.74" y="0" z="-0.5"/>
+                <scale sx="2.0" sy="1-0" sz="1"/>
+                <rotation axis="y" angle="75"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+        </node>
+
+        <node id="footLeftFace">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.74" y="0" z="-0.5"/>
+                <scale sx="2.0" sy="1-0" sz="1"/>
+                <rotation axis="y" angle="-75"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
             </descendants>
         </node>
 
