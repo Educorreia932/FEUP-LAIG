@@ -66,7 +66,7 @@
 
     <nodes>
         <node id="rootTP1">
-            <material id="null" />
+            <material id="White Metal" />
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
