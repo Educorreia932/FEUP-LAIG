@@ -85,9 +85,6 @@ class MyNode {
             if (this.descendants[i].material == "null")
                 this.descendants[i].material = this.material;
         }
-
-        console.log(this.id)
-        console.log(this.material)
     }
 
     display() {
