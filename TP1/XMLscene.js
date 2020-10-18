@@ -21,7 +21,9 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = false;
 
-        this.initCameras();
+        this.cameraIDs = [];
+        this.selectedCamera = null;
+        this.preInitCamera();
 
         this.enableTextures(true);
 
@@ -37,15 +39,29 @@ class XMLscene extends CGFscene {
         this.loadingProgress = 0;
 
         this.defaultAppearance = new CGFappearance(this);
+    }
 
-        this.debugTexture = new CGFtexture(this, "./scenes/images/earth.jpg");
+    preInitCamera() {
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
 
     /**
      * Initializes the scene cameras.
      */
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        /*this.selectedCamera = this.graph.defaultCamera;
+
+        this.cameraIDs = Object.keys(this.graph.cameras);
+
+        this.camera = this.graph.cameras[this.selectedCamera];
+
+        this.interface.setActiveCamera(this.camera);*/
+    }
+
+    updateCamera() {
+        /*this.camera = this.graph.cameras[this.selectedCamera];
+
+        this.interface.setActiveCamera(this.camera);*/
     }
 
     /**
@@ -95,6 +111,10 @@ class XMLscene extends CGFscene {
 
         this.initLights();
 
+        this.initCameras();
+
+        this.interface.addInterfaceElements();
+
         this.sceneInited = true;
     }
 
@@ -118,8 +138,7 @@ class XMLscene extends CGFscene {
         this.pushMatrix();
 
         for (var i = 0; i < this.lights.length; i++) {
-            this.lights[i].setVisible(true);
-            this.lights[i].enable();
+            this.lights[i].update();
         }
 
         if (this.sceneInited) {
@@ -127,8 +146,6 @@ class XMLscene extends CGFscene {
             this.axis.display();
 
             this.defaultAppearance.apply();
-
-            this.debugTexture.bind();
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();

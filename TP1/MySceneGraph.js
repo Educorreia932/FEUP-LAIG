@@ -308,6 +308,11 @@ class MySceneGraph {
         if (numcams == 0)
             return "at least one camera must be defined";
 
+        if (this.cameras[defaultCam] == null)
+            return "no default camera found";
+
+        this.defaultCamera = defaultCam;
+
         this.log("Parsed Views");
 
         return null;
@@ -707,15 +712,17 @@ class MySceneGraph {
             node.texture = texture;
 
             // Descendants
+            console.log("see desc for " + nodeID);
             if (descendantsIndex != -1) {
                 grandgrandChildren = grandChildren[descendantsIndex].children;
 
                 for (let i = 0; i < grandgrandChildren.length; i++) {
                     if (grandgrandChildren[i].nodeName == "noderef") {
                         var aux = this.reader.getString(grandgrandChildren[i], 'id');
-
+                        console.log(aux);
                         node.addDescendant(aux);
-                        this.parents[aux] = nodeID;
+
+                        console.log(node.descendants);
                     } 
                     
                     else if (grandgrandChildren[i].nodeName == "leaf") {
@@ -726,20 +733,28 @@ class MySceneGraph {
                         }
 
                         node.addObject(aux);
+                        console.log(node.descendants);
                     }
                 }
             }
+
+            console.log("end of loop");
+            console.log(node.descendants);
 
             if (node.descendants.length < 1) {
                 return "node of ID " + nodeID + " must have atleast one descendant";
             }
 
             this.nodes[nodeID] = node;
+            console.log(nodeID  + " final node");
+            console.log(this.nodes[nodeID]);
         }
 
-        for (let key in this.nodes) {
-            this.nodes[key].initialize(this.nodes, this.parents, this.materials, this.textures);
-        }
+        console.log(this.nodes);
+
+        console.log(this.nodes["turbine"]);
+
+        this.nodes[this.idRoot].initialize(this.nodes, this.materials, this.textures, null);
 
         this.log("Parsed Nodes.");
 

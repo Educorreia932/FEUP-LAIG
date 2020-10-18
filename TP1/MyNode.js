@@ -11,6 +11,8 @@ var REFERENCE = 2;
 class MyNode {
     constructor(scene) {
         this.scene = scene;
+
+        this.inited = false;
         // Node Info
         this.id = null;
 
@@ -42,55 +44,92 @@ class MyNode {
         this.descendants.push(object);
     }
 
-    initialize(nodes, parents, materials, textures) {
+    initialize(nodes, materials, textures, parent) {
+        if (this.inited)
+            return;
+
         var aux = [];
 
-        if (this.id != null && parents[this.id] != null) {
-            this.parent = nodes[parents[this.id]];
-        }
+        console.log("see " + this.id);
+        console.log(this.descendants);
 
         // Replace ID references by MyNode object references on descendants
         for (let i = 0; i < this.descendants.length; i++) {
-            if (typeof this.descendants[i] == "string") {
-                if (nodes[this.descendants[i]] != null) {
-                    let descendant = this.descendants[i];
+            let descendant = this.descendants[i];
+            console.log(descendant);
+            if (typeof descendant == "string") {
+                if (nodes[descendant] != null) {
                     aux.push(nodes[descendant]);
                 }
             } 
             
-            else {
-                aux.push(this.descendants[i]);
+            else if (descendant instanceof CGFobject) {
+                aux.push(descendant);
             }
         }
 
         this.descendants = aux;
 
-        // Material
-        if (typeof this.material == "string")
-            if (materials[this.material] != null)
-                this.material = materials[this.material];
+        console.log(this.descendants);
 
-        // Texture
-        if (typeof this.texture.id == "string") {
-            if (textures[this.texture.id] != null) {
-                this.texture = textures[this.texture.id];
+        this.parent = parent;
+
+        // Material
+        if (this.parent == null) {
+            if (typeof this.material == "string") {
+                if (materials[this.material] != null)
+                    this.material = materials[this.material];
+                else
+                    this.material = null;
+            }
+        } else {
+            if (typeof this.material == "string") {
+                if (this.material == "null") {
+                    this.material = this.parent.material;
+                } else if (materials[this.material] != null)
+                    this.material = materials[this.material];
+                else
+                    this.material = null;
             }
         }
 
-        // Apply to descendants
-        for (let i = 0; i < this.descendants.length; i++) {
-            if (this.descendants[i].texture == "null")
-                this.descendants[i].texture = this.texture ;
-
-            if (this.descendants[i].material == "null")
-                this.descendants[i].material = this.material;
+        // Texture
+        if (this.parent == null) {
+            if (typeof this.texture.id == "string") {
+                if (textures[this.texture.id] != null) {
+                    this.texture = textures[this.texture.id];
+                } else {
+                    this.texture = null;
+                }
+            }
+        } else {
+            if (typeof this.texture.id == "string") {
+                if (this.texture.id == "null") {
+                    this.texture = this.parent.texture;
+                } else if (textures[this.texture.id] != null)
+                    this.texture = textures[this.texture.id];
+                else
+                    this.texture = null;
+            }
         }
 
-        console.log(this.id)
-        console.log(this.material)
+        console.log("\n");
+        console.log(this.id);
+        console.log(this.descendants);
+        console.log(this.material);
+        console.log(this.texture);
+
+        for (let i = 0; i < this.descendants.length; i++) {
+            if (this.descendants[i] instanceof MyNode) {
+                this.descendants[i].initialize(nodes, materials, textures, this);
+            }
+        }
+
+        this.inited = true;
     }
 
     display() {
+
         this.scene.pushMatrix();
 
         if (this.material != null) {
@@ -99,6 +138,9 @@ class MyNode {
 
         if (this.texture instanceof CGFtexture) {
             this.texture.bind();
+        } else if (this.texture == null) {
+            if (this.parent != null && this.parent.texture != null)
+                this.parent.texture.unbind();
         }
 
         this.scene.multMatrix(this.transformation);
@@ -107,10 +149,16 @@ class MyNode {
             this.descendants[i].display();
         }
 
-        this.scene.popMatrix();
-
         if (this.texture instanceof CGFtexture) {
             this.texture.unbind();
         }
+        if (this.parent != null) {
+            if (this.parent.material != null)
+                this.parent.material.apply();
+            if (this.parent.texture != null)
+                this.parent.texture.bind();
+        }
+
+        this.scene.popMatrix();
     }
 }
