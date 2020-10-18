@@ -656,11 +656,13 @@ class MySceneGraph {
             if (materialIndex != -1) {
                 material = this.reader.getString(grandChildren[materialIndex], 'id');
 
-                if (material == null || this.materials[material] == null) {
+                if (material == null) {
                     this.onXMLMinorError("no valid material found for node " + nodeID);
                     material = null;
                 }
-            } else {
+            } 
+            
+            else {
                 return "material undefined for node " + nodeID;
             }
 
@@ -735,8 +737,9 @@ class MySceneGraph {
             this.nodes[nodeID] = node;
         }
 
-        for (let key in this.nodes)
+        for (let key in this.nodes) {
             this.nodes[key].initialize(this.nodes, this.parents, this.materials, this.textures);
+        }
 
         this.log("Parsed Nodes.");
 
@@ -1142,8 +1145,6 @@ class MySceneGraph {
      */
     displayScene() {
         if (this.nodes[this.idRoot] != null) {
-            console.log(this.nodes[this.idRoot]);
-
             this.nodes[this.idRoot].display();
         }
     }

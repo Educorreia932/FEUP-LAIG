@@ -65,57 +65,26 @@ class MyNode {
 
         this.descendants = aux;
 
-         // Material
-        var material;
-
-         if (typeof this.material == "string") {
-            if (this.material == "null") {
-                if (this.parent != null) {
-                    this.material = this.parent.material;
-                } else {
-                    this.material = null;
-                }
-            }
-
+        // Material
+        if (typeof this.material == "string")
             if (materials[this.material] != null)
-                material = materials[this.material];
-         } else {
-             material = null;
-         }
-
-        this.material = material;
+                this.material = materials[this.material];
 
         // Texture
-        var texture;
-
         if (typeof this.texture.id == "string") {
-
-            for (let i = 0; i < this.objects.length; i++) {
-                var newTexCoords = [];
-                var current = this.objects[i].texCoords;
-                for (let j = 0; j < current.length; j+=2) {
-                    newTexCoords.push(current[j] / this.texture.afs, current[j + 1] / this.texture.aft);
-                }
-
-                this.objects[i].updateTexCoords(newTexCoords);
-            }
-
-            if (this.texture.id == "null") {
-                if (this.parent != null) {
-                    texture = this.parent.texture;
-                } else {
-                    texture = null;
-                }
-            } else if (this.texture.id == "clear") {
-                texture = null;
-            } else if (textures[this.texture.id] != null) {
-                texture = textures[this.texture.id];
+            if (textures[this.texture.id] != null) {
+                this.texture = textures[this.texture.id];
             }
         }
 
-        this.texture = texture;
+        // Apply to descendants
+        for (let i = 0; i < this.descendants.length; i++) {
+            if (this.descendants[i].texture == "null")
+                this.descendants[i].texture = this.texture ;
 
-        return null;
+            if (this.descendants[i].material == "null")
+                this.descendants[i].material = this.material;
+        }
     }
 
     display() {
