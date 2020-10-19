@@ -32,12 +32,14 @@
         </light>
     </lights>
 
+    <!-- Textures -->
     <textures>
         <texture id="R2-D2 Head" path="./scenes/images/R2-D2 Head.png" />
         <texture id="R2-D2 Body" path="./scenes/images/R2-D2 Body.png" />
         <texture id="Sand" path="./scenes/images/sand.jpg" />
     </textures>
 
+    <!-- Materials -->
     <materials>
         <material id="White Metal">
             <shininess value="10.0" />
@@ -64,6 +66,7 @@
         </material>
     </materials>
 
+    <!-- Nodes -->
     <nodes>
         <node id="rootTP1">
             <material id="White Metal" />
@@ -89,8 +92,8 @@
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="-90"/>
                 <translation x="-100" y="0" z="100"/>
+                <rotation axis="x" angle="-90"/>
             </transformations>
 
             <descendants>
@@ -123,9 +126,9 @@
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="-90"/>
-                <rotation axis="y" angle="180"/>
                 <translation x="0.0" y="10.0" z="0.0" />
+                <rotation axis="y" angle="180"/>
+                <rotation axis="x" angle="-90"/>
             </transformations>
 
             <descendants>
@@ -208,8 +211,8 @@
             </texture>
 
             <transformations>
-                <rotation axis="z" angle="180"/>
                 <translation x="0.0" y="4.75" z="8.0" />
+                <rotation axis="z" angle="180"/>
             </transformations>
 
             <descendants>
@@ -217,6 +220,7 @@
             </descendants>
         </node>
 
+        <!-- Legs -->
         <node id="leg">
             <material id="null" />
 
@@ -242,8 +246,8 @@
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="-90"/>
                 <translation x="0.0" y="-2" z="-1.0" />
+                <rotation axis="x" angle="-90"/>
             </transformations>
 
             <descendants>
@@ -292,8 +296,8 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.5" z="0.5"/>
                 <scale sx="4.0" sy="4" sz="1.7"/>
+                <translation x="0.0" y="0.5" z="0.5"/>
             </transformations>
 
             <descendants>
@@ -309,8 +313,8 @@
             </texture>
 
             <transformations>
-                <scale sx="3.0" sy="1.3" sz="5"/>
                 <translation x="0.0" y="-0.95" z="-7.0" />
+                <scale sx="3.0" sy="1.3" sz="5"/>
             </transformations>
 
             <descendants>
@@ -326,13 +330,155 @@
             </texture>
 
             <transformations>
-                <rotation axis="z" angle="45"/> 
-                <scale sx="3.0" sy="1.3" sz="1"/>
-                <translation x="0.0" y="-0.95" z="-11.5" />
+                <translation x="5" y="-0.5" z="-10"/>
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" bottomRadius="1.5" topRadius="0.70711" height="3" slices="4" stacks="50" />
+                <noderef id="footTopFace"/>
+                <noderef id="footBottomFace"/>
+                <noderef id="footRightFace"/>
+                <noderef id="footLeftFace"/>
+                <noderef id="footFrontFace" />
+                <noderef id="footBackFace" />
+            </descendants>
+        </node>
+
+        <node id="footTopFace">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+        </node>
+
+        <node id="footBottomFace">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="1.68" sy="1.68" sz="1"/>
+                <translation x="0" y="0" z="-1"/>
+                <rotation axis="x" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+        </node>
+
+        <node id="footLeftFace">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="footFace" />
+            </descendants>
+        </node>
+
+        <node id="footRightFace">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="footFace" />
+            </descendants>
+        </node>
+
+        <node id="footFrontFace">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="footFace" />
+            </descendants>
+        </node>
+
+        <node id="footBackFace">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="footFace" />
+            </descendants>
+        </node>
+
+        <node id="footFace">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.67" y="0" z="-0.5"/>
+                <scale sx="2.0" sy="1.0" sz="1.02"/>
+                <rotation axis="y" angle="80"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="footFaceLeftTriangle" />
+                <noderef id="footFaceRightTriangle" />
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+        </node>
+
+        <node id="footFaceLeftTriangle">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-0.5" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="-0.5" y1="0" x2="0.5" y2="-0.34" x3="0.5" y3="0.0" />
+            </descendants>
+        </node>
+
+        <node id="footFaceRightTriangle">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.5" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="-0.5" y1="0" x2="0.5" y2="0.0" x3="0.5" y3="0.34" />
             </descendants>
         </node>
 
@@ -410,8 +556,8 @@
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="90" />
                 <translation x="0.0" y="-0.5" z="0"/>
+                <rotation axis="x" angle="90" />
             </transformations>
 
             <descendants>
@@ -427,8 +573,8 @@
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="-90" />
                 <translation x="0.0" y="0.5" z="0"/>
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
@@ -444,8 +590,8 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="0.5"/>
                 <rotation axis="y" angle="90" />
+                <translation x="0.0" y="0.0" z="0.5"/>
             </transformations>
 
             <descendants>
@@ -461,8 +607,8 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="0.5"/>
                 <rotation axis="y" angle="-90" />
+                <translation x="0.0" y="0.0" z="0.5"/>
             </transformations>
 
             <descendants>
@@ -478,8 +624,8 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="0.5" />
                 <rotation axis="y" angle="180"/>
+                <translation x="0.0" y="0.0" z="0.5" />
             </transformations>
 
             <descendants>

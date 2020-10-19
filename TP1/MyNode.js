@@ -50,13 +50,9 @@ class MyNode {
 
         var aux = [];
 
-        console.log("see " + this.id);
-        console.log(this.descendants);
-
         // Replace ID references by MyNode object references on descendants
         for (let i = 0; i < this.descendants.length; i++) {
             let descendant = this.descendants[i];
-            console.log(descendant);
             if (typeof descendant == "string") {
                 if (nodes[descendant] != null) {
                     aux.push(nodes[descendant]);
@@ -69,8 +65,6 @@ class MyNode {
         }
 
         this.descendants = aux;
-
-        console.log(this.descendants);
 
         this.parent = parent;
 
@@ -112,12 +106,6 @@ class MyNode {
                     this.texture = null;
             }
         }
-
-        console.log("\n");
-        console.log(this.id);
-        console.log(this.descendants);
-        console.log(this.material);
-        console.log(this.texture);
 
         for (let i = 0; i < this.descendants.length; i++) {
             if (this.descendants[i] instanceof MyNode) {

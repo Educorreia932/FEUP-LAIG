@@ -712,17 +712,14 @@ class MySceneGraph {
             node.texture = texture;
 
             // Descendants
-            console.log("see desc for " + nodeID);
             if (descendantsIndex != -1) {
                 grandgrandChildren = grandChildren[descendantsIndex].children;
 
                 for (let i = 0; i < grandgrandChildren.length; i++) {
                     if (grandgrandChildren[i].nodeName == "noderef") {
                         var aux = this.reader.getString(grandgrandChildren[i], 'id');
-                        console.log(aux);
                         node.addDescendant(aux);
 
-                        console.log(node.descendants);
                     } 
                     
                     else if (grandgrandChildren[i].nodeName == "leaf") {
@@ -733,26 +730,15 @@ class MySceneGraph {
                         }
 
                         node.addObject(aux);
-                        console.log(node.descendants);
                     }
                 }
             }
-
-            console.log("end of loop");
-            console.log(node.descendants);
-
             if (node.descendants.length < 1) {
                 return "node of ID " + nodeID + " must have atleast one descendant";
             }
 
             this.nodes[nodeID] = node;
-            console.log(nodeID  + " final node");
-            console.log(this.nodes[nodeID]);
         }
-
-        console.log(this.nodes);
-
-        console.log(this.nodes["turbine"]);
 
         this.nodes[this.idRoot].initialize(this.nodes, this.materials, this.textures, null);
 
