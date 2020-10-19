@@ -49,19 +49,19 @@ class XMLscene extends CGFscene {
      * Initializes the scene cameras.
      */
     initCameras() {
-        /*this.selectedCamera = this.graph.defaultCamera;
+        this.selectedCamera = this.graph.defaultCamera;
 
         this.cameraIDs = Object.keys(this.graph.cameras);
 
         this.camera = this.graph.cameras[this.selectedCamera];
 
-        this.interface.setActiveCamera(this.camera);*/
+        this.interface.setActiveCamera(this.camera);
     }
 
     updateCamera() {
-        /*this.camera = this.graph.cameras[this.selectedCamera];
+        this.camera = this.graph.cameras[this.selectedCamera];
 
-        this.interface.setActiveCamera(this.camera);*/
+        this.interface.setActiveCamera(this.camera);
     }
 
     /**

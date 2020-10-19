@@ -937,8 +937,6 @@ class MySceneGraph {
     }
 
     parseCamera(node, messageError) {
-        var out;
-
         var type = node.nodeName;
 
         if (type == "perspective") {
@@ -968,11 +966,11 @@ class MySceneGraph {
             if (typeof from == "string")
                 return from;
             
-            var to = this.parseCoordinates3D(children[fromIndex], " camera of " + messageError);
+            var to = this.parseCoordinates3D(children[toIndex], " camera of " + messageError);
             if (typeof to == "string")
                 return to;
 
-            return new CGFcamera(angle || 0, near || 0, far || 0, from, to);
+            return new CGFcamera(angle * DEGREE_TO_RAD || 0, near || 0, far || 0, from, to);
 
         } else if (type == "ortho") {
             var near = this.reader.getFloat(node, 'near');
@@ -1005,7 +1003,7 @@ class MySceneGraph {
             if (typeof from == "string")
                 return from;
             
-            var to = this.parseCoordinates3D(children[fromIndex], " camera of " + messageError);
+            var to = this.parseCoordinates3D(children[toIndex], " camera of " + messageError);
             if (typeof to == "string")
                 return to;
 
