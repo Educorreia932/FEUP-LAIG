@@ -36,7 +36,14 @@
     <textures>
         <texture id="R2-D2 Head" path="./scenes/images/R2-D2 Head.png" />
         <texture id="R2-D2 Body" path="./scenes/images/R2-D2 Body.png" />
-        <texture id="Sand" path="./scenes/images/sand.jpg" />
+        <texture id="Sandstone" path="./scenes/images/sandstone.jpg"/>
+        <texture id="Copper" path="./scenes/images/copper.jpg"/>
+        <texture id="SkyboxTop" path="./scenes/images/skybox/top.jpg"/>
+        <texture id="SkyboxBottom" path="./scenes/images/skybox/bottom.jpg"/>
+        <texture id="SkyboxLeft" path="./scenes/images/skybox/left.jpg"/>
+        <texture id="SkyboxRight" path="./scenes/images/skybox/right.jpg"/>
+        <texture id="SkyboxFront" path="./scenes/images/skybox/front.jpg"/>
+        <texture id="SkyboxBack" path="./scenes/images/skybox/back.jpg"/>
     </textures>
 
     <!-- Materials -->
@@ -57,7 +64,7 @@
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
-        <material id="Sand">
+        <material id="Skybox">
             <shininess value="10.0" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="0.9" g="0.9" b="0.9" a="1.0" />
@@ -80,27 +87,133 @@
 
             <descendants>
                 <noderef id="R2-D2" />
-                <noderef id="sand"/>
+                <noderef id="skybox"/>
             </descendants>
         </node>
 
-        <node id="sand">
-            <material id="Sand" />
+        <!-- Skybox -->
+        <node id="skybox">
+            <material id="Skybox" />
 
-            <texture id="Sand">
-                <amplification afs="2.0" aft="2.0" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="-100" y="0" z="100"/>
+                <scale sx="150" sy="150" sz="150"></scale>
+            </transformations>
+
+            <descendants>
+                <noderef id="skyboxTopFace"/>
+                <noderef id="skyboxBottomFace"/>
+                <noderef id="skyboxRightFace"/>
+                <noderef id="skyboxLeftFace"/>
+                <noderef id="skyboxFrontFace" />
+                <noderef id="skyboxBackFace" />
+            </descendants>
+        </node>
+
+        <node id="skyboxTopFace">
+            <material id="Skybox" />
+
+            <texture id="SkyboxTop">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="1" z="0"/>
+                <rotation axis="x" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+        </node>
+        
+        <node id="skyboxBottomFace">
+            <material id="Skybox" />
+
+            <texture id="SkyboxBottom">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
                 <rotation axis="x" angle="-90"/>
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0" y1="0" x2="200" y2="200"/>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
             </descendants>
         </node>
 
+        <node id="skyboxRightFace">
+            <material id="SkyboxLeft" />
+
+            <texture id="SkyboxRight">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.5" z="-0.5"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+        </node>
+
+        <node id="skyboxLeftFace">
+            <material id="Sand" />
+
+            <texture id="SkyboxLeft">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.5" z="0.5"/>
+                <rotation axis="y" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+        </node>
+
+        <node id="skyboxFrontFace">
+            <material id="Sand" />
+
+            <texture id="SkyboxFront">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.5" y="0.5" z="0"/>
+                <rotation axis="y" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+        </node>
+
+        <node id="skyboxBackFace">
+            <material id="Sand" />
+
+            <texture id="SkyboxBack">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="0.5" z="0"/>
+                <rotation axis="y" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            </descendants>
+        </node>
+
+        <!-- R2-D2 -->
         <node id="R2-D2">
             <material id="White Metal" />
 
@@ -367,7 +480,7 @@
         <node id="tankWires">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="Copper">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
