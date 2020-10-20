@@ -1126,9 +1126,20 @@ class MySceneGraph {
         // Torus
         else if (type == "torus") {
             let inner = this.reader.getFloat(node, "inner");
+            if (inner == null || isNaN(inner))
+                return "unable to parse inner component from the torus of the " + messageError;
+
             let outer = this.reader.getFloat(node, "outer");
-            let slices = this.reader.getFloat(node, "slices"); 
+            if (outer == null || isNaN(outer))
+                return "unable to parse outer component from the torus of the " + messageError;
+
+            let slices = this.reader.getFloat(node, "slices");
+            if (slices == null || isNaN(slices))
+                return "unable to parse slices component from the torus of the " + messageError; 
+            
             let loops = this.reader.getFloat(node, "loops");
+            if (loops == null || isNaN(loops))
+                return "unable to parse loops component from the torus of the " + messageError;
 
             out = new MyTorus(this.scene, inner, outer, slices, loops);
         }

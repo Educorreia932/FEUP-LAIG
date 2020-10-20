@@ -330,7 +330,8 @@
             </texture>
 
             <transformations>
-                <translation x="5" y="-0.5" z="-10"/>
+                <translation x="0.0" y="-0.95" z="-9.5"/>
+                <scale sx="3.0" sy="1.3" sz="2.0" />
             </transformations>
 
             <descendants>
@@ -340,6 +341,223 @@
                 <noderef id="footLeftFace"/>
                 <noderef id="footFrontFace" />
                 <noderef id="footBackFace" />
+                <noderef id="tank" />
+            </descendants>
+        </node>
+
+        <!-- Foot Miscalleneous -->
+        <node id="tank">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="0.95" sy="0.8" sz="0.4" />
+                <translation x="-1.2" y="0.9" z="-0.4" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tankParallelepiped" />
+                <noderef id="tankWires" />
+            </descendants>
+        </node>
+
+        <node id="tankWires">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.75" y="-0.3" z="-0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tankWireTop" />
+                <noderef id="TankWireBot" />
+            </descendants>
+        </node>
+
+        <node id="tankWireTop">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="1.0" sy="1.1" sz="1.5" />
+                <rotation axis="x" angle="-10" />
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="0.1" outer="0.6" slices="20" loops="20" />
+            </descendants>
+        </node>
+
+        <node id="TankWireBot">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="1.0" sy="0.9" sz="1.5" />
+                <rotation axis="x" angle="-12.5" />
+                <translation x="0.0" y="0.0" z="-0.3" />
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="0.1" outer="0.8" slices="20" loops="20" />
+            </descendants>
+        </node>
+
+        <node id="tankCylinderTop">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="0" z="1.0" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.5" topRadius="0.5" height="1.5" slices="50" stacks="5"/>
+            </descendants>
+        </node>
+
+        <node id="tankCylinderBot">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="0" z="-1.0" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.5" topRadius="0.5" height="1.5" slices="50" stacks="5"/>
+            </descendants>
+        </node>
+
+        <node id="tankParallelepiped">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.0" y="0.2" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tankRectangleBack" />
+                <noderef id="tankRectangleFront" />
+                <noderef id="tankRectangleLeft" />
+                <noderef id="tankRectangleRight" />
+                <noderef id="tankCylinderTop" />
+                <noderef id="tankCylinderBot" />
+            </descendants>
+        </node>
+
+        <node id="tankRectangleBack">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="0.0" z="0.0" />
+                <rotation axis="y" angle="90" />
+                <rotation axis="x" angle="180" />
+                <scale sx="2.0" sy="1.0" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tankRectangle"/>
+            </descendants>
+        </node>
+
+        <node id="tankRectangleFront">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.0" y="0.0" z="0.0" />
+                <rotation axis="y" angle="90" />
+                <scale sx="2.0" sy="1.0" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tankRectangle"/>
+            </descendants>
+        </node>
+
+        <node id="tankRectangleLeft">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.25" y="-0.5" z="0.0" />
+                <rotation axis="y" angle="90" />
+                <rotation axis="x" angle="90" />
+                <scale sx="2.0" sy="1.5" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tankRectangle"/>
+            </descendants>
+        </node>
+
+        <node id="tankRectangleRight">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.25" y="0.5" z="0.0" />
+                <rotation axis="y" angle="90" />
+                <rotation axis="x" angle="-90" />
+                <scale sx="2.0" sy="1.5" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tankRectangle"/>
+            </descendants>
+        </node>
+
+        <node id="tankRectangle">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
             </descendants>
         </node>
 
