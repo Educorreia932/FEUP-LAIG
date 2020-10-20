@@ -755,7 +755,7 @@ class MySceneGraph {
         if (!(boolVal != null && !isNaN(boolVal) && (boolVal == true || boolVal == false)))
             this.onXMLMinorError("unable to parse value component " + messageError + "; assuming 'value = 1'");
 
-        return boolVal || 1;
+        return boolVal;
     }
 
     /**

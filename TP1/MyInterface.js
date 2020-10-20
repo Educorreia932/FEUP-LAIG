@@ -38,6 +38,8 @@ class MyInterface extends CGFinterface {
 
         camera_folder.add(this.scene, 'selectedCamera', this.scene.cameraIDs).name('Camera').onChange(this.scene.updateCamera.bind(this.scene)).listen();
 
+
+        camera_folder.open();
     }
 
     /**
