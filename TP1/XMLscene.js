@@ -21,8 +21,11 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = false;
 
+        // List to store the ID of the cameras read on parser, to be displayed on the GUI
         this.cameraIDs = [];
         this.selectedCamera = null;
+
+        // Pre Init a default camera before parsing the XML (required due to Application implementation)
         this.preInitCamera();
 
         this.enableTextures(true);
@@ -47,17 +50,23 @@ class XMLscene extends CGFscene {
 
     /**
      * Initializes the scene cameras.
+     * Sets the default camera read from the XML and stores the IDs of the cameras defined on the XML
      */
     initCameras() {
+        // Read the default camera
         this.selectedCamera = this.graph.defaultCamera;
 
+        // Read the IDs of the cameras defined
         this.cameraIDs = Object.keys(this.graph.cameras);
 
+        // Set the default camera
         this.camera = this.graph.cameras[this.selectedCamera];
 
+        // Notify interface of the update
         this.interface.setActiveCamera(this.camera);
     }
 
+    // Trigger to be called upon update of selected camera on GUI
     updateCamera() {
         this.camera = this.graph.cameras[this.selectedCamera];
 
@@ -103,14 +112,17 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+        this.displayAxis = Boolean(this.graph.referenceLength);
         this.axis = new CGFaxis(this, this.graph.referenceLength);
 
         this.gl.clearColor(...this.graph.background);
 
         this.setGlobalAmbientLight(...this.graph.ambient);
 
+        // Init lights read from XML
         this.initLights();
 
+        // Init cameras read from XML
         this.initCameras();
 
         this.interface.addInterfaceElements();
@@ -143,7 +155,8 @@ class XMLscene extends CGFscene {
 
         if (this.sceneInited) {
             // Draw axis
-            this.axis.display();
+            if (this.displayAxis)
+                this.axis.display();
 
             this.defaultAppearance.apply();
 

@@ -1,6 +1,6 @@
 <lsf>
     <initials>
-        <reference length="10" />
+        <reference length="1" />
         <root id="demoRoot" />
     </initials>
 
@@ -50,14 +50,14 @@
             <material id="demoMaterial" />
 
             <texture id="Earth">
-                <amplification afs="2.0" aft="2.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="1" x2="3" x3="2" y1="0" y2="0" y3="2"/>
+                <leaf type="rectangle" x1="0" y1="0" x2="2" y2="2"/>
             </descendants>
         </node>
     </nodes>

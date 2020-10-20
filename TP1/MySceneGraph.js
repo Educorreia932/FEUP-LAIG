@@ -26,16 +26,19 @@ class MySceneGraph {
         this.scene = scene;
         scene.graph = this;
 
+        // Structure to store the cameras defined
         this.cameras = [];
 
         this.defaultCamera = null; // The id of the default camera.
 
+        // Graph containing the nodes of the scene
         this.nodes = [];
-        this.parents = [];
+
+        // Structures to store the materials and textures defined in the scene
         this.textures = [];
         this.materials = [];
 
-        this.idRoot = null; // The id of the root element.
+        this.idRoot = null; // The id of the root element of the graph.
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];
@@ -53,16 +56,6 @@ class MySceneGraph {
         this.reader.open('scenes/' + filename, this);
 
         scene.enableTextures(true);
-
-        // R2-D2 
-        this.head = new MySphere(scene, 3.5, 50, 50);
-        this.bodyTop = new MyCylinder(scene, 3.5, 3.5, 10, 50, 5);
-        this.bodyBottom = new MyCylinder(scene, 3, 3.5, 2, 50, 5);
-        this.legTopCircle = new MyCylinder(scene, 2, 2, 2, 50, 5);
-        this.legTopRectangle = new MyCylinder(scene, 1.41421, 1.41421, 5, 4, 5);
-        this.legBottom = new MyCylinder(scene, 0.70711, 0.70711, 3, 4, 5);
-        this.foot = new MyCylinder(scene, 1.7678, 0.70711, 2, 4, 5);
-        this.footSupport = new MyCylinder(scene, 0.4, 0.4, 1, 50, 5);
     }
 
     /*
@@ -264,7 +257,7 @@ class MySceneGraph {
         if (axis_length == null)
             this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
 
-        this.referenceLength = axis_length || 1;
+        this.referenceLength = (axis_length == 0) ? axis_length: axis_length || 1;
 
         this.log("Parsed initials");
 
@@ -723,7 +716,7 @@ class MySceneGraph {
                     } 
                     
                     else if (grandgrandChildren[i].nodeName == "leaf") {
-                        var aux = this.parsePrimitive(grandgrandChildren[i], "node of ID " + nodeID);
+                        var aux = this.parsePrimitive(grandgrandChildren[i], texture.afs, texture.aft, "node of ID " + nodeID);
                     
                         if (typeof aux == "string") {
                             return aux;
@@ -1008,7 +1001,7 @@ class MySceneGraph {
         }
     }
 
-    parsePrimitive(node, messageError) {
+    parsePrimitive(node, textureAfs, textureAft, messageError) {
         var out;
 
         var type = this.reader.getString(node, 'type');
@@ -1035,7 +1028,7 @@ class MySceneGraph {
             if (y2 == null || isNaN(y2))
                 return "unable to parse Y2 component from the rectangle of the " + messageError;
 
-            out = new MyRectangle(this.scene, x1, y1, x2, y2);
+            out = new MyRectangle(this.scene, x1, y1, x2, y2, textureAfs, textureAft);
         
         } 
         
@@ -1077,7 +1070,7 @@ class MySceneGraph {
             if (y3 == null || isNaN(y3))
                 return "unable to parse Y3 component from the triangle of the " + messageError;
 
-            out = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
+            out = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3, textureAfs, textureAft);
         } 
 
         // Sphere

@@ -4,14 +4,16 @@
  * @param scene - Reference to MyScene object
  */
 class MyTriangle extends CGFobject {
-	constructor(scene, x1, y1, x2, y2, x3, y3) {
+	constructor(scene, x1, y1, x2, y2, x3, y3, afs, aft) {
         super(scene);
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2,
         this.x3 = x3;
-        this.y3 = y3;
+		this.y3 = y3;
+		this.afs = afs;
+		this.aft = aft;
 
 		this.initBuffers();
 	}
@@ -42,8 +44,8 @@ class MyTriangle extends CGFobject {
 		
 		this.texCoords = [
 			0, 0,
-			a, 0,
-			c * cosAlpha, c * sinAlpha
+			a / this.afs, 0,
+			c * cosAlpha / this.afs, c * sinAlpha / this.aft
 		];
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
