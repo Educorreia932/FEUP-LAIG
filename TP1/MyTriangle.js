@@ -12,8 +12,8 @@ class MyTriangle extends CGFobject {
         this.y2 = y2,
         this.x3 = x3;
 		this.y3 = y3;
-		this.afs = afs;
-		this.aft = aft;
+		this.afs = (afs == null ? 1 : afs);
+		this.aft = (aft == null ? 1 : aft);
 
 		this.initBuffers();
 	}
@@ -45,7 +45,7 @@ class MyTriangle extends CGFobject {
 		this.texCoords = [
 			0, 0,
 			a / this.afs, 0,
-			c * cosAlpha / this.afs, c * sinAlpha / this.aft
+			c * cosAlpha / this.afs, -c * sinAlpha / this.aft
 		];
 
 		this.primitiveType = this.scene.gl.TRIANGLES;

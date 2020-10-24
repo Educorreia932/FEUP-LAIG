@@ -44,7 +44,7 @@ class MyNode {
         this.descendants.push(object);
     }
 
-    initialize(nodes, materials, textures, parent) {
+    initialize(parser, parent) {
         if (this.inited)
             return;
 
@@ -54,8 +54,8 @@ class MyNode {
         for (let i = 0; i < this.descendants.length; i++) {
             let descendant = this.descendants[i];
             if (typeof descendant == "string") {
-                if (nodes[descendant] != null) {
-                    aux.push(nodes[descendant]);
+                if (parser.nodes[descendant] != null) {
+                    aux.push(parser.nodes[descendant]);
                 }
             } 
             
@@ -71,45 +71,49 @@ class MyNode {
         // Material
         if (this.parent == null) {
             if (typeof this.material == "string") {
-                if (materials[this.material] != null)
-                    this.material = materials[this.material];
+                if (parser.materials[this.material] != null)
+                    this.material = parser.materials[this.material];
                 else
-                    this.material = null;
+                    this.material = parser.errorMaterial;
             }
         } else {
             if (typeof this.material == "string") {
                 if (this.material == "null") {
                     this.material = this.parent.material;
-                } else if (materials[this.material] != null)
-                    this.material = materials[this.material];
+                } else if (parser.materials[this.material] != null)
+                    this.material = parser.materials[this.material];
                 else
-                    this.material = null;
+                    this.material = parser.errorMaterial;
             }
         }
 
         // Texture
         if (this.parent == null) {
             if (typeof this.texture.id == "string") {
-                if (textures[this.texture.id] != null) {
-                    this.texture = textures[this.texture.id];
-                } else {
+                if (parser.textures[this.texture.id] != null) {
+                    this.texture = parser.textures[this.texture.id];
+                } else if (this.texture.id == "null" || this.texture.id == "clear") {
                     this.texture = null;
+                } else {
+                    this.texture = parser.errorTexture;
                 }
             }
         } else {
             if (typeof this.texture.id == "string") {
                 if (this.texture.id == "null") {
                     this.texture = this.parent.texture;
-                } else if (textures[this.texture.id] != null)
-                    this.texture = textures[this.texture.id];
-                else
+                } else if (this.texture.id == "clear") {
                     this.texture = null;
+                } else if (parser.textures[this.texture.id] != null)
+                    this.texture = parser.textures[this.texture.id];
+                else
+                    this.texture = parser.errorTexture;
             }
         }
 
         for (let i = 0; i < this.descendants.length; i++) {
             if (this.descendants[i] instanceof MyNode) {
-                this.descendants[i].initialize(nodes, materials, textures, this);
+                this.descendants[i].initialize(parser, this);
             }
         }
 
@@ -126,7 +130,7 @@ class MyNode {
 
         if (this.texture instanceof CGFtexture) {
             this.texture.bind();
-        } else if (this.texture == null) {
+        } else if (this.texture == null) { // Texture clear
             if (this.parent != null && this.parent.texture != null)
                 this.parent.texture.unbind();
         }
@@ -140,7 +144,7 @@ class MyNode {
         if (this.texture instanceof CGFtexture) {
             this.texture.unbind();
         }
-        if (this.parent != null) {
+        if (this.parent != null) { // Restore old textures and materials
             if (this.parent.material != null)
                 this.parent.material.apply();
             if (this.parent.texture != null)

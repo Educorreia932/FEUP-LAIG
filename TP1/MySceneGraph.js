@@ -55,6 +55,14 @@ class MySceneGraph {
          */
         this.reader.open('scenes/' + filename, this);
 
+        this.errorTexture = new CGFtexture(this.scene, "./scenes/images/error_texture.png");
+        this.errorMaterial = new CGFappearance(this.scene);
+        this.errorMaterial.setAmbient(1, 1, 1, 1);
+        this.errorMaterial.setDiffuse(0, 0, 0, 1);
+        this.errorMaterial.setEmission(1, 1, 1, 1);
+        this.errorMaterial.setSpecular(0, 0, 0, 1);
+        this.errorMaterial.setShininess(10.0);
+
         scene.enableTextures(true);
     }
 
@@ -217,7 +225,6 @@ class MySceneGraph {
             if ((error = this.parseNodes(nodes[index])) != null)
                 return error;
         }
-
         this.log("all parsed");
     }
 
@@ -257,7 +264,7 @@ class MySceneGraph {
         if (axis_length == null)
             this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
 
-        this.referenceLength = (axis_length == 0) ? axis_length: axis_length || 1;
+        this.referenceLength = (axis_length != null) ? axis_length : 1;
 
         this.log("Parsed initials");
 
@@ -470,6 +477,8 @@ class MySceneGraph {
             this.textures[textureID] = texture;
         }
 
+        this.log("Parsed textures");
+
         return null;
     }
 
@@ -484,6 +493,8 @@ class MySceneGraph {
 
         var components = [];
         var nodeNames = [];
+
+        var numMaterials = 0;
 
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
@@ -500,7 +511,7 @@ class MySceneGraph {
 
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
-                return "ID must be unique for each light (conflict: ID = " + materialID + ")";
+                return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
             components = children[i].children;
 
@@ -577,7 +588,14 @@ class MySceneGraph {
             }
 
             this.materials[materialID] = material;
+            numMaterials++;
         }
+
+        if (numMaterials == 0) {
+            return "at least one material must be defined";
+        }
+
+        this.log("Parsed materials");
 
         return null;
     }
@@ -639,8 +657,10 @@ class MySceneGraph {
                 for (let t = 0; t < transformations.length; t++) {
                     var aux = this.parseTransfMatrix(transformations[t], transfMatrix, "node of ID " + nodeID);
 
-                    if (typeof aux === 'string') // An error occurred
-                        return aux;
+                    if (typeof aux === 'string') { // An error occurred
+                        this.onXMLMinorError(aux);
+                        continue;
+                    }
 
                     transfMatrix = aux;
                 }
@@ -656,12 +676,13 @@ class MySceneGraph {
 
                 if (material == null) {
                     this.onXMLMinorError("no valid material found for node " + nodeID);
-                    material = null;
+                    material = this.errorMaterial;
                 }
             } 
             
             else {
-                return "material undefined for node " + nodeID;
+                this.onXMLMinorError("undefined material found for node " + nodeID);
+                material = this.errorMaterial;
             }
 
             node.material = material;
@@ -696,13 +717,14 @@ class MySceneGraph {
                     this.onXMLMinorError("unable to parse aft component from the texture of ID " + texture.id + "of the node " + nodeID);
                 }
 
-                texture.afs = auxS || 1.0;
-                texture.aft = auxT || 1.0;
-            } else {
-                return "texture undefined for node of ID " + nodeID;
-            }
+                texture.afs = (auxS != null ? auxS : 1.0);
+                texture.aft = (auxT != null ? auxT : 1.0);
 
-            node.texture = texture;
+                node.texture = texture;
+            } else {
+                this.onXMLMinorError("texture undefined for node of ID " + nodeID);
+                node.texture = this.errorTexture;
+            }
 
             // Descendants
             if (descendantsIndex != -1) {
@@ -711,6 +733,11 @@ class MySceneGraph {
                 for (let i = 0; i < grandgrandChildren.length; i++) {
                     if (grandgrandChildren[i].nodeName == "noderef") {
                         var aux = this.reader.getString(grandgrandChildren[i], 'id');
+                        if (aux == null) {
+                            this.onXMLMinorError("invalid descendant for node " + nodeID);
+                            continue;
+                        }
+
                         node.addDescendant(aux);
 
                     } 
@@ -719,7 +746,8 @@ class MySceneGraph {
                         var aux = this.parsePrimitive(grandgrandChildren[i], texture.afs, texture.aft, "node of ID " + nodeID);
                     
                         if (typeof aux == "string") {
-                            return aux;
+                            this.onXMLMinorError("invalid primitive for node " + nodeID);
+                            continue;
                         }
 
                         node.addObject(aux);
@@ -727,15 +755,17 @@ class MySceneGraph {
                 }
             }
             if (node.descendants.length < 1) {
-                return "node of ID " + nodeID + " must have atleast one descendant";
+                this.onXMLMinorError("node of ID " + nodeID + " must have atleast one descendant");
+                continue;
             }
 
             this.nodes[nodeID] = node;
         }
 
-        this.nodes[this.idRoot].initialize(this.nodes, this.materials, this.textures, null);
+        // Initialize nodes by replacing all references to real values
+        this.nodes[this.idRoot].initialize(this, null);
 
-        this.log("Parsed Nodes.");
+        this.log("Parsed Nodes");
 
         return null;
     }

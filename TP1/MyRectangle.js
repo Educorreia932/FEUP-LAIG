@@ -14,8 +14,8 @@ class MyRectangle extends CGFobject {
 		this.x2 = x2;
 		this.y1 = y1;
 		this.y2 = y2;
-		this.afs = afs;
-		this.aft = aft;
+		this.afs = (afs == null ? 1 : afs);
+		this.aft = (aft == null ? 1 : aft);
 
 		this.initBuffers();
 	}
