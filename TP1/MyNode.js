@@ -56,6 +56,8 @@ class MyNode {
             if (typeof descendant == "string") {
                 if (parser.nodes[descendant] != null) {
                     aux.push(parser.nodes[descendant]);
+                } else {
+                    parser.onXMLMinorError("invalid descendant for node of ID " + this.id);
                 }
             } 
             
@@ -71,19 +73,21 @@ class MyNode {
         // Material
         if (this.parent == null) {
             if (typeof this.material == "string") {
-                if (parser.materials[this.material] != null)
+                if (parser.materials[this.material] != null) {
                     this.material = parser.materials[this.material];
-                else
+                } else {
                     this.material = parser.errorMaterial;
+                }
             }
         } else {
             if (typeof this.material == "string") {
                 if (this.material == "null") {
                     this.material = this.parent.material;
-                } else if (parser.materials[this.material] != null)
+                } else if (parser.materials[this.material] != null) {
                     this.material = parser.materials[this.material];
-                else
+                } else {
                     this.material = parser.errorMaterial;
+                }
             }
         }
 
@@ -104,10 +108,11 @@ class MyNode {
                     this.texture = this.parent.texture;
                 } else if (this.texture.id == "clear") {
                     this.texture = null;
-                } else if (parser.textures[this.texture.id] != null)
+                } else if (parser.textures[this.texture.id] != null) {
                     this.texture = parser.textures[this.texture.id];
-                else
+                } else {
                     this.texture = parser.errorTexture;
+                }
             }
         }
 

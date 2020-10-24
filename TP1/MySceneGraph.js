@@ -678,9 +678,7 @@ class MySceneGraph {
                     this.onXMLMinorError("no valid material found for node " + nodeID);
                     material = this.errorMaterial;
                 }
-            } 
-            
-            else {
+            } else {
                 this.onXMLMinorError("undefined material found for node " + nodeID);
                 material = this.errorMaterial;
             }
