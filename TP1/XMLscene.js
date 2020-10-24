@@ -21,6 +21,7 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = false;
 
+        this.displayLights = false; // Checkbox for drawing lights or not
         // List to store the ID of the cameras read on parser, to be displayed on the GUI
         this.cameraIDs = [];
         this.selectedCamera = null;
@@ -73,6 +74,12 @@ class XMLscene extends CGFscene {
         this.interface.setActiveCamera(this.camera);
     }
 
+    // Enable/Disable lights drawing
+    toggleDisplayLights() {
+        for (var i = 0; i < this.lights.length; i++)
+            this.lights[i].setVisible(this.displayLights);
+    }
+
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
@@ -92,8 +99,6 @@ class XMLscene extends CGFscene {
                 this.lights[i].setAmbient(...graphLight[2]);
                 this.lights[i].setDiffuse(...graphLight[3]);
                 this.lights[i].setSpecular(...graphLight[4]);
-
-                this.lights[i].setVisible(true);
                 
                 if (graphLight[0])
                     this.lights[i].enable();

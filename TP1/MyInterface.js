@@ -28,6 +28,8 @@ class MyInterface extends CGFinterface {
     addInterfaceElements() {
         // ---- Lights Configuration
         var lights_folder = this.gui.addFolder("Lights Configuration");
+        
+        lights_folder.add(this.scene, 'displayLights').name('Display Lights').onChange(this.scene.toggleDisplayLights.bind(this.scene)).listen();
 
         for (let i = 0; i < this.scene.lights.length; i++) {
             // Checkbox for enabling/disabling lights
