@@ -21,7 +21,13 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = false;
 
-        this.initCameras();
+        this.displayLights = false; // Checkbox for drawing lights or not
+        // List to store the ID of the cameras read on parser, to be displayed on the GUI
+        this.cameraIDs = [];
+        this.selectedCamera = null;
+
+        // Pre Init a default camera before parsing the XML (required due to Application implementation)
+        this.preInitCamera();
 
         this.enableTextures(true);
 
@@ -37,15 +43,41 @@ class XMLscene extends CGFscene {
         this.loadingProgress = 0;
 
         this.defaultAppearance = new CGFappearance(this);
+    }
 
-        this.debugTexture = new CGFtexture(this, "./scenes/images/earth.jpg");
+    preInitCamera() {
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
 
     /**
      * Initializes the scene cameras.
+     * Sets the default camera read from the XML and stores the IDs of the cameras defined on the XML
      */
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        // Read the default camera
+        this.selectedCamera = this.graph.defaultCamera;
+
+        // Read the IDs of the cameras defined
+        this.cameraIDs = Object.keys(this.graph.cameras);
+
+        // Set the default camera
+        this.camera = this.graph.cameras[this.selectedCamera];
+
+        // Notify interface of the update
+        this.interface.setActiveCamera(this.camera);
+    }
+
+    // Trigger to be called upon update of selected camera on GUI
+    updateCamera() {
+        this.camera = this.graph.cameras[this.selectedCamera];
+
+        this.interface.setActiveCamera(this.camera);
+    }
+
+    // Enable/Disable lights drawing
+    toggleDisplayLights() {
+        for (var i = 0; i < this.lights.length; i++)
+            this.lights[i].setVisible(this.displayLights);
     }
 
     /**
@@ -67,8 +99,6 @@ class XMLscene extends CGFscene {
                 this.lights[i].setAmbient(...graphLight[2]);
                 this.lights[i].setDiffuse(...graphLight[3]);
                 this.lights[i].setSpecular(...graphLight[4]);
-
-                this.lights[i].setVisible(true);
                 
                 if (graphLight[0])
                     this.lights[i].enable();
@@ -87,13 +117,20 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+        this.displayAxis = Boolean(this.graph.referenceLength);
         this.axis = new CGFaxis(this, this.graph.referenceLength);
 
         this.gl.clearColor(...this.graph.background);
 
         this.setGlobalAmbientLight(...this.graph.ambient);
 
+        // Init lights read from XML
         this.initLights();
+
+        // Init cameras read from XML
+        this.initCameras();
+
+        this.interface.addInterfaceElements();
 
         this.sceneInited = true;
     }
@@ -118,17 +155,15 @@ class XMLscene extends CGFscene {
         this.pushMatrix();
 
         for (var i = 0; i < this.lights.length; i++) {
-            this.lights[i].setVisible(true);
-            this.lights[i].enable();
+            this.lights[i].update();
         }
 
         if (this.sceneInited) {
             // Draw axis
-            this.axis.display();
+            if (this.displayAxis)
+                this.axis.display();
 
             this.defaultAppearance.apply();
-
-            this.debugTexture.bind();
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();

@@ -20,11 +20,30 @@ class MyInterface extends CGFinterface {
 
         this.gui = new dat.GUI();
 
-        // add a group of controls (and open/expand by defult)
-
         this.initKeys();
 
         return true;
+    }
+
+    addInterfaceElements() {
+        // ---- Lights Configuration
+        var lights_folder = this.gui.addFolder("Lights Configuration");
+        
+        lights_folder.add(this.scene, 'displayLights').name('Display Lights').onChange(this.scene.toggleDisplayLights.bind(this.scene)).listen();
+
+        for (let i = 0; i < this.scene.lights.length; i++) {
+            // Checkbox for enabling/disabling lights
+            lights_folder.add(this.scene.lights[i], 'enabled').name('Light ' + i + ' enabled').listen();
+        }
+
+        // ---- Cameras Configuration
+        var camera_folder = this.gui.addFolder("Cameras Configuration");
+
+        // Dropdown camera selection
+        camera_folder.add(this.scene, 'selectedCamera', this.scene.cameraIDs).name('Camera').onChange(this.scene.updateCamera.bind(this.scene)).listen();
+
+
+        camera_folder.open();
     }
 
     /**
