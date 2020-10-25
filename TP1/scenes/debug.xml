@@ -32,7 +32,7 @@
     </lights>
 
     <textures>
-        <texture id="debugTex" path="./scenes/images/debug.jpg" />
+        <texture id="debugTex" path="./scenes/images/tank_front.png" />
     </textures>
 
     <materials>
@@ -46,13 +46,16 @@
     </materials>
 
     <nodes>
-        <node id="demoRoot">            
+        <node id="demoRoot">     
+            <texture id="debugTex">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>       
             <transformations>
                 <scale sx="4.0" sy="abc" sz="4.0"/>
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+                <leaf type="rectangle" x1="0" y1="0" x2="3" y2="4" />
             </descendants>
         </node>
     </nodes>

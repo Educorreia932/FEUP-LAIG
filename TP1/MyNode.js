@@ -127,12 +127,10 @@ class MyNode {
 
     display() {
 
-        this.scene.pushMatrix();
-
         if (this.material != null) {
             this.material.apply();
         }
-
+        
         if (this.texture instanceof CGFtexture) {
             this.texture.bind();
         } else if (this.texture == null) { // Texture clear
@@ -140,11 +138,15 @@ class MyNode {
                 this.parent.texture.unbind();
         }
 
+        this.scene.pushMatrix();
+
         this.scene.multMatrix(this.transformation);
 
         for (let i = 0; i < this.descendants.length; i++) {
             this.descendants[i].display();
         }
+
+        this.scene.popMatrix();
 
         if (this.texture instanceof CGFtexture) {
             this.texture.unbind();
@@ -155,7 +157,5 @@ class MyNode {
             if (this.parent.texture != null)
                 this.parent.texture.bind();
         }
-
-        this.scene.popMatrix();
     }
 }

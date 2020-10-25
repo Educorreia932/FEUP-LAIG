@@ -1,6 +1,6 @@
 <lsf>
     <initials>
-        <reference length="0" />
+        <reference length="2" />
         <root id="rootTP1" />
     </initials>
 
@@ -36,7 +36,7 @@
     <textures>
         <texture id="R2-D2 Head" path="./scenes/images/R2-D2 Head.png" />
         <texture id="R2-D2 Body" path="./scenes/images/R2-D2 Body.png" />
-        <texture id="Sandstone" path="./scenes/images/sandstone.jpg"/>
+        <texture id="Sandstone" path="./scenes/images/sandstone.png"/>
         <texture id="Copper" path="./scenes/images/copper.jpg"/>
         <texture id="SkyboxTop" path="./scenes/images/skybox/top.jpg"/>
         <texture id="SkyboxBottom" path="./scenes/images/skybox/bottom.jpg"/>
@@ -44,6 +44,7 @@
         <texture id="SkyboxRight" path="./scenes/images/skybox/right.jpg"/>
         <texture id="SkyboxFront" path="./scenes/images/skybox/front.jpg"/>
         <texture id="SkyboxBack" path="./scenes/images/skybox/back.jpg"/>
+        <texture id="TankFront" path="./scenes/images/tank_front.png"/>
     </textures>
 
     <!-- Materials -->
@@ -68,6 +69,14 @@
             <shininess value="10.0" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="0.9" g="0.9" b="0.9" a="1.0" />
+            <specular r="0.1" g="0.1" b="0.1" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="Sandstone">
+            <shininess value="10.0" />
+            <ambient r="0.4" g="0.4" b="0.4" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
             <specular r="0.1" g="0.1" b="0.1" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
@@ -110,11 +119,31 @@
                 <noderef id="skyboxLeftFace"/>
                 <noderef id="skyboxFrontFace" />
                 <noderef id="skyboxBackFace" />
+                <noderef id="arc"/>
+            </descendants>
+        </node>
+
+        <node id="arc">
+            <material id="Sandstone" />
+
+            <texture id="Sandstone">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="0.2" sy="0.2" sz="0.4"/>
+                <translation x="-2" y="0" z="1"/>
+                <rotation axis="z" angle="180"/>
+                <rotation axis="y" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="0.5" outer="1.5" slices="20" loops="20" />
             </descendants>
         </node>
 
         <node id="skyboxTopFace">
-            <material id="Skybox" />
+            <material id="null" />
 
             <texture id="SkyboxTop">
                 <amplification afs="1.0" aft="1.0" />
@@ -122,6 +151,7 @@
 
             <transformations>
                 <translation x="0" y="1" z="0"/>
+                <rotation axis="y" angle="90"/>
                 <rotation axis="x" angle="90"/>
             </transformations>
 
@@ -131,13 +161,14 @@
         </node>
         
         <node id="skyboxBottomFace">
-            <material id="Skybox" />
+            <material id="null" />
 
             <texture id="SkyboxBottom">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
+                <rotation axis="y" angle="-90"/>
                 <rotation axis="x" angle="-90"/>
             </transformations>
 
@@ -147,7 +178,7 @@
         </node>
 
         <node id="skyboxRightFace">
-            <material id="SkyboxLeft" />
+            <material id="null" />
 
             <texture id="SkyboxRight">
                 <amplification afs="1.0" aft="1.0" />
@@ -163,7 +194,7 @@
         </node>
 
         <node id="skyboxLeftFace">
-            <material id="Sand" />
+            <material id="null" />
 
             <texture id="SkyboxLeft">
                 <amplification afs="1.0" aft="1.0" />
@@ -180,15 +211,15 @@
         </node>
 
         <node id="skyboxFrontFace">
-            <material id="Sand" />
+            <material id="null" />
 
             <texture id="SkyboxFront">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="0.5" y="0.5" z="0"/>
-                <rotation axis="y" angle="-90"/>
+                <translation x="-0.5" y="0.5" z="0"/>
+                <rotation axis="y" angle="90"/>
             </transformations>
 
             <descendants>
@@ -204,8 +235,8 @@
             </texture>
 
             <transformations>
-                <translation x="-0.5" y="0.5" z="0"/>
-                <rotation axis="y" angle="90"/>
+                <translation x="0.5" y="0.5" z="0"/>
+                <rotation axis="y" angle="-90"/>
             </transformations>
 
             <descendants>
@@ -312,7 +343,9 @@
             </transformations>
 
             <descendants>
-                <noderef id="leg" />
+                <noderef id="legTop" />
+                <noderef id="legBottom" />
+                <noderef id="footLeft" />
             </descendants>
         </node>
 
@@ -329,27 +362,13 @@
             </transformations>
 
             <descendants>
-                <noderef id="leg" />
+                <noderef id="legTop" />
+                <noderef id="legBottom" />
+                <noderef id="footRight" />
             </descendants>
         </node>
 
         <!-- Legs -->
-        <node id="leg">
-            <material id="null" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-            </transformations>
-
-            <descendants>
-                <noderef id="legTop" />
-                <noderef id="legBottom" />
-                <noderef id="footLeft" />
-            </descendants>
-        </node>
 
         <node id="legTop">
             <material id="null" />
@@ -454,12 +473,35 @@
                 <noderef id="footLeftFace"/>
                 <noderef id="footFrontFace" />
                 <noderef id="footBackFace" />
-                <noderef id="tank" />
+                <noderef id="tankLeft" />
+            </descendants>
+        </node>
+
+        <node id="footRight">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="-0.95" z="-9.5"/>
+                <scale sx="3.0" sy="1.3" sz="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="footTopFace"/>
+                <noderef id="footBottomFace"/>
+                <noderef id="footRightFace"/>
+                <noderef id="footLeftFace"/>
+                <noderef id="footFrontFace" />
+                <noderef id="footBackFace" />
+                <noderef id="tankRight" />
             </descendants>
         </node>
 
         <!-- Foot Miscalleneous -->
-        <node id="tank">
+        <node id="tankLeft">
             <material id="null" />
 
             <texture id="null">
@@ -473,11 +515,30 @@
 
             <descendants>
                 <noderef id="tankParallelepiped" />
-                <noderef id="tankWires" />
+                <noderef id="tankWiresLeft" />
             </descendants>
         </node>
 
-        <node id="tankWires">
+        <node id="tankRight">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="0.95" sy="0.8" sz="0.4" />
+                <translation x="1.2" y="0.9" z="-0.4" />
+                <rotation axis="y" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="tankParallelepiped" />
+                <noderef id="tankWiresRight" />
+            </descendants>
+        </node>
+
+        <node id="tankWiresLeft">
             <material id="null" />
 
             <texture id="Copper">
@@ -486,6 +547,24 @@
 
             <transformations>
                 <translation x="1.75" y="-0.3" z="-0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tankWireTop" />
+                <noderef id="TankWireBot" />
+            </descendants>
+        </node>
+
+        <node id="tankWiresRight">
+            <material id="null" />
+
+            <texture id="Copper">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.75" y="-0.3" z="0.8" />
+                <rotation axis="z" angle="180"/>
             </transformations>
 
             <descendants>
@@ -607,12 +686,12 @@
         <node id="tankRectangleFront">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="Copper">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="1.0" y="0.0" z="0.0" />
+                <translation x="2.0" y="0.0" z="0.0" />
                 <rotation axis="y" angle="90" />
                 <scale sx="2.0" sy="1.0" sz="1.0" />
             </transformations>
