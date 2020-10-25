@@ -26,6 +26,10 @@ class XMLscene extends CGFscene {
         this.cameraIDs = [];
         this.selectedCamera = null;
 
+        // Stack to store materials and textures being applied
+        this.textureStack = [];
+        this.materialStack = [];
+
         // Pre Init a default camera before parsing the XML (required due to Application implementation)
         this.preInitCamera();
 
@@ -43,6 +47,50 @@ class XMLscene extends CGFscene {
         this.loadingProgress = 0;
 
         this.defaultAppearance = new CGFappearance(this);
+    }
+
+    // Texture & Material Stack Control
+    pushTexture(texture) {
+        this.textureStack.push(texture);
+
+        var material = this.getMaterial();
+        if (material != null) {material.setTexture(texture);material.apply();}
+        else {this.defaultAppearance.setTexture(texture);this.defaultAppearance.apply();}
+    }
+
+    popTexture() {
+        var aux = this.textureStack.pop();
+        var current = this.getTexture();
+
+        var material = this.getMaterial();
+        if (material != null) {material.setTexture(current); material.apply()}
+        else {this.defaultAppearance.setTexture(current);this.defaultAppearance.apply();}
+
+        return aux;
+    }
+
+    getTexture() {
+        return (this.textureStack.length <= 0 ? null : this.textureStack[this.textureStack.length - 1]);
+    }
+
+    pushMaterial(material) {
+        var texture = this.getTexture();
+        this.materialStack.push(material);
+        material.setTexture(texture);
+        material.apply();
+    }
+
+    popMaterial() {
+        var texture = this.getTexture();
+        var aux = this.materialStack.pop();
+        var current = this.getMaterial();
+        if (current != null) {current.setTexture(texture);current.apply();}
+        else {this.defaultAppearance.setTexture(texture); this.defaultAppearance.apply();}
+        return aux;
+    }
+
+    getMaterial() {
+        return (this.materialStack.length <= 0 ? null : this.materialStack[this.materialStack.length - 1]);
     }
 
     preInitCamera() {
