@@ -74,6 +74,7 @@ class MyNode {
                 this.material = parser.materials[this.material];
             } else if (this.material != "null") {
                 this.material = parser.errorMaterial;
+                parser.onXMLMinorError("invalid material for node " + this.id + ";applying error material");
             }
         }
 
@@ -82,7 +83,8 @@ class MyNode {
             if (parser.textures[this.texture.id] != null) {
                 this.texture = parser.textures[this.texture.id];
             } else if (this.texture.id != "null" && this.texture.id != "clear") {
-                this.texture = parser.errorTexture;;
+                this.texture = parser.errorTexture;
+                parser.onXMLMinorError("invalid texture for node " + this.id + ";applying error texture");
             } else {
                 this.texture = this.texture.id;
             }
