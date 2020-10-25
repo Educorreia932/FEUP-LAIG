@@ -1,7 +1,7 @@
 <lsf>
     <initials>
         <reference length="1" />
-        <root id="demoRoot" />
+        <root id="scene" />
     </initials>
 
     <views default="defaultCamera">
@@ -32,30 +32,123 @@
     </lights>
 
     <textures>
-        <texture id="debugTex" path="./scenes/images/tank_front.png" />
+        <texture id="error" path="./scenes/required_textures/error_texture.png" />
     </textures>
 
     <materials>
-        <material id="demoMaterial">
-            <shininess value="10.0" />
-            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
-            <diffuse r="0.8"  g="0.8" b="0.8" a="1.0" />
-            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        <material id="default">
+            <shininess value="1.0" />
+            <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="slightlyBrightDefault">
+            <shininess value="1.0" />
+            <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+            <emissive r="0.2" g="0.2" b="0.2" a="1.0" />
+        </material>
+        <material id="mildlyBrightDefault">
+            <shininess value="1.0" />
+            <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+            <emissive r="0.35" g="0.35" b="0.35" a="1.0" />
         </material>
     </materials>
 
     <nodes>
-        <node id="demoRoot">     
-            <texture id="debugTex">
+        <node id="scene">
+            <material id="default" />
+
+            <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
-            </texture>       
+            </texture>
+
             <transformations>
-                <scale sx="4.0" sy="abc" sz="4.0"/>
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0" y1="0" x2="3" y2="4" />
+                <noderef id="props" />
+            </descendants>
+        </node>
+
+        <node id="props" >
+            <material id="null" />
+            
+            <texture id="null" >
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="placed_exit_door" />
+            </descendants>
+        </node>
+
+        <node id="placed_exit_door">
+                <material id="null" />
+
+                <texture id="null">
+                    <amplification afs="1.0" aft="1.0" />
+                </texture>
+
+                <transformations>
+                    <translation x="6.5" y="2.33" z="0" />
+                </transformations>
+
+                <descendants>
+                    <noderef id="exit_door" />
+                </descendants>
+        </node>
+        <node id="exit_door">
+            <material id="null" />
+
+            <texture id="exit_door">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="door_face" />
+                <noderef id="door_torus" />
+            </descendants>
+        </node>
+
+        <node id="door_face">
+            <material id="default" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-0.005" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.01" topRadius="0.4" bottomRadius="0.4" slices="20" stacks="20" />
+            </descendants>
+        </node>
+
+        <node id="door_torus">
+            <material id="slightlyBrightDefault" />
+
+            <texture id="door_frame_color">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="0.025" outer="0.42" slices="10" loops="60"/>
             </descendants>
         </node>
     </nodes>

@@ -55,7 +55,7 @@ class MySceneGraph {
          */
         this.reader.open('scenes/' + filename, this);
 
-        this.errorTexture = new CGFtexture(this.scene, "./scenes/images/error_texture.png");
+        this.errorTexture = new CGFtexture(this.scene, "./scenes/required_textures/error_texture.png");
         this.errorMaterial = new CGFappearance(this.scene);
         this.errorMaterial.setAmbient(1, 1, 1, 1);
         this.errorMaterial.setDiffuse(0, 0, 0, 1);
@@ -761,7 +761,13 @@ class MySceneGraph {
         }
 
         // Initialize nodes by replacing all references to real values
-        this.nodes[this.idRoot].initialize(this, null);
+        if (this.nodes[this.idRoot] == null) {
+            return "scene doesn't have a valid root node";
+        }
+
+        this.nodes[this.idRoot].initialize(this);
+
+        var aux = [];
 
         this.log("Parsed Nodes");
 

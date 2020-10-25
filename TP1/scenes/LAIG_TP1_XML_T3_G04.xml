@@ -1,7 +1,7 @@
 <lsf>
     <initials>
-        <reference length="2" />
-        <root id="rootTP1" />
+        <reference length="0" />
+        <root id="scene" />
     </initials>
 
     <views default="defaultCamera">
@@ -34,21 +34,30 @@
 
     <!-- Textures -->
     <textures>
-        <texture id="R2-D2 Head" path="./scenes/images/R2-D2 Head.png" />
-        <texture id="R2-D2 Body" path="./scenes/images/R2-D2 Body.png" />
-        <texture id="Sandstone" path="./scenes/images/sandstone.png"/>
-        <texture id="Copper" path="./scenes/images/copper.jpg"/>
-        <texture id="SkyboxTop" path="./scenes/images/skybox/top.jpg"/>
-        <texture id="SkyboxBottom" path="./scenes/images/skybox/bottom.jpg"/>
-        <texture id="SkyboxLeft" path="./scenes/images/skybox/left.jpg"/>
-        <texture id="SkyboxRight" path="./scenes/images/skybox/right.jpg"/>
-        <texture id="SkyboxFront" path="./scenes/images/skybox/front.jpg"/>
-        <texture id="SkyboxBack" path="./scenes/images/skybox/back.jpg"/>
-        <texture id="TankFront" path="./scenes/images/tank_front.png"/>
+        <texture id="R2-D2 Head" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/R2-D2 Head.png" />
+        <texture id="R2-D2 Body" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/R2-D2 Body.png" />
+        <texture id="Sandstone" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/sandstone.png"/>
+        <texture id="Copper" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/copper.jpg"/>
+        <texture id="SkyboxTop" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/top.jpg"/>
+        <texture id="SkyboxBottom" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/bottom.jpg"/>
+        <texture id="SkyboxLeft" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/left.jpg"/>
+        <texture id="SkyboxRight" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/right.jpg"/>
+        <texture id="SkyboxFront" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/front.jpg"/>
+        <texture id="SkyboxBack" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/back.jpg"/>
+        <texture id="TankFront" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/tank_front.png"/>
+        <texture id="SupportTubes" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/support_tubes.png"/>
+        <texture id="FootFront" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/foot_front.png"/>
     </textures>
 
     <!-- Materials -->
     <materials>
+        <material id="default">
+            <shininess value="1.0" />
+            <ambient r="0.8" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
         <material id="White Metal">
             <shininess value="10.0" />
             <ambient r="0.3" g="0.3" b="0.3" a="1.0" />
@@ -61,6 +70,14 @@
             <shininess value="10.0" />
             <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
             <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.1" g="0.1" b="0.1" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="Dark Gray Metal">
+            <shininess value="10.0" />
+            <ambient r="0.17" g="0.17" b="0.17" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
             <specular r="0.1" g="0.1" b="0.1" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
@@ -84,7 +101,7 @@
 
     <!-- Nodes -->
     <nodes>
-        <node id="rootTP1">
+        <node id="scene">
             <material id="White Metal" />
 
             <texture id="clear">
@@ -100,7 +117,7 @@
             </descendants>
         </node>
 
-        <!-- Skybox -->
+        <!-- START SKYBOX -->
         <node id="skybox">
             <material id="Skybox" />
 
@@ -243,8 +260,9 @@
                 <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
             </descendants>
         </node>
+        <!-- END SKYBOX -->
 
-        <!-- R2-D2 -->
+        <!-- START R2-D2 -->
         <node id="R2-D2">
             <material id="White Metal" />
 
@@ -262,6 +280,7 @@
             </descendants>
         </node>
 
+        <!-- START R2-D2 HEAD -->
         <node id="head">
             <material id="null" />
 
@@ -279,7 +298,9 @@
                 <leaf type="sphere" radius="4.75" slices="50" stacks="50" />
             </descendants>
         </node>
+        <!-- START R2-D2 HEAD -->
 
+        <!-- START R2-D2 BODY -->
         <node id="body">
             <material id="null" />
 
@@ -330,7 +351,9 @@
                 <translation x="0.0" y="0.0" z="-1.0" />
             </transformations>
         </node>
+        <!-- START R2-D2 BODY -->
 
+        <!-- START R2-D2 LEGS -->
         <node id="leftLeg">
             <material id="null" />
 
@@ -450,7 +473,26 @@
             </transformations>
 
             <descendants>
+                <noderef id="legBottomTube"/>
                 <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="legBottomTube">
+            <material id="null" />
+
+            <texture id="SupportTubes">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="-0.8" z="-0.3" />
+                <rotation axis="y" angle="91.5"/>
+                <scale sx="0.2" sy="0.8" sz="0.7"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.5" topRadius="0.5" height="1.5" slices="50" stacks="5"/>
             </descendants>
         </node>
 
@@ -467,13 +509,28 @@
             </transformations>
 
             <descendants>
+                <noderef id="foot" />
+                <noderef id="tankLeft" />
+            </descendants>
+        </node>
+
+        <node id="foot">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
                 <noderef id="footTopFace"/>
                 <noderef id="footBottomFace"/>
                 <noderef id="footRightFace"/>
                 <noderef id="footLeftFace"/>
                 <noderef id="footFrontFace" />
                 <noderef id="footBackFace" />
-                <noderef id="tankLeft" />
             </descendants>
         </node>
 
@@ -490,12 +547,7 @@
             </transformations>
 
             <descendants>
-                <noderef id="footTopFace"/>
-                <noderef id="footBottomFace"/>
-                <noderef id="footRightFace"/>
-                <noderef id="footLeftFace"/>
-                <noderef id="footFrontFace" />
-                <noderef id="footBackFace" />
+                <noderef id="foot" />
                 <noderef id="tankRight" />
             </descendants>
         </node>
@@ -528,8 +580,8 @@
 
             <transformations>
                 <scale sx="0.95" sy="0.8" sz="0.4" />
-                <translation x="1.2" y="0.9" z="-0.4" />
-                <rotation axis="y" angle="180"/>
+                <translation x="1.2" y="1.3" z="-0.4" />
+                <rotation axis="z" angle="180"/>
             </transformations>
 
             <descendants>
@@ -546,7 +598,7 @@
             </texture>
 
             <transformations>
-                <translation x="1.75" y="-0.3" z="-0.3" />
+                <translation x="1.75" y="-0.35" z="-0.3" />
             </transformations>
 
             <descendants>
@@ -563,7 +615,7 @@
             </texture>
 
             <transformations>
-                <translation x="1.75" y="-0.3" z="0.8" />
+                <translation x="1.75" y="0.7" z="-0.3" />
                 <rotation axis="z" angle="180"/>
             </transformations>
 
@@ -609,7 +661,7 @@
         </node>
 
         <node id="tankCylinderTop">
-            <material id="null" />
+            <material id="Dark Gray Metal" />
 
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
@@ -626,7 +678,7 @@
         </node>
 
         <node id="tankCylinderBot">
-            <material id="null" />
+            <material id="Dark Gray Metal" />
 
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
@@ -672,10 +724,11 @@
             </texture>
 
             <transformations>
-                <translation x="-0.5" y="0.0" z="0.0" />
+                <translation x="-0.501" y="0.0" z="0.0" />
                 <rotation axis="y" angle="90" />
                 <rotation axis="x" angle="180" />
                 <scale sx="2.0" sy="1.0" sz="1.0" />
+                <rotation axis="z" angle="90"/>
             </transformations>
 
             <descendants>
@@ -686,14 +739,15 @@
         <node id="tankRectangleFront">
             <material id="null" />
 
-            <texture id="Copper">
+            <texture id="TankFront">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="2.0" y="0.0" z="0.0" />
+                <translation x="1.001" y="0.0" z="0.0" />
                 <rotation axis="y" angle="90" />
                 <scale sx="2.0" sy="1.0" sz="1.0" />
+                <rotation axis="z" angle="90"/>
             </transformations>
 
             <descendants>
@@ -817,7 +871,7 @@
 
         <node id="footFrontFace">
             <material id="null" />
-            <texture id="clear">
+            <texture id="FootFront">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -846,7 +900,7 @@
 
         <node id="footFace">
             <material id="null" />
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -904,8 +958,7 @@
             </transformations>
 
             <descendants>
-                <noderef id="middleFootSupport" />
-                <noderef id="middleFoot" />
+                <noderef id="middleFootSupport"/>
             </descendants>
         </node>
 
@@ -917,10 +970,13 @@
             </texture>
 
             <transformations>
+                <translation x="0.0" y="-2.0" z="0.7"/>
+                <scale sx="1.9" sy="1.9" sz="1.9"/>
+                <rotation axis="x" angle="-90"/>
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" bottomRadius="1.7678" topRadius="0.70711" height="2" slices="4" stacks="50" />
+                <noderef id="foot"/>
             </descendants>
         </node>
 
@@ -932,10 +988,67 @@
             </texture>
 
             <transformations>
+                <translation x="0.0" y="0.5" z="0.3"/>
+                <rotation axis="x" angle="90"/>
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" bottomRadius="0.4" topRadius="0.4" height="1" slices="50" stacks="50" />
+                <leaf type="cylinder" bottomRadius="1.8" topRadius="1.8" height="1.4" slices="50" stacks="50" />
+                <noderef id="middleFootTubeLeft"/>
+                <noderef id="middleFootTubeRight"/>
+                <noderef id="middleFootJoint"/>
+                <noderef id="middleFoot" />
+            </descendants>
+        </node>
+
+        <node id="middleFootJoint">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="-1.9" z="0.7"/>
+                <scale sx="1.6" sy="0.7" sz="0.7"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="middleFootTubeLeft">
+            <material id="null" />
+
+            <texture id="SupportTubes">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.5" y="-1.6" z="1.7"/>
+                <rotation axis="y" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.3" topRadius="0.3" height="3" slices="50" stacks="50" />
+            </descendants>
+        </node>
+
+        <node id="middleFootTubeRight">
+            <material id="null" />
+
+            <texture id="SupportTubes">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.5" y="-1.6" z="-0.3"/>
+                <rotation axis="y" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.3" topRadius="0.3" height="3" slices="50" stacks="50" />
             </descendants>
         </node>
 
@@ -1059,5 +1172,6 @@
                 <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
             </descendants>
         </node>
+        <!-- END R2-D2 -->
     </nodes>
 </lsf>

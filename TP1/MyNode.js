@@ -44,7 +44,7 @@ class MyNode {
         this.descendants.push(object);
     }
 
-    initialize(parser, parent) {
+    initialize(parser) {
         if (this.inited)
             return;
 
@@ -68,57 +68,29 @@ class MyNode {
 
         this.descendants = aux;
 
-        this.parent = parent;
-
         // Material
-        if (this.parent == null) {
-            if (typeof this.material == "string") {
-                if (parser.materials[this.material] != null) {
-                    this.material = parser.materials[this.material];
-                } else {
-                    this.material = parser.errorMaterial;
-                }
-            }
-        } else {
-            if (typeof this.material == "string") {
-                if (this.material == "null") {
-                    this.material = this.parent.material;
-                } else if (parser.materials[this.material] != null) {
-                    this.material = parser.materials[this.material];
-                } else {
-                    this.material = parser.errorMaterial;
-                }
+        if (typeof this.material == "string") {
+            if (parser.materials[this.material] != null) {
+                this.material = parser.materials[this.material];
+            } else if (this.material != "null") {
+                this.material = parser.errorMaterial;
             }
         }
 
         // Texture
-        if (this.parent == null) {
-            if (typeof this.texture.id == "string") {
-                if (parser.textures[this.texture.id] != null) {
-                    this.texture = parser.textures[this.texture.id];
-                } else if (this.texture.id == "null" || this.texture.id == "clear") {
-                    this.texture = null;
-                } else {
-                    this.texture = parser.errorTexture;
-                }
-            }
-        } else {
-            if (typeof this.texture.id == "string") {
-                if (this.texture.id == "null") {
-                    this.texture = this.parent.texture;
-                } else if (this.texture.id == "clear") {
-                    this.texture = null;
-                } else if (parser.textures[this.texture.id] != null) {
-                    this.texture = parser.textures[this.texture.id];
-                } else {
-                    this.texture = parser.errorTexture;
-                }
+        if (typeof this.texture.id == "string") {
+            if (parser.textures[this.texture.id] != null) {
+                this.texture = parser.textures[this.texture.id];
+            } else if (this.texture.id != "null" && this.texture.id != "clear") {
+                this.texture = parser.errorTexture;;
+            } else {
+                this.texture = this.texture.id;
             }
         }
 
         for (let i = 0; i < this.descendants.length; i++) {
             if (this.descendants[i] instanceof MyNode) {
-                this.descendants[i].initialize(parser, this);
+                this.descendants[i].initialize(parser);
             }
         }
 
@@ -126,16 +98,14 @@ class MyNode {
     }
 
     display() {
-
-        if (this.material != null) {
-            this.material.apply();
+        if (this.material instanceof CGFappearance) {
+            this.scene.pushMaterial(this.material);
         }
-        
+
         if (this.texture instanceof CGFtexture) {
-            this.texture.bind();
-        } else if (this.texture == null) { // Texture clear
-            if (this.parent != null && this.parent.texture != null)
-                this.parent.texture.unbind();
+            this.scene.pushTexture(this.texture);
+        } else if (this.texture == "clear") { // Texture clear
+            this.scene.pushTexture(null);
         }
 
         this.scene.pushMatrix();
@@ -148,14 +118,13 @@ class MyNode {
 
         this.scene.popMatrix();
 
-        if (this.texture instanceof CGFtexture) {
-            this.texture.unbind();
+        if (this.texture instanceof CGFtexture || this.texture == "clear") {
+            this.scene.popTexture();
         }
-        if (this.parent != null) { // Restore old textures and materials
-            if (this.parent.material != null)
-                this.parent.material.apply();
-            if (this.parent.texture != null)
-                this.parent.texture.bind();
+
+        if (this.material instanceof CGFappearance) {
+            this.scene.popMaterial();
         }
+    
     }
 }
