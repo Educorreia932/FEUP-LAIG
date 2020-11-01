@@ -7,7 +7,8 @@ var ILLUMINATION_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
-var NODES_INDEX = 6;
+var ANIMATIONS_INDEX = 6;
+var NODES_INDEX = 7;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -131,6 +132,8 @@ class MySceneGraph {
 
         var error;
 
+        var nonAnimationsBlock = true; // indicates if block <animations> exists
+
         // Processes each node, verifying errors.
 
         // <initials>
@@ -213,12 +216,23 @@ class MySceneGraph {
                 return error;
         }
 
+        if ((index = nodeNames.indexOf("animations")) != -1) {
+            nonAnimationsBlock = false;
+
+            if (index != ANIMATIONS_INDEX)
+                this.onXMLMinorError("tag <animations> out of order");
+
+            // Parse animations block
+            if ((error = this.parseAnimations(nodes[index])) != null)
+                return error;
+        }
+
         // <nodes>
         if ((index = nodeNames.indexOf("nodes")) == -1)
             return "tag <nodes> missing";
 
         else {
-            if (index != NODES_INDEX)
+            if (index != NODES_INDEX - nonAnimationsBlock)
                 this.onXMLMinorError("tag <nodes> out of order");
 
             //Parse nodes block
@@ -601,9 +615,38 @@ class MySceneGraph {
     }
 
     /**
-   * Parses the <nodes> block.
-   * @param {nodes block element} nodesNode
-   */
+     * Parses the <animations> block
+     * @param {animations block element} animationsNode 
+     */
+    parseAnimations(animationsNode) {
+        var children = animationsNode.children;
+
+        this.animations = [];
+
+        var nodeNames = [];
+
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].nodeName != "animation") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            var animationID = this.reader.getString(children[i], 'id');
+
+            if (animationID == null)
+                return "no ID defined for animation number #" + i;
+
+            if (this.animations[animationID] != null)
+                return "ID must be unique for each animation (conflict ID = " + animationID + ")";
+        }
+
+        return "To Do";
+    }
+
+    /**
+     * Parses the <nodes> block.
+     * @param {nodes block element} nodesNode
+     */
     parseNodes(nodesNode) {
         var children = nodesNode.children;
 
