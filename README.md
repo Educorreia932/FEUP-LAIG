@@ -21,10 +21,18 @@
 -----
 
 ### [TP2 - ...](TP2)
-- (items briefly describing main strong points)
+- All of the specified primitives were done and support any kind of texture, material, transformation and 
+instantiation. 
+- Our parser handles all kinds of errors that may occur, giving warnings and assuming default values for missing components.
 
 ----
 
 ### [TP3 - ...](TP3)
 - (items briefly describing main strong points)
+
+
+
+# LAIG 2020/2021 - TP1
+
+
 
