@@ -38,7 +38,7 @@ class KeyframeAnimation extends Animation {
 
     linearInterpolation(time, transformationType) {
         let startTransformation = this.keyframes[this.actualKF][transformationType];
-        let startTime = this.keyframes[this.previousKF]["instant"];
+        let startTime = this.keyframes[this.actualKF]["instant"];
         let endTransformation = this.keyframes[this.nextKF][transformationType];
         let endTime = this.keyframes[this.nextKF]['instant'];
 

@@ -643,6 +643,11 @@ class MySceneGraph {
         return "To Do";
     }
 
+    updateAnimations(time) {
+        for (animation in this.animations)
+            this.animation.update(time);
+    }
+
     /**
      * Parses the <nodes> block.
      * @param {nodes block element} nodesNode
@@ -1229,5 +1234,3 @@ class MySceneGraph {
         }
     }
 }
-
-
