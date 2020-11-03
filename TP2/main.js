@@ -22,6 +22,7 @@ serialInclude([
     './primitives/MySphere.js',
     './primitives/MyCylinder.js',
     './primitives/MyTorus.js',
+    'KeyframeAnimation.js',
 
     main = function() {
         // Standard application, scene and interface setup

@@ -20,9 +20,9 @@ class KeyframeAnimation extends Animation {
 
         this.Ma.translate(this.Ma, this.Ma, translationValues);
 
-        this.resultMatrix = mat4.rotate(this.Ma, this.Ma, rotationValues[0] * DEGREE_TO_RAD, [1 ,0, 0]);
-        this.resultMatrix = mat4.rotate(this.Ma, this.Ma, rotationValues[1] * DEGREE_TO_RAD, [0, 1, 0]);
-        this.resultMatrix = mat4.rotate(this.Ma, this.Ma, rotationValues[2] * DEGREE_TO_RAD, [0, 0, 1]);
+        this.resultMatrix = mat4.rotate(this.Ma, this.Ma, rotationValues[0], [1 ,0, 0]);
+        this.resultMatrix = mat4.rotate(this.Ma, this.Ma, rotationValues[1], [0, 1, 0]);
+        this.resultMatrix = mat4.rotate(this.Ma, this.Ma, rotationValues[2], [0, 0, 1]);
 
         this.resultMatrix = mat4.scale(this.resultMatrix, this.resultMatrix, scaleValues);
 

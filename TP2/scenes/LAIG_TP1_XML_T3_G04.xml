@@ -99,6 +99,18 @@
         </material>
     </materials>
 
+    <animations>
+        <animation id="testAnimation" >
+            <keyframe instant="10.3">
+                <translation x="1.0" y="2.3" z="0" />
+                <rotation axis="x" angle="93" />
+                <rotation axis="y" angle="0" />
+                <scale sx="1.0" sy="0.3" sz="5.4" />
+                <rotation axis="z" angle="-3" />
+            </keyframe>
+        </animation>
+    </animations>
+
     <!-- Nodes -->
     <nodes>
         <node id="scene">
