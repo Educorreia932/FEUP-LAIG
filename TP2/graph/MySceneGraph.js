@@ -677,6 +677,15 @@ class MySceneGraph {
 
             keyframes.sort((keyframeA, keyframeB) => keyframeA["instant"] - keyframeB["instant"]);
 
+            // Eliminate keyframes on the same instant
+            for (let a_i = 1; a_i < keyframes.length;) {
+                if (keyframes[a_i - 1]["instant"] == keyframes[a_i]["instant"]) {
+                    this.onXMLMinorError("invalid keyframes - multiple keyframes for instant " + keyframes[a_i]["instant"]);
+                    keyframes.splice(a_i, 1);
+                } else 
+                    a_i++;
+            }
+
             let animation = new KeyframeAnimation(this.scene, keyframes);
 
             this.animations[animationID] = animation;
@@ -809,8 +818,9 @@ class MySceneGraph {
     }
 
     updateAnimations(time) {
-        for (animation in this.animations)
-            this.animation.update(time);
+        for (const [animationID, animation] of Object.entries(this.animations)) {
+            animation.update(time);
+        }
     }
 
     /**
@@ -856,6 +866,7 @@ class MySceneGraph {
             }
 
             var transformationsIndex = nodeNames.indexOf("transformations");
+            var animationIndex = nodeNames.indexOf("animationref");
             var materialIndex = nodeNames.indexOf("material");
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
@@ -880,6 +891,19 @@ class MySceneGraph {
             }
 
             node.transformation = transfMatrix;
+
+            // Animation
+            var animation = null;
+
+            if (animationIndex != -1) {
+                animation = this.reader.getString(grandChildren[animationIndex], 'id');
+
+                if (animation == null) {
+                    this.onXMLMinorError("no valid animation found for node " + nodeID);
+                }
+            }
+
+            node.animation = animation;
 
             // Material
             var material;
