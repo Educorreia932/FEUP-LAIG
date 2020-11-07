@@ -25,6 +25,9 @@ class MyNode {
         // Transformation Matrix
         this.transformation = null;
 
+        // Animation
+        this.animation = null;
+
         // Parent node
         this.parent = null;
 
@@ -67,6 +70,16 @@ class MyNode {
         }
 
         this.descendants = aux;
+
+        // Animation
+        if (typeof this.animation == "string") {
+            if (parser.animations[this.animation] != null) {
+                this.animation = parser.animations[this.animation];
+            } else if (this.animation != "null") {
+                this.animation = null;
+                parser.onXMLMinorError("invalid animation for node " + this.id);
+            }
+        }
 
         // Material
         if (typeof this.material == "string") {
@@ -114,9 +127,13 @@ class MyNode {
 
         this.scene.multMatrix(this.transformation);
 
-        for (let i = 0; i < this.descendants.length; i++) {
-            this.descendants[i].display();
+        if (this.animation != null) {
+            this.animation.apply();
         }
+        
+        if (this.animation == null || this.animation.started)
+            for (let i = 0; i < this.descendants.length; i++)
+                this.descendants[i].display();
 
         this.scene.popMatrix();
 

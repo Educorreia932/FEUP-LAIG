@@ -45,6 +45,39 @@
         </material>
     </materials>
 
+    <animations>
+        <animation id="a1" >
+            <keyframe instant="5">
+                <translation x="1.0" y="2.3" z="0" />
+                <rotation axis="x" angle="93" />
+                <rotation axis="y" angle="0" />
+                <scale sx="1.0" sy="5.0" sz="5.4" />
+                <rotation axis="z" angle="-3" />
+            </keyframe>
+            <keyframe instant="10">
+                <translation x="1.0" y="2.3" z="0" />
+                <rotation axis="x" angle="93" />
+                <rotation axis="y" angle="0" />
+                <scale sx="1.0" sy="4.3" sz="5.4" />
+                <rotation axis="z" angle="-3" />
+            </keyframe>
+            <keyframe instant="15">
+                <translation x="1.0" y="2.3" z="0" />
+                <rotation axis="x" angle="93" />
+                <rotation axis="y" angle="0" />
+                <scale sx="1.0" sy="2.2" sz="5.4" />
+                <rotation axis="z" angle="-3" />
+            </keyframe>
+            <keyframe instant="20">
+                <translation x="1.0" y="2.3" z="0" />
+                <rotation axis="x" angle="93" />
+                <rotation axis="y" angle="0" />
+                <scale sx="1.0" sy="0.7" sz="5.4" />
+                <rotation axis="z" angle="-3" />
+            </keyframe>
+        </animation>
+    </animations>
+
     <nodes>
         <node id="scene">
             <material id="default" />
@@ -71,6 +104,8 @@
             <transformations>
                 <translation x="0" y="0" z="-0.005" />
             </transformations>
+
+            <animationref id="a1"/>
 
             <descendants>
                 <leaf type="cylinder" height="4" topRadius="2" bottomRadius="2" slices="20" stacks="20" />

@@ -41,7 +41,6 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
-        this.setUpdatePeriod(100);
 
         this.loadingProgressObject = new MyRectangle(this, -1, -.1, 1, .1);
         this.loadingProgress = 0;
@@ -95,6 +94,12 @@ class XMLscene extends CGFscene {
 
     preInitCamera() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+    }
+
+    update(time) {
+        if (this.sceneInited) {
+            this.graph.updateAnimations((time - this.firstFrame)/1000.0);
+        }
     }
 
     /**
@@ -179,6 +184,10 @@ class XMLscene extends CGFscene {
         this.initCameras();
 
         this.interface.addInterfaceElements();
+
+        this.setUpdatePeriod(100);
+        
+        this.firstFrame = Date.now();
 
         this.sceneInited = true;
     }
