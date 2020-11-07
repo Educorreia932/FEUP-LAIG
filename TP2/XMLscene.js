@@ -97,8 +97,9 @@ class XMLscene extends CGFscene {
     }
 
     update(time) {
-        if (this.sceneInited) 
-            this.graph.updateAnimations(time);
+        if (this.sceneInited) {
+            this.graph.updateAnimations((time - this.firstFrame)/1000.0);
+        }
     }
 
     /**
@@ -185,6 +186,8 @@ class XMLscene extends CGFscene {
         this.interface.addInterfaceElements();
 
         this.setUpdatePeriod(100);
+        
+        this.firstFrame = Date.now();
 
         this.sceneInited = true;
     }

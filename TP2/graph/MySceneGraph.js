@@ -42,9 +42,10 @@ class MySceneGraph {
         // Graph containing the nodes of the scene
         this.nodes = [];
 
-        // Structures to store the materials and textures defined in the scene
+        // Structures to store the materials, textures and animations defined in the scene
         this.textures = [];
         this.materials = [];
+        this.animations = [];
 
         this.idRoot = null; // The id of the root element of the graph.
 

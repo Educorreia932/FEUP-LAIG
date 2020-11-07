@@ -6,12 +6,13 @@ class KeyframeAnimation extends Animation {
 
         this.actualKF = 0;
         this.nextKF = 1;
+        this.started = false;
         this.ended = false;
+
+        this.Ma = mat4.create();
 
         if (keyframes.length == 1) {
             // Create animation matrix
-            this.Ma = mat4.create();
-
             let translation = this.keyframes[this.actualKF]["translation"];
 
             let rotation = this.keyframes[this.actualKF]["rotation"];
@@ -34,14 +35,15 @@ class KeyframeAnimation extends Animation {
         if (this.ended)
             return; 
         
+        if (!this.started && time >= this.keyframes[0]["instant"])
+            this.started = true;
+        if (!this.started) return;
+
         // Update current and next keyframes
         // When the update function is called, a keyframe might be skipped, that's why the while cycle is needed
-        while (time >= this.keyframes[this.nextKF]["instant"]) {
-            this.actualKF++;
-            this.nextKF++;
-
+        while (time >= this.keyframes[this.actualKF]["instant"]) {
             // Animation ended
-            if (this.nextKF == this.keyframes.length) {
+            if (this.nextKF >= this.keyframes.length) {
                 this.ended = true;
                 
                 return;
@@ -59,15 +61,18 @@ class KeyframeAnimation extends Animation {
 
             this.startScale = this.keyframes[this.actualKF]["scale"];
             this.endScale = this.keyframes[this.nextKF]["scale"];
+
+            this.actualKF++;
+            this.nextKF++;
         }
 
         // Create animation matrix
         this.Ma = mat4.create();
 
         // Calculate interpolated transfomation values
-        let translationValues = linearInterpolation(time, this.startTranslation, this.endTranslation);
-        let rotationValues = linearInterpolation(time, this.startRotation, this.endRotation);
-        let scaleValues = linearInterpolation(time, this.startScale, this.endScale);
+        let translationValues = this.linearInterpolation(time, this.startTranslation, this.endTranslation);
+        let rotationValues = this.linearInterpolation(time, this.startRotation, this.endRotation);
+        let scaleValues = this.linearInterpolation(time, this.startScale, this.endScale);
 
         this.Ma = mat4.translate(this.Ma, this.Ma, translationValues);
 
@@ -86,8 +91,8 @@ class KeyframeAnimation extends Animation {
     linearInterpolation(time, startTransformation, endTransformation) {
         let result = vec3.create();
 
-        t = (time - this.startTime) / (this.endTime - this.startTime);
+        let t = (time - this.startInstant) / (this.endInstant - this.startInstant);
 
-        return lerp(result, startTransformation, endTransformation, t);
+        return vec3.lerp(result, startTransformation, endTransformation, t);
     }
 }
