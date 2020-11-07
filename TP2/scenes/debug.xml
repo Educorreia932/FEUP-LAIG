@@ -108,7 +108,7 @@
             <animationref id="a1"/>
 
             <descendants>
-                <leaf type="cylinder" height="4" topRadius="2" bottomRadius="2" slices="20" stacks="20" />
+                <leaf type="spritetext" text="Telmo e Eduardo" />
             </descendants>
         </node>
 

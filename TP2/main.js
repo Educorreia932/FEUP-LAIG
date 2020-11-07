@@ -24,6 +24,9 @@ serialInclude([
     './primitives/MyTorus.js',
     './animations/Animation.js',
     './animations/KeyframeAnimation.js',
+    './spritesheets/MySpriteSheet.js',
+    './spritesheets/MySpriteText.js',
+    './spritesheets/MySpriteAnimation.js',
 
     main = function() {
         // Standard application, scene and interface setup
@@ -41,7 +44,7 @@ serialInclude([
         // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
         // or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
 
-        // var filename = getUrlVars()['file'] || "LAIG_TP1_XML_T3_G04.xml";
+        var filename = getUrlVars()['file'] || "debug.xml";
 
         // Debug scene
         filename = getUrlVars()['file'] || "debug.xml";
