@@ -2,15 +2,14 @@
  * MySpriteText
  * @constructor
  */
-class MySpriteText {
+class MySpriteText extends CGFobject {
     constructor(scene, text) {
-        this.scene = scene;
+        super(scene);
         this.text = text;
-        this.characters = [];
 
-        this.spritesheet = new MySpriteSheet(scene, "textures/Berlinfont.png", 16, 16);
+        this.spritesheet = new MySpriteSheet(scene, "textures/oolite-font.png", 16, 16);
 
-        this.rectangle = new MyRectangle();
+        this.rectangle = new MyRectangle(scene, 0, 0, 1, 1);
     }
 
     getCharacterPosition(character) {
@@ -18,20 +17,22 @@ class MySpriteText {
     }
 
     display() {
-        this.spritesheet.appearance.apply();
-        this.spritesheet.appearance.apply();
+        this.scene.pushTexture(this.spritesheet.texture);
 
         this.scene.setActiveShader(this.spritesheet.shader);
 
         for (let i = 0; i < this.text.length; i++) {
-            let character = text.charAt(i);
-            let characterCode = getCharacterPosition(character);
+            let character = this.text.charAt(i);
+            let characterCode = this.getCharacterPosition(character);
 
+            this.spritesheet.shader.setUniformsValues({char_index: i});
             this.spritesheet.activacteCellP(characterCode);
 
             this.rectangle.display();
         }
 
         this.scene.setActiveShader(this.scene.defaultShader);
+
+        this.scene.popTexture(this.spritesheet.texture);
     }
 }

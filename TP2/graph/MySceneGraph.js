@@ -1213,6 +1213,16 @@ class MySceneGraph {
 
             out = new MyTorus(this.scene, inner, outer, slices, loops);
         }
+
+        // Sprite Text
+        else if (type == "spritetext") {
+            let text = this.reader.getString(node, "text");
+
+            if (text == null)
+                return "Unable to parse text component from the spritetext of the " + messageError;
+
+            out = new MySpriteText(this.scene, text);
+        }
         
         else 
             return "unable to process primitive of the " + messageError;
