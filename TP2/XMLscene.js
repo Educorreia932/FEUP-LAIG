@@ -97,9 +97,8 @@ class XMLscene extends CGFscene {
     }
 
     update(time) {
-        if (this.sceneInited) {
-            this.graph.updateAnimations((time - this.firstFrame)/1000.0);
-        }
+        if (this.sceneInited)
+            this.graph.updateAnimations((time - this.firstFrame) / 1000.0);
     }
 
     /**

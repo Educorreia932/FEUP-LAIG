@@ -112,6 +112,13 @@ class MyNode {
         this.inited = true;
     }
 
+    update(time) {
+        for (const [objectID, object] of Object.entries(this.objects))
+            if (object instanceof MySpriteAnimation) {
+                object.update(time);
+            }
+    }
+
     display() {
         if (this.material instanceof CGFappearance) {
             this.scene.pushMaterial(this.material);
@@ -119,6 +126,7 @@ class MyNode {
 
         if (this.texture instanceof CGFtexture) {
             this.scene.pushTexture(this.texture);
+
         } else if (this.texture == "clear") { // Texture clear
             this.scene.pushTexture(null);
         }

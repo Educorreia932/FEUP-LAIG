@@ -105,10 +105,8 @@
                 <translation x="0" y="0" z="-0.005" />
             </transformations>
 
-            <animationref id="a1"/>
-
             <descendants>
-                <leaf type="spritetext" text="Telmo e Eduardo" />
+                <leaf type="spriteanim" ssid="textures/man.png" duration="5" startCell="0" endCell="15" />
             </descendants>
         </node>
 

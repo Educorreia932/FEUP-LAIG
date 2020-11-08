@@ -819,10 +819,13 @@ class MySceneGraph {
     }
 
     updateAnimations(time) {
-        for (const [animationID, animation] of Object.entries(this.animations)) {
+        for (const [animationID, animation] of Object.entries(this.animations))
             animation.update(time);
-        }
+
+        for (const [nodeID, node] of Object.entries(this.nodes))
+            node.update(time);
     }
+
 
     /**
      * Parses the <nodes> block.
@@ -1419,8 +1422,36 @@ class MySceneGraph {
             out = new MySpriteText(this.scene, text);
         }
         
+        // Sprite Text
+        else if (type == "spriteanim") {
+            let ssid = this.reader.getString(node, "ssid");
+
+            if (ssid == null)
+                return "Unable to parse spritesheet ID component from the sprite animation of the " + messageError;
+
+            let duration = this.reader.getFloat(node, "duration");
+
+            if (duration == null || isNaN(duration))
+                return "Unable to parse duration component from the sprite animation of the " + messageError;
+
+            let startCell = this.reader.getFloat(node, "startCell");
+
+            if (startCell == null || isNaN(startCell))
+                return "Unable to parse start cell component from the sprite animation of the " + messageError;
+
+
+            let endCell = this.reader.getFloat(node, "endCell");
+
+            if (endCell == null || isNaN(startCell))
+                return "Unable to parse end cell component from the sprite animation of the " + messageError;
+
+            out = new MySpriteAnimation(this.scene, ssid, duration, startCell, endCell);
+        }
+
+        // TODO: Verify cell 
+
         else 
-            return "unable to process primitive of the " + messageError;
+            return "Unable to process primitive of the " + messageError;
 
         return out;
     }
