@@ -6,7 +6,7 @@ class MySpriteAnimation extends CGFobject {
     constructor(scene, ssid, duration, startCell, endCell) {
         super(scene);
         
-        this.spritesheet = new MySpriteSheet(scene, ssid, 8, 8);
+        this.spritesheet = ssid;
         this.startCell = startCell;
         this.endCell = endCell;
 

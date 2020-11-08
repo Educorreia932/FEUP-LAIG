@@ -51,25 +51,36 @@ class MyNode {
         if (this.inited)
             return;
 
-        var aux = [];
+        var auxDesc = [];
+        var auxObj = [];
 
         // Replace ID references by MyNode object references on descendants
         for (let i = 0; i < this.descendants.length; i++) {
             let descendant = this.descendants[i];
             if (typeof descendant == "string") {
                 if (parser.nodes[descendant] != null) {
-                    aux.push(parser.nodes[descendant]);
+                    auxDesc.push(parser.nodes[descendant]);
                 } else {
                     parser.onXMLMinorError("invalid descendant for node of ID " + this.id);
                 }
             } 
             
             else if (descendant instanceof CGFobject) {
-                aux.push(descendant);
+                if (descendant instanceof MySpriteAnimation) {
+                    if (parser.spritesheets[descendant.spritesheet] == null) {
+                        parser.onXMLMinorError("invalid spritesheet for spriteanimation for node of ID " + this.id);
+                        continue;
+                    }
+                    descendant.spritesheet = parser.spritesheets[descendant.spritesheet];
+                }
+
+                auxDesc.push(descendant);
+                auxObj.push(descendant);
             }
         }
 
-        this.descendants = aux;
+        this.descendants = auxDesc;
+        this.objects = auxObj;
 
         // Animation
         if (typeof this.animation == "string") {

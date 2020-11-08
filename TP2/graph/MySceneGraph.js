@@ -6,9 +6,10 @@ var VIEWS_INDEX = 1;
 var ILLUMINATION_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
-var MATERIALS_INDEX = 5;
-var ANIMATIONS_INDEX = 6;
-var NODES_INDEX = 7;
+var SPRITESHEETS_INDEX = 5;
+var MATERIALS_INDEX = 6;
+var ANIMATIONS_INDEX = 7;
+var NODES_INDEX = 8;
 
 // Order of the transformations in keyframe block.
 var KEYFRAME_TRANSLATION_INDEX = 0;
@@ -208,6 +209,19 @@ class MySceneGraph {
 
             //Parse textures block
             if ((error = this.parseTextures(nodes[index])) != null)
+                return error;
+        }
+
+        // <spritesheets>
+        if ((index = nodeNames.indexOf("spritesheets")) == -1)
+            return "tag <spritesheets> missing";
+        
+        else {
+            if (index != SPRITESHEETS_INDEX)
+                this.onXMLMinorError("tag <spritesheets> out of order");
+
+            //Parse textures block
+            if ((error = this.parseSpritesheets(nodes[index])) != null)
                 return error;
         }
 
@@ -500,6 +514,59 @@ class MySceneGraph {
         }
 
         this.log("Parsed textures");
+
+        return null;
+    }
+
+    /**
+     * Parses the <spritesheets> node.
+     * @param {spritesheets block element} spritesheetsNode
+     */
+    parseSpritesheets(spritesheetsNode) {
+        var children = spritesheetsNode.children;
+
+        this.spritesheets = [];
+
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].nodeName != "spritesheet") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            let spritesheetID = this.reader.getString(children[i], 'id');
+
+            if (spritesheetID == null) {
+                return "no ID defined for spritesheet";
+            }
+
+            if (this.spritesheets[spritesheetID] != null) {
+                return "ID must be unique for each spritesheet (conflict: ID = " + spritesheetID + ")";
+            }
+
+            let spritesheetPath = this.reader.getString(children[i], 'path');
+
+            if (spritesheetPath == null) {
+                return "no path defined for spritesheet";
+            }
+
+            let sizeM = this.reader.getInteger(children[i], 'sizeM');
+
+            if (sizeM == null || isNaN(sizeM)) {
+                return "no horizontal size defined for spritesheet";
+            }
+
+            let sizeN = this.reader.getInteger(children[i], 'sizeN');
+
+            if (sizeN == null || isNaN(sizeN)) {
+                return "no vertical size defined for spritesheet";
+            }
+
+            var spritesheet = new MySpriteSheet(this.scene, spritesheetPath, sizeM, sizeN);
+
+            this.spritesheets[spritesheetID] = spritesheet;
+        }
+
+        this.log("Parsed spritesheets");
 
         return null;
     }

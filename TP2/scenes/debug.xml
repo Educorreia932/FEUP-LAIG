@@ -35,6 +35,10 @@
         <texture id="error" path="./scenes/required_textures/error_texture.png" />
     </textures>
 
+    <spritesheets>
+        <spritesheet id="man" path="./textures/man.png" sizeM="8" sizeN="8"/>
+    </spritesheets>
+
     <materials>
         <material id="default">
             <shininess value="1.0" />
@@ -106,7 +110,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="textures/man.png" duration="5" startCell="0" endCell="15" />
+                <leaf type="spriteanim" ssid="man" duration="5" startCell="0" endCell="15" />
             </descendants>
         </node>
 
