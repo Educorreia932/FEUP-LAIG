@@ -15,6 +15,7 @@ serialInclude([
     '../lib/CGF.js', 
     'XMLscene.js', 
     './graph/MySceneGraph.js',
+    './graph/MySceneGraphTextures.js',
     './graph/MyNode.js', 
     'MyInterface.js',
     './primitives/MyRectangle.js',
