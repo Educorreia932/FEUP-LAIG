@@ -35,6 +35,10 @@
         <texture id="error" path="./scenes/required_textures/error_texture.png" />
     </textures>
 
+    <spritesheets>
+        <spritesheet id="man" path="./textures/man.png" sizeM="8" sizeN="8"/>
+    </spritesheets>
+
     <materials>
         <material id="default">
             <shininess value="1.0" />
@@ -44,6 +48,39 @@
             <emissive r="0" g="0" b="0" a="1.0" />
         </material>
     </materials>
+
+    <animations>
+        <animation id="a1" >
+            <keyframe instant="5">
+                <translation x="1.0" y="2.3" z="0" />
+                <rotation axis="x" angle="93" />
+                <rotation axis="y" angle="0" />
+                <scale sx="1.0" sy="5.0" sz="5.4" />
+                <rotation axis="z" angle="-3" />
+            </keyframe>
+            <keyframe instant="10">
+                <translation x="1.0" y="2.3" z="0" />
+                <rotation axis="x" angle="93" />
+                <rotation axis="y" angle="0" />
+                <scale sx="1.0" sy="4.3" sz="5.4" />
+                <rotation axis="z" angle="-3" />
+            </keyframe>
+            <keyframe instant="15">
+                <translation x="1.0" y="2.3" z="0" />
+                <rotation axis="x" angle="93" />
+                <rotation axis="y" angle="0" />
+                <scale sx="1.0" sy="2.2" sz="5.4" />
+                <rotation axis="z" angle="-3" />
+            </keyframe>
+            <keyframe instant="20">
+                <translation x="1.0" y="2.3" z="0" />
+                <rotation axis="x" angle="93" />
+                <rotation axis="y" angle="0" />
+                <scale sx="1.0" sy="0.7" sz="5.4" />
+                <rotation axis="z" angle="-3" />
+            </keyframe>
+        </animation>
+    </animations>
 
     <nodes>
         <node id="scene">
@@ -73,7 +110,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="4" topRadius="2" bottomRadius="2" slices="20" stacks="20" />
+                <leaf type="spriteanim" ssid="man" duration="5" startCell="0" endCell="15" />
             </descendants>
         </node>
 

@@ -6,9 +6,17 @@ var VIEWS_INDEX = 1;
 var ILLUMINATION_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
-var MATERIALS_INDEX = 5;
-var ANIMATIONS_INDEX = 6;
-var NODES_INDEX = 7;
+var SPRITESHEETS_INDEX = 5;
+var MATERIALS_INDEX = 6;
+var ANIMATIONS_INDEX = 7;
+var NODES_INDEX = 8;
+
+// Order of the transformations in keyframe block.
+var KEYFRAME_TRANSLATION_INDEX = 0;
+var KEYFRAME_ROTATIONX_INDEX = 1;
+var KEYFRAME_ROTATIONY_INDEX = 2;
+var KEYFRAME_ROTATIONZ_INDEX = 3;
+var KEYFRAME_SCALE_INDEX = 4;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -35,9 +43,10 @@ class MySceneGraph {
         // Graph containing the nodes of the scene
         this.nodes = [];
 
-        // Structures to store the materials and textures defined in the scene
+        // Structures to store the materials, textures and animations defined in the scene
         this.textures = [];
         this.materials = [];
+        this.animations = [];
 
         this.idRoot = null; // The id of the root element of the graph.
 
@@ -200,6 +209,19 @@ class MySceneGraph {
 
             //Parse textures block
             if ((error = this.parseTextures(nodes[index])) != null)
+                return error;
+        }
+
+        // <spritesheets>
+        if ((index = nodeNames.indexOf("spritesheets")) == -1)
+            return "tag <spritesheets> missing";
+        
+        else {
+            if (index != SPRITESHEETS_INDEX)
+                this.onXMLMinorError("tag <spritesheets> out of order");
+
+            //Parse textures block
+            if ((error = this.parseSpritesheets(nodes[index])) != null)
                 return error;
         }
 
@@ -497,6 +519,59 @@ class MySceneGraph {
     }
 
     /**
+     * Parses the <spritesheets> node.
+     * @param {spritesheets block element} spritesheetsNode
+     */
+    parseSpritesheets(spritesheetsNode) {
+        var children = spritesheetsNode.children;
+
+        this.spritesheets = [];
+
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].nodeName != "spritesheet") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            let spritesheetID = this.reader.getString(children[i], 'id');
+
+            if (spritesheetID == null) {
+                return "no ID defined for spritesheet";
+            }
+
+            if (this.spritesheets[spritesheetID] != null) {
+                return "ID must be unique for each spritesheet (conflict: ID = " + spritesheetID + ")";
+            }
+
+            let spritesheetPath = this.reader.getString(children[i], 'path');
+
+            if (spritesheetPath == null) {
+                return "no path defined for spritesheet";
+            }
+
+            let sizeM = this.reader.getInteger(children[i], 'sizeM');
+
+            if (sizeM == null || isNaN(sizeM)) {
+                return "no horizontal size defined for spritesheet";
+            }
+
+            let sizeN = this.reader.getInteger(children[i], 'sizeN');
+
+            if (sizeN == null || isNaN(sizeN)) {
+                return "no vertical size defined for spritesheet";
+            }
+
+            var spritesheet = new MySpriteSheet(this.scene, spritesheetPath, sizeM, sizeN);
+
+            this.spritesheets[spritesheetID] = spritesheet;
+        }
+
+        this.log("Parsed spritesheets");
+
+        return null;
+    }
+
+    /**
      * Parses the <materials> node.
      * @param {materials block element} materialsNode
      */
@@ -623,7 +698,7 @@ class MySceneGraph {
 
         this.animations = [];
 
-        var nodeNames = [];
+        var grandChildren = [];
 
         for (var i = 0; i < children.length; i++) {
             if (children[i].nodeName != "animation") {
@@ -633,15 +708,191 @@ class MySceneGraph {
 
             var animationID = this.reader.getString(children[i], 'id');
 
-            if (animationID == null)
-                return "no ID defined for animation number #" + i;
+            if (animationID == null) {
+                this.onXMLMinorError("no ID defined for animation number #" + i);
+                continue;
+            }
 
-            if (this.animations[animationID] != null)
-                return "ID must be unique for each animation (conflict ID = " + animationID + ")";
+            if (this.animations[animationID] != null) {
+                this.onXMLMinorError("ID must be unique for each animation (conflict ID = " + animationID + ")");
+                continue;
+            }
+
+            grandChildren = children[i].children;
+
+            let last_keyframe_instant = -1;
+            let keyframes = [];
+
+            for (var j = 0; j < grandChildren.length; j++) {
+                if (grandChildren[j].nodeName != "keyframe") {
+                    this.onXMLMinorError("unknown tag <" + grandChildren[i].nodeName + ">");
+                    continue;
+                }
+
+                let keyframe = this.parseKeyframe(grandChildren[j], last_keyframe_instant, " of animation " + animationID);
+
+                if (keyframe == null) continue;
+
+                last_keyframe_instant = keyframe["instant"];
+
+                keyframes.push(keyframe);
+            }
+
+            if (keyframes.length <= 0) {
+                this.onXMLMinorError("animation " + animationID + " must have at least one keyframe")
+                continue;
+            }
+
+            keyframes.sort((keyframeA, keyframeB) => keyframeA["instant"] - keyframeB["instant"]);
+
+            // Eliminate keyframes on the same instant
+            for (let a_i = 1; a_i < keyframes.length;) {
+                if (keyframes[a_i - 1]["instant"] == keyframes[a_i]["instant"]) {
+                    this.onXMLMinorError("invalid keyframes - multiple keyframes for instant " + keyframes[a_i]["instant"]);
+                    keyframes.splice(a_i, 1);
+                } else 
+                    a_i++;
+            }
+
+            let animation = new KeyframeAnimation(this.scene, keyframes);
+
+            this.animations[animationID] = animation;
         }
 
-        return "To Do";
+        return null;
     }
+
+    parseKeyframe(keyframeNode, last_keyframe_instant, messageError) {
+
+        let keyframe_instant = this.reader.getFloat(keyframeNode, 'instant');
+
+        if (keyframe_instant == null || isNaN(keyframe_instant) || keyframe_instant < 0) {
+            this.onXMLMinorError("no instant defined or invalid instant for the keyframe " + messageError);
+            return null;
+        }
+
+        if (keyframe_instant <= last_keyframe_instant)
+            this.onXMLMinorError("keyframes should be in ascending order of instant; last-keyframe=" + last_keyframe_instant + ", current-keyframe=" + keyframe_instant + ", " + messageError);
+        
+
+        var transformationsNodes = keyframeNode.children;
+
+        let keyframe = [];
+
+        keyframe["instant"] = keyframe_instant;
+
+        keyframe["rotation"] = [0, 0, 0];
+
+        for (let i = 0; i < transformationsNodes.length; i++) {
+
+            let nodeName = transformationsNodes[i].nodeName;
+
+            // Translation
+            if (nodeName == 'translation') {
+                if (i != KEYFRAME_TRANSLATION_INDEX)
+                    this.onXMLMinorError("block <translation> is out of order for the keyframe in instant=" + keyframe_instant + " of the " + messageError);
+
+                // x
+                var x = this.reader.getFloat(transformationsNodes[i], 'x');
+
+                if (x == null || isNaN(x)) {
+                    this.onXMLMinorError("unable to parse X component of the translation matrix of the " + messageError);
+                    x = 0;
+                }
+
+                // y
+                var y = this.reader.getFloat(transformationsNodes[i], 'y');
+
+                if (y == null || isNaN(y)) {
+                    this.onXMLMinorError("unable to parse Y component of the translation matrix of the " + messageError);
+                    y = 0;
+                }
+
+                // z
+                var z = this.reader.getFloat(transformationsNodes[i], 'z');
+
+                if (z == null || isNaN(z)) {
+                    this.onXMLMinorError("unable to parse Z component of the translation matrix of the " + messageError);
+                    z = 0;
+                }
+
+                keyframe["translation"] = [x, y, z];
+
+            } else if (nodeName == 'rotation') { // Rotation
+                // Axis
+                var axis = this.reader.getString(transformationsNodes[i], 'axis');
+
+                if (axis == null) {
+                    this.onXMLMinorError("unable to parse axis component of the rotation matrix of the " + messageError);
+                    continue;
+                }
+                
+                if (axis != 'x' && axis != 'y' && axis != 'z') {
+                    this.onXMLMinorError("invalid axis value (" + messageError);
+                    continue;
+                }
+
+                // Angle
+                var angle = this.reader.getFloat(transformationsNodes[i], 'angle');
+
+                if (angle == null || isNaN(angle)) {
+                    this.onXMLMinorError("unable to parse angle component of the rotation matrix of the " + messageError);
+                    angle = 0;
+                }
+
+                let index = (axis == 'x' ? 0 : (axis == 'y' ? 1 : 2));
+                let order = (axis == 'x' ? KEYFRAME_ROTATIONX_INDEX : (axis == 'y' ? KEYFRAME_ROTATIONY_INDEX : KEYFRAME_ROTATIONZ_INDEX));
+
+                if (order != i)
+                    this.onXMLMinorError("block <rotation> is out of order for axis " + axis + " of the " + messageError);
+
+                keyframe["rotation"][index] = angle * DEGREE_TO_RAD;
+
+            } else if (nodeName == "scale") { // Scaling
+                if (i != KEYFRAME_SCALE_INDEX)
+                this.onXMLMinorError("block <scale> is out of order for the keyframe in instant=" + keyframe_instant + " of the " + messageError);
+
+                // Scale x
+                var sx = this.reader.getFloat(transformationsNodes[i], 'sx');
+                if (sx == null || isNaN(sx)) {
+                    this.onXMLMinorError("unable to parse X component of the scale matrix of the " + messageError);
+                    sx = 0;
+                }
+
+                // Scale y
+                var sy = this.reader.getFloat(transformationsNodes[i], 'sy');
+
+                if (sy == null || isNaN(sy)) {
+                    this.onXMLMinorError("unable to parse Y component of the scale matrix of the " + messageError);
+                    sy = 0;
+                }
+                
+                // Scale z
+                var sz = this.reader.getFloat(transformationsNodes[i], 'sz');
+
+                if (sz == null || isNaN(sz)) {
+                    this.onXMLMinorError("unable to parse Z component of the scale matrix of the " + messageError);
+                    sz = 0;
+                }
+
+                keyframe["scale"] = [sx, sy, sz];
+
+            } else {
+                this.onXMLMinorError("unkown transformation of name (name=" + nodeName + ") " + messageError);
+            }
+        }
+
+        return keyframe;
+    }
+
+    updateAnimations(time) {
+        for (const [animationID, animation] of Object.entries(this.animations))
+            animation.update(time);
+
+        for (const [nodeID, node] of Object.entries(this.nodes))
+            node.update(time);
+    }
+
 
     /**
      * Parses the <nodes> block.
@@ -686,6 +937,7 @@ class MySceneGraph {
             }
 
             var transformationsIndex = nodeNames.indexOf("transformations");
+            var animationIndex = nodeNames.indexOf("animationref");
             var materialIndex = nodeNames.indexOf("material");
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
@@ -710,6 +962,19 @@ class MySceneGraph {
             }
 
             node.transformation = transfMatrix;
+
+            // Animation
+            var animation = null;
+
+            if (animationIndex != -1) {
+                animation = this.reader.getString(grandChildren[animationIndex], 'id');
+
+                if (animation == null) {
+                    this.onXMLMinorError("no valid animation found for node " + nodeID);
+                }
+            }
+
+            node.animation = animation;
 
             // Material
             var material;
@@ -1213,9 +1478,47 @@ class MySceneGraph {
 
             out = new MyTorus(this.scene, inner, outer, slices, loops);
         }
+
+        // Sprite Text
+        else if (type == "spritetext") {
+            let text = this.reader.getString(node, "text");
+
+            if (text == null)
+                return "Unable to parse text component from the spritetext of the " + messageError;
+
+            out = new MySpriteText(this.scene, text);
+        }
         
+        // Sprite Text
+        else if (type == "spriteanim") {
+            let ssid = this.reader.getString(node, "ssid");
+
+            if (ssid == null)
+                return "Unable to parse spritesheet ID component from the sprite animation of the " + messageError;
+
+            let duration = this.reader.getFloat(node, "duration");
+
+            if (duration == null || isNaN(duration))
+                return "Unable to parse duration component from the sprite animation of the " + messageError;
+
+            let startCell = this.reader.getFloat(node, "startCell");
+
+            if (startCell == null || isNaN(startCell))
+                return "Unable to parse start cell component from the sprite animation of the " + messageError;
+
+
+            let endCell = this.reader.getFloat(node, "endCell");
+
+            if (endCell == null || isNaN(startCell))
+                return "Unable to parse end cell component from the sprite animation of the " + messageError;
+
+            out = new MySpriteAnimation(this.scene, ssid, duration, startCell, endCell);
+        }
+
+        // TODO: Verify cell 
+
         else 
-            return "unable to process primitive of the " + messageError;
+            return "Unable to process primitive of the " + messageError;
 
         return out;
     }
@@ -1229,5 +1532,3 @@ class MySceneGraph {
         }
     }
 }
-
-
