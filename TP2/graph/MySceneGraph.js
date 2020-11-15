@@ -481,37 +481,12 @@ class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
-
         var children = texturesNode.children;
+        
+        this.textures = new MySceneGraphTextures(this.scene, this).parse(children);
 
-        this.textures = [];
-
-        for (var i = 0; i < children.length; i++) {
-            if (children[i].nodeName != "texture") {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
-                continue;
-            }
-
-            let textureID = this.reader.getString(children[i], 'id');
-
-            if (textureID == null) {
-                return "no ID defined for texture";
-            }
-
-            if (this.textures[textureID] != null) {
-                return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
-            }
-
-            let texturePath = this.reader.getString(children[i], 'path');
-
-            if (texturePath == null) {
-                return "no path defined for texture";
-            }
-
-            var texture = new CGFtexture(this.scene, texturePath);
-
-            this.textures[textureID] = texture;
-        }
+        if (typeof this.textures === "string") // An error occurred while parsing
+            return this.textures;
 
         this.log("Parsed textures");
 
@@ -818,7 +793,9 @@ class MySceneGraph {
 
                 keyframe["translation"] = [x, y, z];
 
-            } else if (nodeName == 'rotation') { // Rotation
+            } 
+            
+            else if (nodeName == 'rotation') { // Rotation
                 // Axis
                 var axis = this.reader.getString(transformationsNodes[i], 'axis');
 
@@ -831,7 +808,7 @@ class MySceneGraph {
                     this.onXMLMinorError("invalid axis value (" + messageError);
                     continue;
                 }
-
+ 
                 // Angle
                 var angle = this.reader.getFloat(transformationsNodes[i], 'angle');
 
