@@ -17,11 +17,13 @@
         </ortho>
     </views>
 
+    <!-- Illumination -->
     <illumination>
         <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
         <background r="0.5" g="0.8" b="0.9" a="1.0" />
     </illumination>
 
+    <!-- Lights -->
     <lights>
         <light id="firstLight">
             <enable value="1" />
@@ -48,6 +50,11 @@
         <texture id="SupportTubes" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/support_tubes.png"/>
         <texture id="FootFront" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/foot_front.png"/>
     </textures>
+
+    <!-- Spritesheets -->
+    <spritesheets>
+
+    </spritesheets>
 
     <!-- Materials -->
     <materials>
@@ -99,16 +106,9 @@
         </material>
     </materials>
 
+    <!-- Animations -->
     <animations>
-        <animation id="testAnimation" >
-            <keyframe instant="10.3">
-                <translation x="1.0" y="2.3" z="0" />
-                <rotation axis="x" angle="93" />
-                <rotation axis="y" angle="0" />
-                <scale sx="1.0" sy="0.3" sz="5.4" />
-                <rotation axis="z" angle="-3" />
-            </keyframe>
-        </animation>
+  
     </animations>
 
     <!-- Nodes -->

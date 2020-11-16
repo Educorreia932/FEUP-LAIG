@@ -342,14 +342,14 @@ class MySceneGraph {
         }
 
         if (numcams == 0)
-            return "at least one camera must be defined";
+            return "At least one camera must be defined";
 
         if (this.cameras[defaultCam] == null)
-            return "no default camera found";
+            return "No default camera found";
 
         this.defaultCamera = defaultCam;
 
-        this.log("Parsed Views");
+        this.log("Parsed views");
 
         return null;
     }
@@ -483,7 +483,7 @@ class MySceneGraph {
     parseTextures(texturesNode) {
         var children = texturesNode.children;
         
-        this.textures = new MySceneGraphTextures(this.scene, this).parse(children);
+        this.textures = new MySceneTextures(this).parse(children);
 
         if (typeof this.textures === "string") // An error occurred while parsing
             return this.textures;
