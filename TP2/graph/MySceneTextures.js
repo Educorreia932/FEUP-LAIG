@@ -7,7 +7,6 @@ class MySceneTextures {
     parse(children) {
         let textures = [];
 
-
         for (let i = 0; i < children.length; i++) {
             if (children[i].nodeName != "texture") {
                 this.graph.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
