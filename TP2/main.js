@@ -18,6 +18,7 @@ serialInclude([
     './graph/MySceneGraph.js',
     './graph/MySceneTextures.js',
     './graph/MySceneMaterials.js',
+    './graph/MySceneTransformationMatrix.js',
     './graph/MyNode.js', 
     './primitives/MyRectangle.js',
     './primitives/MyTriangle.js',
