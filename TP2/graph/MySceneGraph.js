@@ -207,7 +207,7 @@ class MySceneGraph {
             if (index != TEXTURES_INDEX)
                 this.onXMLMinorError("tag <textures> out of order");
 
-            //Parse textures block
+            // sParse textures block
             if ((error = this.parseTextures(nodes[index])) != null)
                 return error;
         }
@@ -839,6 +839,8 @@ class MySceneGraph {
 
             node.transformation = transfMatrix;
 
+            this.log("Parsed transformations");
+
             // Animation
             var animation = null;
 
@@ -936,6 +938,7 @@ class MySceneGraph {
                     }
                 }
             }
+
             if (node.descendants.length < 1) {
                 this.onXMLMinorError("node of ID " + nodeID + " must have atleast one descendant");
                 continue;
@@ -945,15 +948,14 @@ class MySceneGraph {
         }
 
         // Initialize nodes by replacing all references to real values
-        if (this.nodes[this.idRoot] == null) {
+        if (this.nodes[this.idRoot] == null) 
             return "scene doesn't have a valid root node";
-        }
 
         this.nodes[this.idRoot].initialize(this);
 
         var aux = [];
 
-        this.log("Parsed Nodes");
+        this.log("Parsed nodes");
 
         return null;
     }
@@ -1286,23 +1288,6 @@ class MySceneGraph {
             return "Unable to process primitive of the " + messageError;
 
         return out;
-    }
-
-    /**
-     * Parse a transformation matrix of a node
-     * @param {block element} node
-     * @param {matrix where result is stored} out
-     * @param {message to be displayed in case of error} messageError
-     */
-    parseTransformationMatrix(node, out, messageError) {
-        let children = texturesNode.children;
-
-        this.textures = new MySceneTransformationMatrix(this).parse(children);
-
-        if (typeof this.textures === "string") // An error occurred while parsing
-            return this.textures;
-
-        this.log("Parsed textures");
     }
 
     /**
