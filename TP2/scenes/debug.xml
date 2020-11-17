@@ -110,7 +110,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="man" duration="5" startCell="0" endCell="15" />
+                <leaf type="defbarrel" base="5.4" middle="4.4" height="3.3" slices="5" stacks="4"/>
             </descendants>
         </node>
 
