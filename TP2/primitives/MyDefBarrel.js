@@ -3,8 +3,8 @@ class MyPatch extends CGFobject {
         super(scene);
 
         this.scene = scene;
-        this.base = base;
-        this.middle = middle;
+        this.r = base;
+        this.R = middle;
         this.height = height;
         this.slices = slices;
         this.stacks = stacks;
@@ -13,26 +13,37 @@ class MyPatch extends CGFobject {
     }
 
     initBuffers() {
+        let H = (4 / 3) * (this.R - this.r);
+        let alpha = Math.PI / 6;
+
         let controlPoints = [
             // U = 0
             [
-                [-this.base, 0, 0, 1],  // V = 0
-                [0, this.base, 0, 1],   // V = 0.5
-                [this.base, 0, 0, 1]    // V = 1
+                [-this.r, 0, 0, 1],  // V = 0
+                [0, this.r, 0, 1],   // V = 0.5
+                [this.r, 0, 0, 1]    // V = 1
             ],
 
-            // U = 0.5
+            // U = 0.25
             [
-                [-this.middle, 0, this.height / 2, 1],  // V = 0
-                [0, this.middle, this.height / 2, 1],   // V = 0.5
-                [this.middle, 0, this.height / 2, 1]    // V = 1
+                [-this.r + H, 0, H / Math.tan(alpha), 1] ,  // V = 0
+                [0, this.r + H, H / Math.tan(alpha), 1] ,   // V = 0.5
+                [this.r + H, 0, H / Math.tan(alpha), 1]    // V = 1
+            ],
+
+            // U = 0.75
+            [
+                [-this.r + H, 0, this.height -  H / Math.tan(alpha), 1] ,  // V = 0
+                [0, this.r + H, this.height -  H / Math.tan(alpha), 1] ,   // V = 0.5
+                [this.r + H, 0, this.height - H / Math.tan(alpha), 1]    // V = 1
             ]
+
 
             // U = 1
             [
-                [-this.base, 0, this.height, 1],  // V = 0
-                [0, this.base, this.height, 1],   // V = 0.5
-                [this.base, 0, this.height, 1]    // V = 1
+                [-this.r, 0, this.height, 1],  // V = 0
+                [0, this.r, this.height, 1],   // V = 0.5
+                [this.r, 0, this.height, 1]    // V = 1
             ]
         ];
 
