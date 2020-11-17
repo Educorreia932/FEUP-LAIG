@@ -207,7 +207,7 @@ class MySceneGraph {
             if (index != TEXTURES_INDEX)
                 this.onXMLMinorError("tag <textures> out of order");
 
-            //Parse textures block
+            // sParse textures block
             if ((error = this.parseTextures(nodes[index])) != null)
                 return error;
         }
@@ -839,6 +839,8 @@ class MySceneGraph {
 
             node.transformation = transfMatrix;
 
+            this.log("Parsed transformations");
+
             // Animation
             var animation = null;
 
@@ -936,6 +938,7 @@ class MySceneGraph {
                     }
                 }
             }
+
             if (node.descendants.length < 1) {
                 this.onXMLMinorError("node of ID " + nodeID + " must have atleast one descendant");
                 continue;
@@ -945,15 +948,14 @@ class MySceneGraph {
         }
 
         // Initialize nodes by replacing all references to real values
-        if (this.nodes[this.idRoot] == null) {
+        if (this.nodes[this.idRoot] == null) 
             return "scene doesn't have a valid root node";
-        }
 
         this.nodes[this.idRoot].initialize(this);
 
         var aux = [];
 
-        this.log("Parsed Nodes");
+        this.log("Parsed nodes");
 
         return null;
     }

@@ -5,6 +5,12 @@ class MySceneTransformationMatrix {
         this.messageError = messageError;
     }
 
+    /**
+     * Parse a transformation matrix of a node
+     * @param {block element} node
+     * @param {matrix where result is stored} out
+     * @param {message to be displayed in case of error} messageError
+     */
     parse(node, out) {
         // Translation
         if (node.nodeName == "translation") {
