@@ -32,7 +32,7 @@
     </lights>
 
     <textures>
-        <texture id="error" path="./scenes/required_textures/error_texture.png" />
+        <texture id="debug" path="./scenes/debug_textures/debug.jpg" />
     </textures>
 
     <spritesheets>
@@ -101,7 +101,7 @@
         <node id="prop">
             <material id="default" />
 
-            <texture id="null">
+            <texture id="debug">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -110,7 +110,18 @@
             </transformations>
 
             <descendants>
-                <leaf type="defbarrel" base="5.4" middle="4.4" height="3.3" slices="5" stacks="4"/>
+                <!-- <leaf type="plane" npartsU="1" npartsV="1"/> -->
+                <!-- <leaf type="patch" npointsU="3" npointsV="2" npartsU="4" npartsV="5">
+                    <controlpoint xx="-1.5" yy="-1.5" zz="0"/>
+                    <controlpoint xx="-1.5" yy="1.5" zz="0"/>
+                    
+                    <controlpoint xx="0" yy="-1.5" zz="3"/>
+                    <controlpoint xx="0" yy="1.5" zz="3"/>
+
+                    <controlpoint xx="1.5" yy="-1.5" zz="0"/>
+                    <controlpoint xx="1.5" yy="1.5" zz="0"/>
+                </leaf> -->
+                <leaf type="defbarrel" base="2" middle="4" height="5" slices="10" stacks="10"/>
             </descendants>
         </node>
 

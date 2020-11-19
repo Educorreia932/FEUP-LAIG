@@ -930,7 +930,7 @@ class MySceneGraph {
                         var aux = this.parsePrimitive(grandgrandChildren[i], texture.afs, texture.aft, "node of ID " + nodeID);
 
                         if (typeof aux == "string") {
-                            this.onXMLMinorError("invalid primitive for node " + nodeID);
+                            this.onXMLMinorError("invalid primitive for node " + nodeID + ":\n\t" + aux);
                             continue;
                         }
 
@@ -1308,15 +1308,13 @@ class MySceneGraph {
                 vDivisions = 1;
             }
             
-            // out = new MyPlane(this.scene, uDivisions, vDivisions);
-            console.log("uDivisions: " + uDivisions +"; vDivisions: "+vDivisions);
-            out = "MyPlane class to be implemented";
+            out = new MyPlane(this.scene, uDivisions, vDivisions);
 
         }
 
         // Patch
         else if (type == "patch") {
-            
+            return this.parsePatchPrimitive(node, messageError);
         }
 
         // Defbarrel
@@ -1350,9 +1348,7 @@ class MySceneGraph {
 
             if (stacks < 0) return "Invalid value for stacks value from the barrel of the " + messageError;
     
-            // out = new MyBarrel(this.scene, base, middle, height, slices, stacks);
-            console.log("Base: "+base+"; Middle: "+middle+"; Height: "+height+"; Slices: "+slices+";Stacks: "+stacks);
-            out = "MyBarrel class to be implemented";
+            out = new MyDefBarrel(this.scene, base, middle, height, slices, stacks);
         }
 
         else
@@ -1391,6 +1387,44 @@ class MySceneGraph {
         
         if (vDivisions < 0) return "Invalid npartsV value for the patch of the " + messageError;
 
+        let children = node.children;
+
+        if (children.length != pointsU * pointsV) return "Missing control points on patch of the " + messageError +"; Expected " + (pointsU * pointsV) + " got " + children.length; 
+        
+        let arrayPoints = [];
+
+        for (let i = 0; i < children.length; i++) {
+            if (children[i].nodeName != "controlpoint")
+                return "Unknown tag <" + children[i].nodeName + "> on the control points in patch of the " + messageError;
+
+            let x = this.reader.getFloat(children[i], "xx");
+
+            if (x == null || isNaN(x))
+                return "Unable to parse X value from the control point " + i + " in the patch of the " + messageError;
+
+            let y = this.reader.getFloat(children[i], "yy");
+
+            if (y == null || isNaN(y))
+                return "Unable to parse Y value from the control point " + i + " in the patch of the " + messageError;
+
+            let z = this.reader.getFloat(children[i], "zz");
+
+            if (z == null || isNaN(z))
+                return "Unable to parse Z value from the control point " + i + " in the patch of the " + messageError;
+
+            arrayPoints.push([x, y, z, 1]);
+        }
+
+        let controlPoints = this.arrayToMatrix(arrayPoints, pointsV);
+        return new MyPatch(this.scene, pointsU, pointsV, uDivisions, vDivisions, controlPoints);
+    }
+
+    arrayToMatrix(array, elementsPerColumn) {
+        let matrix = [];
+        for (let i = 0; i < array.length; i+=elementsPerColumn) {
+            matrix.push(array.slice(i, i + elementsPerColumn));
+        }
+        return matrix;
     }
 
     /**

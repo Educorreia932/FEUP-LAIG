@@ -15,18 +15,26 @@ serialInclude([
     '../lib/CGF.js', 
     'XMLscene.js', 
     'MyInterface.js',
+
     './graph/MySceneGraph.js',
     './graph/MySceneTextures.js',
     './graph/MySceneMaterials.js',
     './graph/MySceneTransformationMatrix.js',
     './graph/MyNode.js', 
+
     './primitives/MyRectangle.js',
     './primitives/MyTriangle.js',
     './primitives/MySphere.js',
     './primitives/MyCylinder.js',
     './primitives/MyTorus.js',
+    './primitives/MyPlane.js',
+    './primitives/MyPatch.js',
+    './primitives/MyDefBarrel.js',
+
+
     './animations/Animation.js',
     './animations/KeyframeAnimation.js',
+
     './spritesheets/MySpriteSheet.js',
     './spritesheets/MySpriteText.js',
     './spritesheets/MySpriteAnimation.js',

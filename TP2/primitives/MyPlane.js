@@ -3,7 +3,7 @@ class MyPlane extends CGFobject {
         super(scene);
 
         this.scene = scene;
-        this.narptsU = npartsU;
+        this.npartsU = npartsU;
         this.npartsV = npartsV;
 
         this.initBuffers();
