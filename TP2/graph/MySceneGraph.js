@@ -930,7 +930,7 @@ class MySceneGraph {
                         var aux = this.parsePrimitive(grandgrandChildren[i], texture.afs, texture.aft, "node of ID " + nodeID);
 
                         if (typeof aux == "string") {
-                            this.onXMLMinorError("invalid primitive for node " + nodeID);
+                            this.onXMLMinorError("invalid primitive for node " + nodeID + ":\n\t" + aux);
                             continue;
                         }
 
@@ -1256,7 +1256,7 @@ class MySceneGraph {
             out = new MySpriteText(this.scene, text);
         }
 
-        // Sprite Text
+        // Sprite Animation
         else if (type == "spriteanim") {
             let ssid = this.reader.getString(node, "ssid");
 
@@ -1282,12 +1282,149 @@ class MySceneGraph {
             out = new MySpriteAnimation(this.scene, ssid, duration, startCell, endCell);
         }
 
-        // TODO: Verify cell 
+        // Plane
+        else if (type == "plane") {
+            let uDivisions = this.reader.getInteger(node, "npartsU");
+
+            if (uDivisions == null || isNaN(uDivisions)) {
+                this.onXMLMinorError("Unable to parse U divisions from the plane of the " + messageError + "; assuming uDivisions = 1");
+                uDivisions = 1;
+            }
+
+            if (uDivisions <= 0) {
+                this.onXMLMinorError("Invalid value for U divisions from the plane of the " + messageError + "; assuming uDivisions = 1");
+                uDivisions = 1;
+            }
+
+            let vDivisions = this.reader.getInteger(node, "npartsV");
+
+            if (vDivisions == null || isNaN(vDivisions)) {
+                this.onXMLMinorError("Unable to parse V divisions from the plane of the " + messageError + "; assuming vDivisions = 1");
+                vDivisions = 1;
+            }
+
+            if (vDivisions <= 0) {
+                this.onXMLMinorError("Invalid value for V divisions from the plane of the " + messageError + "; assuming vDivisions = 1");
+                vDivisions = 1;
+            }
+            
+            out = new MyPlane(this.scene, uDivisions, vDivisions);
+
+        }
+
+        // Patch
+        else if (type == "patch") {
+            return this.parsePatchPrimitive(node, messageError);
+        }
+
+        // Defbarrel
+        else if (type == "defbarrel") {
+            let base = this.reader.getFloat(node, "base");
+
+            if (base == null || isNaN(base))
+                return "Unable to parse base value from the barrel of the " + messageError;
+
+            let middle = this.reader.getFloat(node, "middle");
+
+            if (middle == null || isNaN(middle))
+                return "Unable to parse middle value from the barrel of the " + messageError;
+
+            let height = this.reader.getFloat(node, "height");
+
+            if (height == null || isNaN(height))
+                return "Unable to parse height value from the barrel of the " + messageError;
+
+            let slices = this.reader.getFloat(node, "slices");
+
+            if (slices == null || isNaN(slices))
+                return "Unable to parse slices value from the barrel of the " + messageError;
+
+            if (slices < 0) return "Invalid value for slices value from the barrel of the " + messageError;
+
+            let stacks = this.reader.getFloat(node, "stacks");
+
+            if (stacks == null || isNaN(stacks))
+                return "Unable to parse stacks value from the barrel of the " + messageError;
+
+            if (stacks < 0) return "Invalid value for stacks value from the barrel of the " + messageError;
+    
+            out = new MyDefBarrel(this.scene, base, middle, height, slices, stacks);
+        }
 
         else
             return "Unable to process primitive of the " + messageError;
 
         return out;
+    }
+
+    /**
+     * Parse a patch primitive
+     * @param {block element} node
+     * @param {message to be displayed in case of error} messageError
+     */
+    parsePatchPrimitive(node, messageError) {
+        let pointsU = this.reader.getInteger(node, "npointsU");
+        if (pointsU == null || isNaN(pointsU))
+            return "Unable to parse npointsU value for the patch of the " + messageError;
+        
+        if (pointsU <= 0) return "Invalid npointsU value for the patch of the " + messageError;
+
+        let pointsV = this.reader.getInteger(node, "npointsV");
+        if (pointsV == null || isNaN(pointsV))
+            return "Unable to parse npointsV value for the patch of the " + messageError;
+        
+        if (pointsV <= 0) return "Invalid npointsV value for the patch of the " + messageError;
+
+        let uDivisions = this.reader.getInteger(node, "npartsU");
+        if (uDivisions == null || isNaN(uDivisions))
+            return "Unable to parse npartsU value for the patch of the " + messageError;
+        
+        if (uDivisions < 0) return "Invalid npartsU value for the patch of the " + messageError;
+
+        let vDivisions = this.reader.getInteger(node, "npartsV");
+        if (vDivisions == null || isNaN(vDivisions))
+            return "Unable to parse npartsV value for the patch of the " + messageError;
+        
+        if (vDivisions < 0) return "Invalid npartsV value for the patch of the " + messageError;
+
+        let children = node.children;
+
+        if (children.length != pointsU * pointsV) return "Missing control points on patch of the " + messageError +"; Expected " + (pointsU * pointsV) + " got " + children.length; 
+        
+        let arrayPoints = [];
+
+        for (let i = 0; i < children.length; i++) {
+            if (children[i].nodeName != "controlpoint")
+                return "Unknown tag <" + children[i].nodeName + "> on the control points in patch of the " + messageError;
+
+            let x = this.reader.getFloat(children[i], "xx");
+
+            if (x == null || isNaN(x))
+                return "Unable to parse X value from the control point " + i + " in the patch of the " + messageError;
+
+            let y = this.reader.getFloat(children[i], "yy");
+
+            if (y == null || isNaN(y))
+                return "Unable to parse Y value from the control point " + i + " in the patch of the " + messageError;
+
+            let z = this.reader.getFloat(children[i], "zz");
+
+            if (z == null || isNaN(z))
+                return "Unable to parse Z value from the control point " + i + " in the patch of the " + messageError;
+
+            arrayPoints.push([x, y, z, 1]);
+        }
+
+        let controlPoints = this.arrayToMatrix(arrayPoints, pointsV);
+        return new MyPatch(this.scene, pointsU, pointsV, uDivisions, vDivisions, controlPoints);
+    }
+
+    arrayToMatrix(array, elementsPerColumn) {
+        let matrix = [];
+        for (let i = 0; i < array.length; i+=elementsPerColumn) {
+            matrix.push(array.slice(i, i + elementsPerColumn));
+        }
+        return matrix;
     }
 
     /**
