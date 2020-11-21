@@ -23,32 +23,32 @@ class MyDefBarrel extends CGFobject {
             // U = 0
             [
                 [-this.r, 0, 0, 1],     // V = 0
-                [-this.r, h, 0, 1],     // V = 0.5
-                [this.r, h, 0, 1],      // V = 0.75
+                [-this.r, h, 0, 1],     // V = 0.33
+                [this.r, h, 0, 1],      // V = 0.66
                 [this.r, 0, 0, 1]       // V = 1
             ],
 
-            // U = 0.25
+            // U = 0.33
             [
-                [-this.r - H, 0, H / tanAlpha, 1],      // V = 0
-                [-this.r - H, h + (4 / 3) * H, H / tanAlpha, 1],      // V = 0.25
-                [this.r + H, h + (4 / 3) * H, H / tanAlpha, 1],       // V = 0.75
-                [this.r + H, 0, H / tanAlpha, 1]        // V = 1
+                [-this.r - H, 0, H / tanAlpha, 1],                    // V = 0
+                [-this.r - H, h + (4 / 3) * H, H / tanAlpha, 1],      // V = 0.33
+                [this.r + H, h + (4 / 3) * H, H / tanAlpha, 1],       // V = 0.66
+                [this.r + H, 0, H / tanAlpha, 1]                      // V = 1
             ],
 
-            // U = 0.75
+            // U = 0.66
             [
-                [-this.r - H, 0, L - H / tanAlpha, 1],      // V = 0
-                [-this.r - H, h + (4 / 3) * H, L - H / tanAlpha, 1],      // V = 0.25
-                [this.r + H, h + (4 / 3) * H, L - H / tanAlpha, 1],       // V = 0.75
-                [this.r + H, 0, L - H / tanAlpha, 1]        // V = 1
+                [-this.r - H, 0, L - H / tanAlpha, 1],                    // V = 0
+                [-this.r - H, h + (4 / 3) * H, L - H / tanAlpha, 1],      // V = 0.33
+                [this.r + H, h + (4 / 3) * H, L - H / tanAlpha, 1],       // V = 0.66
+                [this.r + H, 0, L - H / tanAlpha, 1]                      // V = 1
             ],
 
             // U = 1
             [
                 [-this.r, 0, L, 1],     // V = 0
-                [-this.r, h, L, 1],     // V = 0.5
-                [this.r, h, L, 1],      // V = 0.75
+                [-this.r, h, L, 1],     // V = 0.33
+                [this.r, h, L, 1],      // V = 0.66
                 [this.r, 0, L, 1]       // V = 1
             ]
         ];

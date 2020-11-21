@@ -159,6 +159,7 @@
                 <noderef id="R2-D2" />
                 <noderef id="skybox"/>
                 <noderef id="arc"/>
+                <noderef id="rock"/>
             </descendants>
         </node>
 
@@ -181,6 +182,45 @@
                 <noderef id="skyboxLeftFace"/>
                 <noderef id="skyboxFrontFace" />
                 <noderef id="skyboxBackFace" />
+            </descendants>
+        </node>
+
+        <!-- START ROCK -->
+        <node id="rock">
+            <material id="Sandstone" />
+
+            <texture id="Sandstone">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="20" y="-0.1" z="15"/>
+                <scale sx="5" sy="-4" sz="4"/>
+                <rotation axis="x" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="patch" npointsU="4" npointsV="4" npartsU="4" npartsV="4" >
+                    <controlpoint xx="0" yy="0" zz="0" />
+                    <controlpoint xx="-0.5" yy="0" zz="0.25" />
+                    <controlpoint xx="-0.5" yy="0" zz="0.75" />
+                    <controlpoint xx="0" yy="0" zz="1.0" />
+
+                    <controlpoint xx="0.25" yy="0" zz="-0.5" />
+                    <controlpoint xx="0.25" yy="1" zz="0.33" />
+                    <controlpoint xx="0.25" yy="1" zz="0.66" />
+                    <controlpoint xx="0.25" yy="0" zz="1.5" />
+
+                    <controlpoint xx="0.75" yy="0" zz="-0.5" />
+                    <controlpoint xx="0.75" yy="1" zz="0.33" />
+                    <controlpoint xx="0.75" yy="1" zz="0.66" />
+                    <controlpoint xx="0.75" yy="0" zz="1.5" />
+
+                    <controlpoint xx="1" yy="0" zz="0" />
+                    <controlpoint xx="1" yy="0" zz="0.25" />
+                    <controlpoint xx="1" yy="0" zz="0.75" />
+                    <controlpoint xx="1" yy="0" zz="1.0" />
+                </leaf>
             </descendants>
         </node>
 
