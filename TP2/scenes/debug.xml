@@ -110,18 +110,7 @@
             </transformations>
 
             <descendants>
-                <!-- <leaf type="plane" npartsU="1" npartsV="1"/> -->
-                <!-- <leaf type="patch" npointsU="3" npointsV="2" npartsU="4" npartsV="5">
-                    <controlpoint xx="-1.5" yy="-1.5" zz="0"/>
-                    <controlpoint xx="-1.5" yy="1.5" zz="0"/>
-                    
-                    <controlpoint xx="0" yy="-1.5" zz="3"/>
-                    <controlpoint xx="0" yy="1.5" zz="3"/>
-
-                    <controlpoint xx="1.5" yy="-1.5" zz="0"/>
-                    <controlpoint xx="1.5" yy="1.5" zz="0"/>
-                </leaf> -->
-                <leaf type="defbarrel" base="2" middle="3" height="5" slices="10" stacks="10"/>
+                <leaf type="spritetext" text="Tetetete" />
             </descendants>
         </node>
 
