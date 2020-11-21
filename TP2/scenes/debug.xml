@@ -121,7 +121,7 @@
                     <controlpoint xx="1.5" yy="-1.5" zz="0"/>
                     <controlpoint xx="1.5" yy="1.5" zz="0"/>
                 </leaf> -->
-                <leaf type="defbarrel" base="2" middle="4" height="5" slices="10" stacks="10"/>
+                <leaf type="defbarrel" base="2" middle="3" height="5" slices="10" stacks="10"/>
             </descendants>
         </node>
 

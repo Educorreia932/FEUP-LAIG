@@ -15,7 +15,9 @@ class MyDefBarrel extends CGFobject {
     initBuffers() {
         let h = (4 / 3) * this.r;
         let H = (4 / 3) * (this.R - this.r);
+        let L = this.height;
         let alpha = Math.PI / 6;
+        const tanAlpha = Math.tan(alpha);
 
         let controlPoints = [
             // U = 0
@@ -28,30 +30,30 @@ class MyDefBarrel extends CGFobject {
 
             // U = 0.25
             [
-                [this.r, 0, 0, 1],                                          // V = 0
-                [this.r + H, 0, H / Math.tan(alpha), 1],                    // V = 0.25
-                [this.r + H, 0, this.height - H / Math.tan(alpha), 1],      // V = 0.75
-                [this.r, 0, this.height, 1]
+                [-this.r - H, 0, H / tanAlpha, 1],      // V = 0
+                [-this.r - H, h + (4 / 3) * H, H / tanAlpha, 1],      // V = 0.25
+                [this.r + H, h + (4 / 3) * H, H / tanAlpha, 1],       // V = 0.75
+                [this.r + H, 0, H / tanAlpha, 1]        // V = 1
             ],
 
             // U = 0.75
             [
-                [-this.r + H, 0, this.height -  H / Math.tan(alpha), 1] ,  // V = 0
-                [0, this.r + H, this.height -  H / Math.tan(alpha), 1] ,   // V = 0.5
-                [this.r + H, 0, this.height - H / Math.tan(alpha), 1]    // V = 1
+                [-this.r - H, 0, L - H / tanAlpha, 1],      // V = 0
+                [-this.r - H, h + (4 / 3) * H, L - H / tanAlpha, 1],      // V = 0.25
+                [this.r + H, h + (4 / 3) * H, L - H / tanAlpha, 1],       // V = 0.75
+                [this.r + H, 0, L - H / tanAlpha, 1]        // V = 1
             ],
-
 
             // U = 1
             [
-                [-this.r, 0, this.height, 1],     // V = 0
-                [-this.r, h, this.height, 1],     // V = 0.5
-                [this.r, h, this.height, 1],      // V = 0.75
-                [this.r, 0, this.height, 1]       // V = 1
+                [-this.r, 0, L, 1],     // V = 0
+                [-this.r, h, L, 1],     // V = 0.5
+                [this.r, h, L, 1],      // V = 0.75
+                [this.r, 0, L, 1]       // V = 1
             ]
         ];
 
-        let surface = new CGFnurbsSurface(3, 2, controlPoints);
+        let surface = new CGFnurbsSurface(3, 3, controlPoints);
 
         this.object = new CGFnurbsObject(this.scene, this.slices, this.stacks, surface);
     }
