@@ -28,6 +28,8 @@ class MySpriteAnimation extends CGFobject {
     }
 
     display() {
+        this.scene.gl.enable(this.scene.gl.BLEND);
+        this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE_MINUS_SRC_ALPHA);
         this.scene.pushTexture(this.spritesheet.texture);
 
         this.scene.setActiveShader(this.spritesheet.shader);
@@ -39,5 +41,6 @@ class MySpriteAnimation extends CGFobject {
         this.scene.setActiveShader(this.scene.defaultShader);
 
         this.scene.popTexture(this.spritesheet.texture);
+        this.scene.gl.disable(this.scene.gl.BLEND);
     }
 }

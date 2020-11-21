@@ -37,6 +37,7 @@
 
     <spritesheets>
         <spritesheet id="man" path="./textures/man.png" sizeM="8" sizeN="8"/>
+        <spritesheet id="text" path="./textures/Berlinfont.png" sizeM="16" sizeN="16"/>
     </spritesheets>
 
     <materials>
@@ -121,7 +122,8 @@
                     <controlpoint xx="1.5" yy="-1.5" zz="0"/>
                     <controlpoint xx="1.5" yy="1.5" zz="0"/>
                 </leaf> -->
-                <leaf type="defbarrel" base="2" middle="3" height="5" slices="10" stacks="10"/>
+                <leaf type="spritetext" text="Testing text"/>
+                <leaf type="spriteanim" ssid="text" startCell="31" endCell="56" duration="10"/>
             </descendants>
         </node>
 

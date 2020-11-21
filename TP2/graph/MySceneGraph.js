@@ -1397,22 +1397,13 @@ class MySceneGraph {
             if (children[i].nodeName != "controlpoint")
                 return "Unknown tag <" + children[i].nodeName + "> on the control points in patch of the " + messageError;
 
-            let x = this.reader.getFloat(children[i], "xx");
+            let coords = this.parseCoordinates3D(node, "in the patch of the " + messageError);
 
-            if (x == null || isNaN(x))
-                return "Unable to parse X value from the control point " + i + " in the patch of the " + messageError;
+            if (typeof coords == "string") return coords;
 
-            let y = this.reader.getFloat(children[i], "yy");
+            coords.push(1);
 
-            if (y == null || isNaN(y))
-                return "Unable to parse Y value from the control point " + i + " in the patch of the " + messageError;
-
-            let z = this.reader.getFloat(children[i], "zz");
-
-            if (z == null || isNaN(z))
-                return "Unable to parse Z value from the control point " + i + " in the patch of the " + messageError;
-
-            arrayPoints.push([x, y, z, 1]);
+            arrayPoints.push(coords);
         }
 
         let controlPoints = this.arrayToMatrix(arrayPoints, pointsV);
