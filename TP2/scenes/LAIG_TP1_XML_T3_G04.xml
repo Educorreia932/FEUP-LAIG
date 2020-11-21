@@ -160,6 +160,7 @@
                 <noderef id="skybox"/>
                 <noderef id="arc"/>
                 <noderef id="rock"/>
+                <noderef id="chatBubble"/>
             </descendants>
         </node>
 
@@ -221,6 +222,24 @@
                     <controlpoint xx="1" yy="0" zz="0.75" />
                     <controlpoint xx="1" yy="0" zz="1.0" />
                 </leaf>
+
+            </descendants>
+        </node>
+
+        <node id="chatBubble">
+            <material id="null"/>
+
+            <texture id="clear">
+            </texture>
+
+            <transformations>
+                <translation x="20" y="20" z="50"/>
+                <scale sx="5" sy="5" sz="5"/>
+                <rotation axis="y" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="spritetext" text="BEEEP! *boom*"/>
             </descendants>
         </node>
 
@@ -270,11 +289,10 @@
 
             <transformations>
                 <rotation axis="y" angle="-90"/>
-                <rotation axis="x" angle="-90"/>
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+                <leaf type="plane" npartsU="4" npartsV="4" />
             </descendants>
         </node>
 
