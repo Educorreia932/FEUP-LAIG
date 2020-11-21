@@ -28,19 +28,19 @@ class MyDefBarrel extends CGFobject {
 
             // U = 0.25
             [
-                [this.r, 0, 0, 1],                                          // V = 0
-                [this.r + H, 0, H / Math.tan(alpha), 1],                    // V = 0.25
-                [this.r + H, 0, this.height - H / Math.tan(alpha), 1],      // V = 0.75
-                [this.r, 0, this.height, 1]
+                [-this.r - H, 0, H / Math.tan(alpha), 1],                                           // V = 0
+                [-this.r - H, h, H / Math.tan(alpha), 1],                     // V = 0.25
+                [this.r + H, h, H / Math.tan(alpha), 1],       // V = 0.75
+                [this.r + H, 0, H / Math.tan(alpha), 1]                                  // V = 1
             ],
 
             // U = 0.75
             [
-                [-this.r + H, 0, this.height -  H / Math.tan(alpha), 1] ,  // V = 0
-                [0, this.r + H, this.height -  H / Math.tan(alpha), 1] ,   // V = 0.5
-                [this.r + H, 0, this.height - H / Math.tan(alpha), 1]    // V = 1
+                [-this.r - H, 0,this.height -  H / Math.tan(alpha), 1],                                           // V = 0
+                [-this.r - H, h, this.height - H / Math.tan(alpha), 1],                     // V = 0.25
+                [this.r + H, h, this.height - H / Math.tan(alpha), 1],       // V = 0.75
+                [this.r + H, 0, this.height - H / Math.tan(alpha), 1]                                  // V = 1
             ],
-
 
             // U = 1
             [
@@ -51,7 +51,7 @@ class MyDefBarrel extends CGFobject {
             ]
         ];
 
-        let surface = new CGFnurbsSurface(3, 2, controlPoints);
+        let surface = new CGFnurbsSurface(3, 3, controlPoints);
 
         this.object = new CGFnurbsObject(this.scene, this.slices, this.stacks, surface);
     }
