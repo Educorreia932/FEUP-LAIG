@@ -53,7 +53,7 @@
 
     <!-- Spritesheets -->
     <spritesheets>
-
+        <spritesheet id="explosion" path="textures/explosion.png" sizeM="4" sizeN="4" />
     </spritesheets>
 
     <!-- Materials -->
@@ -141,6 +141,34 @@
                 <scale sx="1.0" sy="1.0" sz="1.0" />
             </keyframe>
         </animation>
+
+        <animation id="chatBubble" >
+            <keyframe instant="1">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="3">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="-90" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+        </animation>
+
+        <animation id="explosion" >
+            <keyframe instant="2.5">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+        </animation>
     </animations>
 
     <!-- Nodes -->
@@ -159,8 +187,8 @@
                 <noderef id="R2-D2" />
                 <noderef id="skybox"/>
                 <noderef id="arc"/>
+                <noderef id="explosion"/>
                 <noderef id="rock"/>
-                <noderef id="chatBubble"/>
             </descendants>
         </node>
 
@@ -226,17 +254,40 @@
             </descendants>
         </node>
 
+        <node id="explosion">
+            <material id="null"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="15" y="-0.1" z="25"/>
+                <rotation axis="y" angle="40"/>
+                <scale sx="30" sy="30" sz="30"/>
+            </transformations>
+
+            <animationref id="explosion"/>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="explosion" startCell="0" endCell="15" duration="1" />
+            </descendants>
+        </node>
+
         <node id="chatBubble">
             <material id="null"/>
 
             <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="20" y="20" z="50"/>
+                <translation x="0" y="20" z="35"/>
                 <scale sx="5" sy="5" sz="5"/>
                 <rotation axis="y" angle="90"/>
             </transformations>
+
+            <animationref id="chatBubble"/>
 
             <descendants>
                 <leaf type="spritetext" text="BEEEP! *boom*"/>
@@ -379,6 +430,7 @@
             <animationref id="walk" />
 
             <descendants>
+                <noderef id="chatBubble"/>
                 <noderef id="head" />
                 <noderef id="body" />
             </descendants>

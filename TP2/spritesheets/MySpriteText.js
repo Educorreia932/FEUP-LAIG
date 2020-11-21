@@ -7,7 +7,7 @@ class MySpriteText extends CGFobject {
         super(scene);
         this.text = text;
 
-        this.spritesheet = new MySpriteSheet(scene, "textures/oolite-font.png", 16, 16);
+        this.spritesheet = new MySpriteSheet(scene, "textures/Berlinfont.png", 16, 16);
 
         this.rectangle = new MyRectangle(scene, 0, 0, 1, 1);
     }

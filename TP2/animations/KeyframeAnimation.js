@@ -26,8 +26,6 @@ class KeyframeAnimation extends Animation {
             this.Ma = mat4.rotate(this.Ma, this.Ma, rotation[2], [0, 0, 1]);
 
             this.Ma = mat4.scale(this.Ma, this.Ma, scale);
-
-            this.ended = true;
         }
     }
 
@@ -37,6 +35,7 @@ class KeyframeAnimation extends Animation {
         
         if (!this.started && time >= this.keyframes[0]["instant"])
             this.started = true;
+
         if (!this.started) return;
 
         // Update current and next keyframes
