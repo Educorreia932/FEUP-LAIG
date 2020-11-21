@@ -893,16 +893,18 @@ class MySceneGraph {
                 let auxS = this.reader.getFloat(grandgrandChildren[0], 'afs');
                 let auxT = this.reader.getFloat(grandgrandChildren[0], 'aft');
 
-                if (auxS == null) {
+                if (auxS == null || isNaN(auxS)) {
                     this.onXMLMinorError("unable to parse afs component from the texture of ID " + texture.id + "of the node " + nodeID);
+                    auxS = 1.0;
                 }
 
-                if (auxT == null) {
+                if (auxT == null || isNaN(auxT)) {
                     this.onXMLMinorError("unable to parse aft component from the texture of ID " + texture.id + "of the node " + nodeID);
+                    auxT = 1.0;
                 }
 
-                texture.afs = (auxS != null ? auxS : 1.0);
-                texture.aft = (auxT != null ? auxT : 1.0);
+                texture.afs = auxS;
+                texture.aft = auxT;
 
                 node.texture = texture;
             } else {
@@ -1397,7 +1399,7 @@ class MySceneGraph {
             if (children[i].nodeName != "controlpoint")
                 return "Unknown tag <" + children[i].nodeName + "> on the control points in patch of the " + messageError;
 
-            let coords = this.parseCoordinates3D(node, "in the patch of the " + messageError);
+            let coords = this.parseCoordinates3D(children[i], "in the patch of the " + messageError);
 
             if (typeof coords == "string") return coords;
 

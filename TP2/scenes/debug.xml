@@ -112,18 +112,45 @@
 
             <descendants>
                 <!-- <leaf type="plane" npartsU="1" npartsV="1"/> -->
-                <!-- <leaf type="patch" npointsU="3" npointsV="2" npartsU="4" npartsV="5">
-                    <controlpoint xx="-1.5" yy="-1.5" zz="0"/>
-                    <controlpoint xx="-1.5" yy="1.5" zz="0"/>
-                    
-                    <controlpoint xx="0" yy="-1.5" zz="3"/>
-                    <controlpoint xx="0" yy="1.5" zz="3"/>
+                <!-- <leaf type="patch" npointsU="7" npointsV="4" npartsU="4" npartsV="5">
+                    <controlpoint x="0" z="2" y="0"/>
+                    <controlpoint x="0" z="2" y="0"/>
+                    <controlpoint x="0" z="1" y="0"/>
+                    <controlpoint x="0" z="1" y="0"/>
 
-                    <controlpoint xx="1.5" yy="-1.5" zz="0"/>
-                    <controlpoint xx="1.5" yy="1.5" zz="0"/>
+                    <controlpoint x="2.821" z="2" y="2.698"/>
+                    <controlpoint x="2.821" z="2" y="2.698"/>
+                    <controlpoint x="2.821" z="1" y="2.698"/>
+                    <controlpoint x="2.821" z="1" y="2.698"/>
+
+                    <controlpoint x="-1.222" z="2" y="8.884"/>
+                    <controlpoint x="-1.222" z="2" y="8.884"/>
+                    <controlpoint x="-1.222" z="1" y="8.884"/>
+                    <controlpoint x="-1.222" z="1" y="8.884"/>
+
+                    <controlpoint x="4.812" z="2" y="8.108"/>
+                    <controlpoint x="4.812" z="2" y="8.108"/>
+                    <controlpoint x="4.812" z="1" y="8.108"/>
+                    <controlpoint x="4.812" z="1" y="8.108"/>
+
+                    <controlpoint x="7,045" z="2" y="6.746"/>
+                    <controlpoint x="7,045" z="2" y="6.746"/>
+                    <controlpoint x="7,045" z="1" y="6.746"/>
+                    <controlpoint x="7,045" z="1" y="6.746"/>
+
+                    <controlpoint x="3.882" z="2" y="0.971"/>
+                    <controlpoint x="3.882" z="2" y="0.971"/>
+                    <controlpoint x="3.882" z="1" y="0.971"/>
+                    <controlpoint x="3.882" z="1" y="0.971"/>
+
+                    <controlpoint x="6" z="2" y="0"/>
+                    <controlpoint x="6" z="2" y="0"/>
+                    <controlpoint x="6" z="1" y="0"/>
+                    <controlpoint x="6" z="1" y="0"/>
                 </leaf> -->
-                <leaf type="spritetext" text="Testing text"/>
-                <leaf type="spriteanim" ssid="text" startCell="31" endCell="56" duration="10"/>
+                <!-- <leaf type="spritetext" text="Testing text"/> -->
+                <!-- <leaf type="spriteanim" ssid="text" startCell="31" endCell="56" duration="10"/> -->
+                <leaf type="defbarrel" base="1" middle="3" height="15" slices="10" stacks="10" />
             </descendants>
         </node>
 
