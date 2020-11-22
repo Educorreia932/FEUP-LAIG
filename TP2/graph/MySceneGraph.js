@@ -886,21 +886,26 @@ class MySceneGraph {
                     return "unable to parse texture ID for node " + nodeID;
                 }
 
+                let auxS = null;
+                let auxT = null;
+
                 if (grandgrandChildren.length < 1 || grandgrandChildren[0].nodeName != "amplification") {
-                    this.onXMLMinorError("unable to parse texture amplification" + texture.id + "for node " + nodeID + "; assuming amplication of 1.0");
-                }
-
-                let auxS = this.reader.getFloat(grandgrandChildren[0], 'afs');
-                let auxT = this.reader.getFloat(grandgrandChildren[0], 'aft');
-
-                if (auxS == null || isNaN(auxS)) {
-                    this.onXMLMinorError("unable to parse afs component from the texture of ID " + texture.id + "of the node " + nodeID);
+                    this.onXMLMinorError("unable to parse texture amplification for texture " + texture.id + " for node " + nodeID + "; assuming amplication of 1.0");
                     auxS = 1.0;
-                }
-
-                if (auxT == null || isNaN(auxT)) {
-                    this.onXMLMinorError("unable to parse aft component from the texture of ID " + texture.id + "of the node " + nodeID);
                     auxT = 1.0;
+                } else {
+                    auxS = this.reader.getFloat(grandgrandChildren[0], 'afs');
+                    auxT = this.reader.getFloat(grandgrandChildren[0], 'aft');
+
+                    if (auxS == null || isNaN(auxS)) {
+                        this.onXMLMinorError("unable to parse afs component from the texture of ID " + texture.id + " of the node " + nodeID);
+                        auxS = 1.0;
+                    }
+
+                    if (auxT == null || isNaN(auxT)) {
+                        this.onXMLMinorError("unable to parse aft component from the texture of ID " + texture.id + " of the node " + nodeID);
+                        auxT = 1.0;
+                    }
                 }
 
                 texture.afs = auxS;

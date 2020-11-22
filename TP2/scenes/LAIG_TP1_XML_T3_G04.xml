@@ -280,7 +280,7 @@
             </texture>
 
             <transformations>
-                <translation x="-20" y="0" z="20"/> 
+                <translation x="-10" y="0" z="0"/> 
                 <rotation axis="x" angle="-90"/>
                 <scale sx="30" sy="30" sz="30"/>
             </transformations>
