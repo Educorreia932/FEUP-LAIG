@@ -1,12 +1,12 @@
-class MySceneGraphTextures {
-    constructor(scene, graph) {
-        this.scene = scene;
+class MySceneTextures {
+    constructor(graph) {
         this.graph = graph;
+        this.scene = graph.scene;
     }
 
     parse(children) {
         let textures = [];
-    
+
         for (let i = 0; i < children.length; i++) {
             if (children[i].nodeName != "texture") {
                 this.graph.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
@@ -29,8 +29,8 @@ class MySceneGraphTextures {
             let texture = new CGFtexture(this.scene, texturePath);
     
             textures[textureID] = texture;
-
-            return textures;
         }
+
+        return textures;
     }
 }

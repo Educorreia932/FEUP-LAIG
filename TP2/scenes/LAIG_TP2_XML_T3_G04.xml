@@ -6,22 +6,24 @@
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="30" y="25" z="30" />
-            <to x="0" y="5" z="0" />
+            <from x="110" y="61" z="125" />
+            <to x="-4" y="33" z="-8" />
         </perspective>
 
-        <ortho id="orthoCamera" near="0.1" far="500" left="-10" right="10" top="15" bottom="-5">
-            <from x="20" y="6" z="0" />
-            <to x="0" y="5" z="0" />
-            <up x="0" y="1" z="0" />
+        <ortho id="birdView" near="0.1" far="500" left="-75" right="75" top="75" bottom="-75">
+            <from x="20" y="120" z="0" />
+            <to x="0" y="0" z="0" />
+            <up x="0" y="0" z="-100" />
         </ortho>
     </views>
 
+    <!-- Illumination -->
     <illumination>
         <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
         <background r="0.5" g="0.8" b="0.9" a="1.0" />
     </illumination>
 
+    <!-- Lights -->
     <lights>
         <light id="firstLight">
             <enable value="1" />
@@ -34,20 +36,25 @@
 
     <!-- Textures -->
     <textures>
-        <texture id="R2-D2 Head" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/R2-D2 Head.png" />
-        <texture id="R2-D2 Body" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/R2-D2 Body.png" />
-        <texture id="Sandstone" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/sandstone.png"/>
-        <texture id="Copper" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/copper.jpg"/>
-        <texture id="SkyboxTop" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/top.jpg"/>
-        <texture id="SkyboxBottom" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/bottom.jpg"/>
-        <texture id="SkyboxLeft" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/left.jpg"/>
-        <texture id="SkyboxRight" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/right.jpg"/>
-        <texture id="SkyboxFront" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/front.jpg"/>
-        <texture id="SkyboxBack" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/back.jpg"/>
-        <texture id="TankFront" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/tank_front.png"/>
-        <texture id="SupportTubes" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/support_tubes.png"/>
-        <texture id="FootFront" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/foot_front.png"/>
+        <texture id="R2-D2 Head" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/R2-D2 Head.png" />
+        <texture id="R2-D2 Body" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/R2-D2 Body.png" />
+        <texture id="Sandstone" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/sandstone.png"/>
+        <texture id="Copper" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/copper.jpg"/>
+        <texture id="SkyboxTop" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/top.jpg"/>
+        <texture id="SkyboxBottom" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/bottom.jpg"/>
+        <texture id="SkyboxLeft" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/left.jpg"/>
+        <texture id="SkyboxRight" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/right.jpg"/>
+        <texture id="SkyboxFront" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/front.jpg"/>
+        <texture id="SkyboxBack" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/back.jpg"/>
+        <texture id="TankFront" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/tank_front.png"/>
+        <texture id="SupportTubes" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/support_tubes.png"/>
+        <texture id="FootFront" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/foot_front.png"/>
     </textures>
+
+    <!-- Spritesheets -->
+    <spritesheets>
+        <spritesheet id="explosion" path="textures/explosion.png" sizeM="4" sizeN="4" />
+    </spritesheets>
 
     <!-- Materials -->
     <materials>
@@ -99,14 +106,67 @@
         </material>
     </materials>
 
+    <!-- Animations -->
     <animations>
-        <animation id="testAnimation" >
-            <keyframe instant="10.3">
-                <translation x="1.0" y="2.3" z="0" />
-                <rotation axis="x" angle="93" />
+        <animation id="walk" >
+            <keyframe instant="0">
+                <translation x="-10" y="0" z="-15" />
+                <rotation axis="x" angle="0" />
                 <rotation axis="y" angle="0" />
-                <scale sx="1.0" sy="0.3" sz="5.4" />
-                <rotation axis="z" angle="-3" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="1">
+                <translation x="-7" y="0" z="-13" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="-50" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+         
+            <keyframe instant="2">
+                <translation x="20" y="0" z="10" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="-50" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="3">
+                <translation x="25" y="0" z="15" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="-50" />
+                <rotation axis="z" angle="-90" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+        </animation>
+
+        <animation id="chatBubble" >
+            <keyframe instant="1">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="3">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="-90" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+        </animation>
+
+        <animation id="explosion" >
+            <keyframe instant="2.5">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
             </keyframe>
         </animation>
     </animations>
@@ -124,8 +184,29 @@
             </transformations>
 
             <descendants>
-                <noderef id="R2-D2" />
                 <noderef id="skybox"/>
+                <noderef id="arc"/>
+                <noderef id="sandPillar"/>
+                <noderef id="rock"/>
+                <noderef id="R2-D2" />
+            </descendants>
+        </node>
+
+        <node id="sandPillar">
+            <material id="null" />
+
+            <texture id="Sandstone">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="20" y="25" z="-50"/>
+                <rotation axis="x" angle="90"/>
+                <scale sx="5" sy="5" sz="5"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="defbarrel" base="0" middle="4" height="10" slices="10" stacks="10"/>
             </descendants>
         </node>
 
@@ -148,7 +229,86 @@
                 <noderef id="skyboxLeftFace"/>
                 <noderef id="skyboxFrontFace" />
                 <noderef id="skyboxBackFace" />
-                <noderef id="arc"/>
+            </descendants>
+        </node>
+
+        <!-- START ROCK -->
+        <node id="rock">
+            <material id="Sandstone" />
+
+            <texture id="Sandstone">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="20" y="-0.1" z="15"/>
+                <scale sx="5" sy="-4" sz="4"/>
+                <rotation axis="x" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="patch" npointsU="4" npointsV="4" npartsU="4" npartsV="4" >
+                    <controlpoint x="0" y="0" z="0" />
+                    <controlpoint x="-0.5" y="0" z="0.25" />
+                    <controlpoint x="-0.5" y="0" z="0.75" />
+                    <controlpoint x="0" y="0" z="1.0" />
+
+                    <controlpoint x="0.25" y="0" z="-0.5" />
+                    <controlpoint x="0.25" y="1" z="0.33" />
+                    <controlpoint x="0.25" y="1" z="0.66" />
+                    <controlpoint x="0.25" y="0" z="1.5" />
+
+                    <controlpoint x="0.75" y="0" z="-0.5" />
+                    <controlpoint x="0.75" y="1" z="0.33" />
+                    <controlpoint x="0.75" y="1" z="0.66" />
+                    <controlpoint x="0.75" y="0" z="1.5" />
+
+                    <controlpoint x="1" y="0" z="0" />
+                    <controlpoint x="1" y="0" z="0.25" />
+                    <controlpoint x="1" y="0" z="0.75" />
+                    <controlpoint x="1" y="0" z="1.0" />
+                </leaf>
+
+            </descendants>
+        </node>
+
+        <node id="explosion">
+            <material id="null"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-10" y="0" z="0"/> 
+                <rotation axis="x" angle="-90"/>
+                <scale sx="30" sy="30" sz="30"/>
+            </transformations>
+
+            <animationref id="explosion"/>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="explosion" startCell="0" endCell="15" duration="1" />
+            </descendants>
+        </node>
+
+        <node id="chatBubble">
+            <material id="null"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="20" z="35"/>
+                <scale sx="5" sy="5" sz="5"/>
+                <rotation axis="y" angle="90"/>
+            </transformations>
+
+            <animationref id="chatBubble"/>
+
+            <descendants>
+                <leaf type="spritetext" text="BEEEP! *boom*"/>
             </descendants>
         </node>
 
@@ -160,14 +320,14 @@
             </texture>
 
             <transformations>
-                <scale sx="0.2" sy="0.2" sz="0.4"/>
-                <translation x="-2" y="0" z="1"/>
+                <translation x="-40" y="0" z="0"/>
+                <scale sx="50" sy="35" sz="40"/>
                 <rotation axis="z" angle="180"/>
-                <rotation axis="y" angle="-90"/>
+                <rotation axis="y" angle="100"/>
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.5" outer="1.5" slices="20" loops="20" />
+                <leaf type="torus" inner="0.3" outer="1.3" slices="4" loops="20" />
             </descendants>
         </node>
 
@@ -198,11 +358,10 @@
 
             <transformations>
                 <rotation axis="y" angle="-90"/>
-                <rotation axis="x" angle="-90"/>
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+                <leaf type="plane" npartsU="4" npartsV="4" />
             </descendants>
         </node>
 
@@ -286,9 +445,13 @@
                 <translation x="0.0" y="3.5" z="0.0" />
             </transformations>
 
+            <animationref id="walk" />
+
             <descendants>
                 <noderef id="head" />
                 <noderef id="body" />
+                <noderef id="explosion"/>
+                <noderef id="chatBubble"/>
             </descendants>
         </node>
 
