@@ -6,14 +6,14 @@
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="30" y="25" z="30" />
-            <to x="0" y="5" z="0" />
+            <from x="110" y="61" z="125" />
+            <to x="-4" y="33" z="-8" />
         </perspective>
 
-        <ortho id="orthoCamera" near="0.1" far="500" left="-10" right="10" top="15" bottom="-5">
-            <from x="20" y="6" z="0" />
-            <to x="0" y="5" z="0" />
-            <up x="0" y="1" z="0" />
+        <ortho id="birdView" near="0.1" far="500" left="-75" right="75" top="75" bottom="-75">
+            <from x="20" y="120" z="0" />
+            <to x="0" y="0" z="0" />
+            <up x="0" y="0" z="-100" />
         </ortho>
     </views>
 
@@ -184,11 +184,29 @@
             </transformations>
 
             <descendants>
-                <noderef id="R2-D2" />
                 <noderef id="skybox"/>
                 <noderef id="arc"/>
-                <noderef id="explosion"/>
+                <noderef id="sandPillar"/>
                 <noderef id="rock"/>
+                <noderef id="R2-D2" />
+            </descendants>
+        </node>
+
+        <node id="sandPillar">
+            <material id="null" />
+
+            <texture id="Sandstone">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="20" y="25" z="-50"/>
+                <rotation axis="x" angle="90"/>
+                <scale sx="5" sy="5" sz="5"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="defbarrel" base="0" middle="4" height="10" slices="10" stacks="10"/>
             </descendants>
         </node>
 
@@ -230,25 +248,25 @@
 
             <descendants>
                 <leaf type="patch" npointsU="4" npointsV="4" npartsU="4" npartsV="4" >
-                    <controlpoint xx="0" yy="0" zz="0" />
-                    <controlpoint xx="-0.5" yy="0" zz="0.25" />
-                    <controlpoint xx="-0.5" yy="0" zz="0.75" />
-                    <controlpoint xx="0" yy="0" zz="1.0" />
+                    <controlpoint x="0" y="0" z="0" />
+                    <controlpoint x="-0.5" y="0" z="0.25" />
+                    <controlpoint x="-0.5" y="0" z="0.75" />
+                    <controlpoint x="0" y="0" z="1.0" />
 
-                    <controlpoint xx="0.25" yy="0" zz="-0.5" />
-                    <controlpoint xx="0.25" yy="1" zz="0.33" />
-                    <controlpoint xx="0.25" yy="1" zz="0.66" />
-                    <controlpoint xx="0.25" yy="0" zz="1.5" />
+                    <controlpoint x="0.25" y="0" z="-0.5" />
+                    <controlpoint x="0.25" y="1" z="0.33" />
+                    <controlpoint x="0.25" y="1" z="0.66" />
+                    <controlpoint x="0.25" y="0" z="1.5" />
 
-                    <controlpoint xx="0.75" yy="0" zz="-0.5" />
-                    <controlpoint xx="0.75" yy="1" zz="0.33" />
-                    <controlpoint xx="0.75" yy="1" zz="0.66" />
-                    <controlpoint xx="0.75" yy="0" zz="1.5" />
+                    <controlpoint x="0.75" y="0" z="-0.5" />
+                    <controlpoint x="0.75" y="1" z="0.33" />
+                    <controlpoint x="0.75" y="1" z="0.66" />
+                    <controlpoint x="0.75" y="0" z="1.5" />
 
-                    <controlpoint xx="1" yy="0" zz="0" />
-                    <controlpoint xx="1" yy="0" zz="0.25" />
-                    <controlpoint xx="1" yy="0" zz="0.75" />
-                    <controlpoint xx="1" yy="0" zz="1.0" />
+                    <controlpoint x="1" y="0" z="0" />
+                    <controlpoint x="1" y="0" z="0.25" />
+                    <controlpoint x="1" y="0" z="0.75" />
+                    <controlpoint x="1" y="0" z="1.0" />
                 </leaf>
 
             </descendants>
@@ -262,8 +280,8 @@
             </texture>
 
             <transformations>
-                <translation x="15" y="-0.1" z="25"/>
-                <rotation axis="y" angle="40"/>
+                <translation x="-20" y="0" z="20"/> 
+                <rotation axis="x" angle="-90"/>
                 <scale sx="30" sy="30" sz="30"/>
             </transformations>
 
@@ -430,9 +448,10 @@
             <animationref id="walk" />
 
             <descendants>
-                <noderef id="chatBubble"/>
                 <noderef id="head" />
                 <noderef id="body" />
+                <noderef id="explosion"/>
+                <noderef id="chatBubble"/>
             </descendants>
         </node>
 
