@@ -9,7 +9,7 @@ class MySpriteText extends CGFobject {
 
         this.spritesheet = new MySpriteSheet(scene, "textures/Berlinfont.png", 16, 16);
 
-        this.rectangle = new MyRectangle(scene, 0, 0, 1, 1);
+        this.rectangle = new MyRectangle(scene, -0.5, -0.5, 0.5, 0.5);
     }
 
     getCharacterPosition(character) {

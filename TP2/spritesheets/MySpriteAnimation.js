@@ -14,7 +14,7 @@ class MySpriteAnimation extends CGFobject {
         this.segmentTime = duration / (endCell - startCell)
         this.currentTime = this.segmentTime;
 
-        this.rectangle = new MyRectangle(scene, 0, 0, 1, 1);
+        this.rectangle = new MyRectangle(scene, -0.5, -0.5, 0.5, 0.5);
     }
 
     update(time) {
