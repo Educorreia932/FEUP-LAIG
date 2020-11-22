@@ -36,19 +36,19 @@
 
     <!-- Textures -->
     <textures>
-        <texture id="R2-D2 Head" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/R2-D2 Head.png" />
-        <texture id="R2-D2 Body" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/R2-D2 Body.png" />
-        <texture id="Sandstone" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/sandstone.png"/>
-        <texture id="Copper" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/copper.jpg"/>
-        <texture id="SkyboxTop" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/top.jpg"/>
-        <texture id="SkyboxBottom" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/bottom.jpg"/>
-        <texture id="SkyboxLeft" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/left.jpg"/>
-        <texture id="SkyboxRight" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/right.jpg"/>
-        <texture id="SkyboxFront" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/front.jpg"/>
-        <texture id="SkyboxBack" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/skybox/back.jpg"/>
-        <texture id="TankFront" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/tank_front.png"/>
-        <texture id="SupportTubes" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/support_tubes.png"/>
-        <texture id="FootFront" path="./scenes/IMAGES_LAIG_TP1_XML_T3_GO4/foot_front.png"/>
+        <texture id="R2-D2 Head" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/R2-D2 Head.png" />
+        <texture id="R2-D2 Body" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/R2-D2 Body.png" />
+        <texture id="Sandstone" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/sandstone.png"/>
+        <texture id="Copper" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/copper.jpg"/>
+        <texture id="SkyboxTop" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/top.jpg"/>
+        <texture id="SkyboxBottom" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/bottom.jpg"/>
+        <texture id="SkyboxLeft" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/left.jpg"/>
+        <texture id="SkyboxRight" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/right.jpg"/>
+        <texture id="SkyboxFront" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/front.jpg"/>
+        <texture id="SkyboxBack" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/skybox/back.jpg"/>
+        <texture id="TankFront" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/tank_front.png"/>
+        <texture id="SupportTubes" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/support_tubes.png"/>
+        <texture id="FootFront" path="./scenes/IMAGES_LAIG_TP2_XML_T3_GO4/foot_front.png"/>
     </textures>
 
     <!-- Spritesheets -->

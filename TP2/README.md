@@ -1,4 +1,4 @@
-# LAIG 2020/2021 - TP1
+# LAIG 2020/2021 - TP2
 
 ## Group T03G04
 
@@ -11,14 +11,17 @@
 
 ## Project information
 
-- All of the specified primitives were done and support any kind of texture, material, transformation and 
+- All of the specified primitives were done and support any kind of texture, material, transformation, animation and 
 instantiation. 
-- Our parser handles all kinds of errors that may occur, giving warnings and assuming default values for missing components.
+- Our parser handles all kinds of errors that may occur, giving warnings and assuming default values for missing components and is organized into multiple parts.
 
 ### Scene
-- Our [scene](scenes/LAIG_TP1_XML_T3_04.xml) consists in a representation of Star Wars IV's part in which the character C-3P0 and R2-D2 are in the desert planet of Tatooine.
-- For the sake of simplicity, we decided not to represent C-3P0 and instead focus on the details of R2-D2.
-- As R2-D2 is already a complex structure, extreme details are hard to implement here due to limitations on the primitives, so the R2-D2 represented is simplified to give the main charm of the robot, instaed of the full package.
+- Our [scene](scenes/LAIG_TP1_XML_T3_04.xml) consists in a representation of Star Wars IV's part in which the character R2-D2 is stranded in the desert planet of Tatooine.
+- More precisely, it represents a section of the movie that didn't make it to the final cut where the robot walks into a rock, triping over it and subconsequently damaging its internal circuits (poor R2-D2).
+- As R2-D2 is already a complex structure, extreme details are hard to implement here due to limitations on the primitives, so the R2-D2 represented is simplified to give the main charm of the robot, insteadd of the full package.
+
+![Inspiration](Inspiration.jpg)
+![Scene](Scene.gif)
 
 ----
 
