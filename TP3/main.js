@@ -16,24 +16,31 @@ serialInclude([
     'XMLscene.js', 
     'MyInterface.js',
 
+    './animations/MyAnimation.js',
+    './animations/MyAnimator.js',
+    './animations/MyKeyframeAnimation.js',
+
+    './game/MyGameMove.js',
+    './game/MyGameOrchestrator.js',
+    './game/MyGameSequence.js',
+
     './graph/MySceneGraph.js',
     './graph/MySceneTextures.js',
     './graph/MySceneMaterials.js',
     './graph/MySceneTransformationMatrix.js',
     './graph/MyNode.js', 
 
-    './primitives/MyRectangle.js',
-    './primitives/MyTriangle.js',
-    './primitives/MySphere.js',
     './primitives/MyCylinder.js',
-    './primitives/MyTorus.js',
-    './primitives/MyPlane.js',
-    './primitives/MyPatch.js',
     './primitives/MyDefBarrel.js',
-
-
-    './animations/Animation.js',
-    './animations/KeyframeAnimation.js',
+    './primitives/MyGameBoard.js',
+    './primitives/MyPatch.js',
+    './primitives/MyPiece.js',
+    './primitives/MyPlane.js',
+    './primitives/MyRectangle.js',
+    './primitives/MySphere.js',
+    './primitives/MyTile.js',
+    './primitives/MyTorus.js',
+    './primitives/MyTriangle.js',
 
     './spritesheets/MySpriteSheet.js',
     './spritesheets/MySpriteText.js',
@@ -55,7 +62,7 @@ serialInclude([
         // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
         // or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
 
-        var filename = getUrlVars()['file'] || "LAIG_TP2_XML_T3_G04.xml";
+        var filename = getUrlVars()['file'] || "scene.xml";
 
         // create and load graph, and associate it to scene. 
         // Check console for loading errors

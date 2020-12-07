@@ -1,0 +1,3 @@
+class MyPiece extends CGFobject {
+    
+}

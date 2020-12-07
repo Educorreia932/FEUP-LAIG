@@ -1,8 +1,8 @@
 /**
- * Animation
+ * MyAnimation
  * @constructor
  */
-class Animation {
+class MyAnimation {
     constructor() {
     }
 

@@ -1,0 +1,83 @@
+<lsf>
+    <!-- Initials -->
+    <initials>
+        <reference length="1" />
+        <root id="root" />
+    </initials>
+
+    <!-- Views -->
+    <views default="defaultCamera">
+        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
+            <from x="10" y="10" z="10" />
+            <to x="0" y="0" z="0" />
+        </perspective>
+
+        <ortho id="birdView" near="0.1" far="500" left="-75" right="75" top="75" bottom="-75">
+            <from x="20" y="120" z="0" />
+            <to x="0" y="0" z="0" />
+            <up x="0" y="0" z="-100" />
+        </ortho>
+    </views>
+
+    <!-- Illumination -->
+    <illumination>
+        <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+        <background r="0.5" g="0.8" b="0.9" a="1.0" />
+    </illumination>
+
+     <!-- Lights -->
+     <lights>
+        <light id="firstLight">
+            <enable value="1" />
+            <position x="10" y="12" z="9.5" w="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </light>
+    </lights>
+
+    <!-- Textures -->
+    <textures>
+
+    </textures>
+
+    <!-- Spritesheets -->
+    <spritesheets>
+
+    </spritesheets>
+
+    <!-- Materials -->
+    <materials>
+        <material id="default">
+            <shininess value="1.0" />
+            <ambient r="0.8" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+    </materials>
+
+    <!-- Animations -->
+    <animations>
+
+    </animations>
+
+    <!-- Nodes -->
+    <nodes> 
+        <node id="root">
+            <material id="default"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="3" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="1" slices="50" stacks="50" />
+            </descendants>
+        </node>
+    </nodes>
+</lsf>

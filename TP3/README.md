@@ -11,6 +11,7 @@
 
 ## Project information
 
+This project consists in a visual representation of the game [Greener](https://github.com/Educorreia932/PLOG/tree/master/Projects/Greener).
 
 ----
 
