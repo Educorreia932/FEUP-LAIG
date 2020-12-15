@@ -18,17 +18,22 @@ class MyGameBoard extends CGFobject {
     }
 
     display() {
+        this.scene.translate(0, 0, 1);
+
         for (let i = 0; i < this.rows; i++) {
+            this.scene.pushMatrix();
+
             for (let j = 0; j < this.columns; j++) {
                 this.scene.pushMatrix();
-                this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+                this.scene.rotate(-Math.PI / 2, 1, 0, 0); // Place tiles on XZ plane
                 this.tiles[i][j].display();  
                 this.scene.popMatrix();
-                this.scene.translate(1, 0, 0);
+                this.scene.translate(1.1, 0, 0);
             }
 
-            this.scene.translate(-this.rows, 0, 0);
-            this.scene.translate(0, 0, 1);
+            this.scene.popMatrix();
+
+            this.scene.translate(0, 0, 1.1);
         }
     }
 }
