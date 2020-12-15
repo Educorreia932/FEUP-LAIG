@@ -20,10 +20,11 @@ class MyGameBoard extends CGFobject {
     display() {
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.columns; j++) {
-                this.scene.rotate(Math.PI / 2, 0, 0, 1);
+                this.scene.pushMatrix();
+                this.scene.rotate(-Math.PI / 2, 1, 0, 0);
                 this.tiles[i][j].display();  
+                this.scene.popMatrix();
                 this.scene.translate(1, 0, 0);
-                this.scene.rotate(Math.PI / 2, 0, 0, -1);
             }
 
             this.scene.translate(-this.rows, 0, 0);
