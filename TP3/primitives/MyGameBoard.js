@@ -14,7 +14,15 @@ class MyGameBoard extends CGFobject {
 
             for (let j = 0; j < columns; j++) {
                 tilesRow.push(new MyTile(scene));
-                piecesRow.push(new MyPiece(scene));
+
+                if (j < 3) 
+                    piecesRow.push(new MyPiece(scene, this.scene.graph.materials["white"]));
+
+                else if (j < 5) 
+                    piecesRow.push(new MyPiece(scene, this.scene.graph.materials["green"]));
+
+                else
+                    piecesRow.push(new MyPiece(scene, this.scene.graph.materials["black"]));
             }
 
             this.tiles.push(tilesRow);

@@ -1363,12 +1363,12 @@ class MySceneGraph {
             let rows = this.reader.getFloat(node, "rows");
 
             if (rows == null || isNaN(rows))
-                return "Unable to parse rows value from the barrel of the " + messageError;
+                return "Unable to parse rows value from the game board of the " + messageError;
 
             let columns = this.reader.getFloat(node, "columns");
 
             if (columns == null || isNaN(columns))
-                return "Unable to parse columns value from the barrel of the " + messageError;
+                return "Unable to parse columns value from the game board of the " + messageError;
 
             out = new MyGameBoard(this.scene, rows, columns);
         }

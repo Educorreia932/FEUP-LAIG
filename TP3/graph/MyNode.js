@@ -71,6 +71,7 @@ class MyNode {
                         parser.onXMLMinorError("invalid spritesheet for spriteanimation for node of ID " + this.id);
                         continue;
                     }
+
                     descendant.spritesheet = parser.spritesheets[descendant.spritesheet];
                 }
 
@@ -115,9 +116,8 @@ class MyNode {
         }
 
         for (let i = 0; i < this.descendants.length; i++) {
-            if (this.descendants[i] instanceof MyNode) {
+            if (this.descendants[i] instanceof MyNode)
                 this.descendants[i].initialize(parser);
-            }
         }
 
         this.inited = true;
@@ -125,9 +125,8 @@ class MyNode {
 
     update(time) {
         for (const [objectID, object] of Object.entries(this.objects))
-            if (object instanceof MySpriteAnimation) {
+            if (object instanceof MySpriteAnimation)
                 object.update(time);
-            }
     }
 
     display() {
