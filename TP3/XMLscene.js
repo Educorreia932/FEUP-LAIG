@@ -46,6 +46,9 @@ class XMLscene extends CGFscene {
         this.loadingProgress = 0;
 
         this.defaultAppearance = new CGFappearance(this);
+
+        // Enable picking
+		this.setPickEnabled(true);
     }
 
     // Texture & Material Stack Control
@@ -191,10 +194,28 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
     }
 
+    logPicking() {
+		if (this.pickMode == false) {
+			if (this.pickResults != null && this.pickResults.length > 0) {
+				for (var i = 0; i < this.pickResults.length; i++) {
+					var obj = this.pickResults[i][0];
+					if (obj) {
+						var customId = this.pickResults[i][1];
+						console.log("Picked object: " + obj + ", with pick id " + customId);						
+					}
+				}
+				this.pickResults.splice(0, this.pickResults.length);
+			}
+		}
+	}
+
     /**
      * Displays the scene.
      */
     display() {
+        this.logPicking();
+        this.clearPickRegistration();
+        
         // ---- BEGIN Background, camera and axis setup
 
         // Clear image and depth buffer everytime we update the scene

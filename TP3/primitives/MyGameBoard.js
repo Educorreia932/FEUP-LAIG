@@ -15,15 +15,16 @@ class MyGameBoard extends CGFobject {
             for (let j = 0; j < columns; j++) {
                 tilesRow.push(new MyTile(scene));
 
-                if (j < 3) 
+                if (j < 2) 
                     piecesRow.push(new MyPiece(scene, this.scene.graph.materials["white"]));
 
-                else if (j < 5) 
+                else if (j < 4) 
                     piecesRow.push(new MyPiece(scene, this.scene.graph.materials["green"]));
 
                 else
                     piecesRow.push(new MyPiece(scene, this.scene.graph.materials["black"]));
             }
+
 
             this.tiles.push(tilesRow);
             this.pieces.push(piecesRow);
@@ -41,6 +42,7 @@ class MyGameBoard extends CGFobject {
                 
                 this.scene.rotate(-Math.PI / 2, 1, 0, 0); // Place tiles on XZ plane
 
+                this.scene.registerForPick(i * this.columns + j + 1, this.pieces[i][j]);
                 this.tiles[i][j].display();  
                 this.pieces[i][j].display();
                 
