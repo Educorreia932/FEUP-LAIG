@@ -4,4 +4,6 @@ class MyGameMove {
         this.originTile;
         this.destinationTile; 
     }
+
+    // Animation
 }

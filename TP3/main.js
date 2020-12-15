@@ -68,6 +68,8 @@ serialInclude([
         // Check console for loading errors
         var myGraph = new MySceneGraph(filename, myScene);
 
+        let game = new MyGameOrchestrator(myScene);
+
         // start
         app.run();
     }

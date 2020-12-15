@@ -1,5 +1,10 @@
 class MyGameSequence {
-    constructor() {
+    constructor(scene) {
+        this.scene = scene;
+        this.moves = [];
+    }   
+
+    undo() {
 
     }
 }

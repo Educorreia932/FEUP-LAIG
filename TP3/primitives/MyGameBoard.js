@@ -7,6 +7,8 @@ class MyGameBoard extends CGFobject {
         this.columns = columns;
         this.tiles = [];
         this.pieces = [];
+        this.source = null;
+        this.target = null;
 
         for (let i = 0; i < rows; i++) {
             let tilesRow = [];
@@ -24,7 +26,6 @@ class MyGameBoard extends CGFobject {
                 else
                     piecesRow.push(new MyPiece(scene, this.scene.graph.materials["black"]));
             }
-
 
             this.tiles.push(tilesRow);
             this.pieces.push(piecesRow);
@@ -55,5 +56,41 @@ class MyGameBoard extends CGFobject {
 
             this.scene.translate(0, 0, 1.1);
         }
+
+        this.pickedPiece();
+        this.scene.clearPickRegistration();
+    }
+
+    pickedPiece() {
+        if (this.scene.pickMode == false) {
+			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+				for (var i = 0; i < this.scene.pickResults.length; i++) {
+                    let obj = this.scene.pickResults[i][0];
+                    
+					if (obj) {
+                        if (this.source == null)
+                            this.source = this.scene.pickResults[i][1];
+                        
+                        else {
+                            this.target = this.scene.pickResults[i][1];
+                            this.movePiece();
+                            this.source = null;
+                            this.target = null;
+                        }
+					}
+                }
+                
+				this.scene.pickResults.splice(0, this.scene.pickResults.length);
+			}
+		}
+    }
+
+    movePiece() {
+        let i = this.source % this.rows;
+        let j = Math.floor(this.source / this.rows);
+
+        console.log(i, j)
+
+        console.log(this.pieces[i][j])
     }
 }
