@@ -3,17 +3,22 @@ class MyGameBoard extends CGFobject {
         super(scene);
 
         this.scene = scene;
-        this.tiles = []
         this.rows = rows;
         this.columns = columns;
+        this.tiles = [];
+        this.pieces = [];
 
         for (let i = 0; i < rows; i++) {
-            let row = [];
+            let tilesRow = [];
+            let piecesRow = [];
 
-            for (let j = 0; j < columns; j++)
-                row.push(new MyTile(scene));
+            for (let j = 0; j < columns; j++) {
+                tilesRow.push(new MyTile(scene));
+                piecesRow.push(new MyPiece(scene));
+            }
 
-            this.tiles.push(row);
+            this.tiles.push(tilesRow);
+            this.pieces.push(piecesRow);
         }
     }
 
@@ -25,9 +30,14 @@ class MyGameBoard extends CGFobject {
 
             for (let j = 0; j < this.columns; j++) {
                 this.scene.pushMatrix();
+                
                 this.scene.rotate(-Math.PI / 2, 1, 0, 0); // Place tiles on XZ plane
+
                 this.tiles[i][j].display();  
+                this.pieces[i][j].display();
+                
                 this.scene.popMatrix();
+
                 this.scene.translate(1.1, 0, 0);
             }
 
