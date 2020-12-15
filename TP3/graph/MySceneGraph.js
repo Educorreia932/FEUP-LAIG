@@ -955,7 +955,7 @@ class MySceneGraph {
         }
 
         // Initialize nodes by replacing all references to real values
-        if (this.nodes[this.idRoot] == null) 
+        if (this.nodes[this.idRoot] == null)
             return "scene doesn't have a valid root node";
 
         this.nodes[this.idRoot].initialize(this);
@@ -1118,9 +1118,8 @@ class MySceneGraph {
     }
 
     parsePrimitive(node, textureAfs, textureAft, messageError) {
-        var out;
-
-        var type = this.reader.getString(node, 'type');
+        let out;
+        let type = this.reader.getString(node, 'type');
 
         // Rectangle
         if (type == "rectangle") {
@@ -1314,7 +1313,7 @@ class MySceneGraph {
                 this.onXMLMinorError("Invalid value for V divisions from the plane of the " + messageError + "; assuming vDivisions = 1");
                 vDivisions = 1;
             }
-            
+
             out = new MyPlane(this.scene, uDivisions, vDivisions);
 
         }
@@ -1353,9 +1352,25 @@ class MySceneGraph {
             if (stacks == null || isNaN(stacks))
                 return "Unable to parse stacks value from the barrel of the " + messageError;
 
-            if (stacks < 0) return "Invalid value for stacks value from the barrel of the " + messageError;
-    
+            if (stacks < 0)
+                return "Invalid value for stacks value from the barrel of the " + messageError;
+
             out = new MyDefBarrel(this.scene, base, middle, height, slices, stacks);
+        }
+
+        // Board
+        else if (type == "board") {
+            let rows = this.reader.getFloat(node, "rows");
+
+            if (rows == null || isNaN(rows))
+                return "Unable to parse rows value from the barrel of the " + messageError;
+
+            let columns = this.reader.getFloat(node, "columns");
+
+            if (columns == null || isNaN(columns))
+                return "Unable to parse columns value from the barrel of the " + messageError;
+
+            out = new MyGameBoard(this.scene, rows, columns);
         }
 
         else
@@ -1373,31 +1388,31 @@ class MySceneGraph {
         let pointsU = this.reader.getInteger(node, "npointsU");
         if (pointsU == null || isNaN(pointsU))
             return "Unable to parse npointsU value for the patch of the " + messageError;
-        
+
         if (pointsU <= 0) return "Invalid npointsU value for the patch of the " + messageError;
 
         let pointsV = this.reader.getInteger(node, "npointsV");
         if (pointsV == null || isNaN(pointsV))
             return "Unable to parse npointsV value for the patch of the " + messageError;
-        
+
         if (pointsV <= 0) return "Invalid npointsV value for the patch of the " + messageError;
 
         let uDivisions = this.reader.getInteger(node, "npartsU");
         if (uDivisions == null || isNaN(uDivisions))
             return "Unable to parse npartsU value for the patch of the " + messageError;
-        
+
         if (uDivisions < 0) return "Invalid npartsU value for the patch of the " + messageError;
 
         let vDivisions = this.reader.getInteger(node, "npartsV");
         if (vDivisions == null || isNaN(vDivisions))
             return "Unable to parse npartsV value for the patch of the " + messageError;
-        
+
         if (vDivisions < 0) return "Invalid npartsV value for the patch of the " + messageError;
 
         let children = node.children;
 
-        if (children.length != pointsU * pointsV) return "Missing control points on patch of the " + messageError +"; Expected " + (pointsU * pointsV) + " got " + children.length; 
-        
+        if (children.length != pointsU * pointsV) return "Missing control points on patch of the " + messageError + "; Expected " + (pointsU * pointsV) + " got " + children.length;
+
         let arrayPoints = [];
 
         for (let i = 0; i < children.length; i++) {
@@ -1419,7 +1434,7 @@ class MySceneGraph {
 
     arrayToMatrix(array, elementsPerColumn) {
         let matrix = [];
-        for (let i = 0; i < array.length; i+=elementsPerColumn) {
+        for (let i = 0; i < array.length; i += elementsPerColumn) {
             matrix.push(array.slice(i, i + elementsPerColumn));
         }
         return matrix;
