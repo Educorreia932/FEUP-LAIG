@@ -10,6 +10,6 @@ class MyTile extends CGFobject {
     }
 
     display() {
-        this.object.display();
+        this.body.display();
     }
 }
