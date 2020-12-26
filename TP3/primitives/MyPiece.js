@@ -1,9 +1,10 @@
 class MyPiece extends CGFobject {
-    constructor(scene, material) {
+    constructor(scene, material, color) {
         super(scene);
 
         this.body = new MyCylinder(this.scene, 0.4, 0.4, 0.2, 20, 10);
         this.material = material;
+        this.color = color;
     }
 
     display() {
@@ -17,4 +18,6 @@ class MyPiece extends CGFobject {
         this.scene.popMatrix();
         this.scene.popMaterial();
     }
+
+    prologIdentifier() { return this.color.toLowerCase().charAt(0); }
 }

@@ -76,8 +76,7 @@ get_move(Player, GameState, 'player', NewGameState) :-
 
 get_move(Player, GameState, Strat, NewGameState) :-     % AI calculates move
     Strat \== 'player',
-    choose_move(GameState, Player, Strat, NewGameState),
-    sleep(0.5).
+    choose_move(GameState, Player, Strat, NewGameState).
 
 % Calculate value of move
 
