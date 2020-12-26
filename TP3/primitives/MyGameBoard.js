@@ -55,8 +55,15 @@ class MyGameBoard extends CGFobject {
 
                 let piecesStack = this.pieces[i][j]
 
-                for (let piece of piecesStack) 
+                this.scene.pushMatrix();
+
+                for (let piece of piecesStack) {
                     piece.display();
+
+                    this.scene.translate(0, 0, 0.2);
+                }
+
+                this.scene.popMatrix();
                 
                 this.scene.popMatrix();
 
@@ -100,11 +107,14 @@ class MyGameBoard extends CGFobject {
         let j = (this.source - 1) % this.rows;
         let i = Math.floor((this.source - 1) / this.rows);
 
-        let sourcePiece = this.pieces[i][j].pop();
+        let sourcePiecesStack = this.pieces[i][j];
 
         j = (this.target - 1) % this.rows;
         i = Math.floor((this.target - 1) / this.rows);
 
-        this.pieces[i][j].push(sourcePiece);
+        let targetPiecesStack = this.pieces[i][j];
+
+        targetPiecesStack.push(...sourcePiecesStack);
+        sourcePiecesStack.splice(0, sourcePiecesStack.length); // Remove pieces from their original stack
     }
 }
