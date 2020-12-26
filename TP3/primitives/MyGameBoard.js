@@ -86,10 +86,17 @@ class MyGameBoard extends CGFobject {
     }
 
     movePiece() {
-        let i = this.source % this.rows;
-        let j = Math.floor(this.source / this.rows);
+        let j = (this.source - 1) % this.rows;
+        let i = Math.floor((this.source - 1) / this.rows);
 
-        console.log(i, j)
+        let sourcePiece = this.pieces[i][j];
+
+        console.log(sourcePiece)
+
+        j = (this.target - 1) % this.rows;
+        i = Math.floor((this.target - 1) / this.rows);
+
+        this.pieces[i][j] = sourcePiece;
 
         console.log(this.pieces[i][j])
     }
