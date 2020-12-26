@@ -86,12 +86,17 @@ class MyGameBoard extends CGFobject {
                     let obj = this.scene.pickResults[i][0];
                     
 					if (obj) {
+                        // Picking source stack
                         if (this.source == null)
                             this.source = this.scene.pickResults[i][1];
-                        
+
+                        // Picking target stack
                         else {
                             this.target = this.scene.pickResults[i][1];
-                            this.movePiece();
+
+                            if (this.target != this.source)
+                                this.movePiece();
+
                             this.source = null;
                             this.target = null;
                         }
