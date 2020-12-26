@@ -17,14 +17,20 @@ class MyGameBoard extends CGFobject {
             for (let j = 0; j < columns; j++) {
                 tilesRow.push(new MyTile(scene));
 
+                let color;
+
                 if (j < 2) 
-                    piecesRow.push(new MyPiece(scene, this.scene.graph.materials["white"]));
+                    color = "white";
 
                 else if (j < 4) 
-                    piecesRow.push(new MyPiece(scene, this.scene.graph.materials["green"]));
+                    color = "green";
 
                 else
-                    piecesRow.push(new MyPiece(scene, this.scene.graph.materials["black"]));
+                    color = "black"
+
+                let piece = new MyPiece(scene, this.scene.graph.materials[color])
+
+                piecesRow.push([piece]);
             }
 
             this.tiles.push(tilesRow);
@@ -44,8 +50,13 @@ class MyGameBoard extends CGFobject {
                 this.scene.rotate(-Math.PI / 2, 1, 0, 0); // Place tiles on XZ plane
 
                 this.scene.registerForPick(i * this.columns + j + 1, this.pieces[i][j]);
+                
                 this.tiles[i][j].display();  
-                this.pieces[i][j].display();
+
+                let piecesStack = this.pieces[i][j]
+
+                for (let piece of piecesStack) 
+                    piece.display();
                 
                 this.scene.popMatrix();
 
@@ -89,15 +100,11 @@ class MyGameBoard extends CGFobject {
         let j = (this.source - 1) % this.rows;
         let i = Math.floor((this.source - 1) / this.rows);
 
-        let sourcePiece = this.pieces[i][j];
-
-        console.log(sourcePiece)
+        let sourcePiece = this.pieces[i][j].pop();
 
         j = (this.target - 1) % this.rows;
         i = Math.floor((this.target - 1) / this.rows);
 
-        this.pieces[i][j] = sourcePiece;
-
-        console.log(this.pieces[i][j])
+        this.pieces[i][j].push(sourcePiece);
     }
 }
