@@ -38,7 +38,7 @@
 
     <!-- Textures -->
     <textures>
-
+        <texture id="wood" path="./scenes/scene_home/wood.png"/>
     </textures>
 
     <!-- Spritesheets -->
@@ -79,6 +79,22 @@
             <specular r="0" g="0" b="0" a="1.0" />
             <emissive r="0" g="0" b="0" a="1.0" />
         </material>
+
+        <material id="dark_gray">
+            <shininess value="10">
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.3" g="0.3" b="0.3" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
+        <material id="light_gray">
+            <shininess value="10">
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
     </materials>
 
     <!-- Animations -->
@@ -86,20 +102,20 @@
 
     </animations>
 
-    <board>
-
-    </board>
-
-    <tile_even>
-
-    </tile_even>
-
-    <tile_odd>
-
-    </tile_odd>
-
+    <!--
+        tile_odd
+        tile_even
+        green_piece
+        white_piece
+        black_piece
+        board_support
+        lamp
+    -->
+    
     <!-- Nodes -->
-    <nodes> 
+    <nodes>
+
+        <!-- ROOT -->
         <node id="root">
             <material id="default"/>
 
@@ -117,6 +133,162 @@
             </descendants>
         </node>
 
+        <!-- TILES -->
+        <node id="tile_odd">
+            <material id="dark_gray"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <leaf>
+            </descendants>
+        </node>
+
+        <node id="tile_even">
+            <material id="light_gray"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="tile"/>
+            </descendants>
+        </node>
+
+        <node id="tile">
+            <material id="light_gray"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
+                <noderef id="tile_border"/>
+            </descendants>
+        </node>
+
+        <node id="tile">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
+                <noderef id="tile_border"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border">
+            <material id="light_gray"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
+                <noderef id="tile_border"/>
+            </descendants>
+        </node>
+
+        <!-- PIECES -->
+
+        <node id="white_piece">
+            <material id="white"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="piece"/>
+            </descendants>
+        </node>
+
+        <node id="green_piece">
+            <material id="green"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="piece"/>
+            </descendants>
+        </node>
+
+        <node id="black_piece">
+            <material id="black"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="piece"/>
+            </descendants>
+        </node>
+
+        <node id="piece">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="1" topRadius="1" height="1" slices="10" stacks="5"/>
+            </descendants>
+        </node>
+
+        <!-- END PIECES -->
+
+        <!-- END TILES -->
+
+        <!-- BOARD -->
+        
         <node id="gameBoard">
             <material id="default"/>
 
@@ -130,6 +302,17 @@
 
             <descendants>
                 <leaf type="board" rows="6" columns="6">
+                    <pieces>
+                        <piece id="white_piece"/>
+                        <piece id="green_piece"/>
+                        <piece id="black_piece"/>
+                    </pieces>
+
+                    <tiles>
+                        <tile id="tile_odd"/>
+                        <tile id="tile_even"/>
+                    </tiles>
+                </leaf>
             </descendants>
         </node>
     </nodes>

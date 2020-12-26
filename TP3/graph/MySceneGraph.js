@@ -1315,7 +1315,6 @@ class MySceneGraph {
             }
 
             out = new MyPlane(this.scene, uDivisions, vDivisions);
-
         }
 
         // Patch
