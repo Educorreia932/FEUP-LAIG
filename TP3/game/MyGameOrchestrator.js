@@ -2,8 +2,10 @@ class MyGameOrchestrator {
     constructor(scene) {
         this.gameSequence = new MyGameSequence(scene);
         this.animator = new MyAnimator();
+        this.prolog = new MyPrologInterface();
         this.gameboard = new MyGameBoard(scene);
-        // this.prolog = new MyPrologInterface();
+
+        this.prolog.generateBoard(this.gameboard);
 
         this.modes = {
             PvP: 1,
@@ -33,7 +35,6 @@ class MyGameOrchestrator {
     }
 
     display() {
-        console.log(this.theme)
         this.theme.display();
         this.gameboard.display();
         // this.animator.display();

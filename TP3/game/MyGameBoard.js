@@ -1,40 +1,23 @@
 class MyGameBoard extends CGFobject {
-    constructor(scene, rows, columns) {
+    constructor(scene) {
         super(scene);
 
         this.scene = scene;
-        this.rows = rows;
-        this.columns = columns;
+        this.rows = 6;
+        this.columns = 6;
         this.tiles = [];
-        this.pieces = [];
+        this.state = [];
         this.source = null;
         this.target = null;
 
-        for (let i = 0; i < rows; i++) {
+        for (let i = 0; i < this.rows; i++) {
             let tilesRow = [];
-            let piecesRow = [];
 
-            for (let j = 0; j < columns; j++) {
+            for (let j = 0; j < this.columns; j++) {
                 tilesRow.push(new MyTile(scene));
-
-                let color;
-
-                if (j < 2) 
-                    color = "white";
-
-                else if (j < 4) 
-                    color = "green";
-
-                else
-                    color = "black"
-
-                let piece = new MyPiece(scene, this.scene.graph.materials[color], color);
-
-                piecesRow.push([piece]);
             }
 
             this.tiles.push(tilesRow);
-            this.pieces.push(piecesRow);
         }
     }
 
@@ -49,19 +32,19 @@ class MyGameBoard extends CGFobject {
                 
                 this.scene.rotate(-Math.PI / 2, 1, 0, 0); // Place tiles on XZ plane
 
-                this.scene.registerForPick(i * this.columns + j + 1, this.pieces[i][j]);
+                // this.scene.registerForPick(i * this.columns + j + 1, this.state[i][j]);
                 
                 this.tiles[i][j].display();  
 
-                let piecesStack = this.pieces[i][j]
+                // let piecesStack = this.state[i][j]
 
                 this.scene.pushMatrix();
 
-                for (let piece of piecesStack) {
-                    piece.display();
+                // for (let piece of piecesStack) {
+                //     piece.display();
 
-                    this.scene.translate(0, 0, 0.2);
-                }
+                //     this.scene.translate(0, 0, 0.2);
+                // }
 
                 this.scene.popMatrix();
                 
@@ -112,12 +95,12 @@ class MyGameBoard extends CGFobject {
         let j = (this.source - 1) % this.rows;
         let i = Math.floor((this.source - 1) / this.rows);
 
-        let sourcePiecesStack = this.pieces[i][j];
+        let sourcePiecesStack = this.state[i][j];
 
         j = (this.target - 1) % this.rows;
         i = Math.floor((this.target - 1) / this.rows);
 
-        let targetPiecesStack = this.pieces[i][j];
+        let targetPiecesStack = this.state[i][j];
 
         targetPiecesStack.push(...sourcePiecesStack);
         sourcePiecesStack.splice(0, sourcePiecesStack.length); // Remove pieces from their original stack
@@ -130,7 +113,7 @@ class MyGameBoard extends CGFobject {
             let row = '[';
             for (let j = 0; j < this.columns; j++) {
                 let piece = '[';
-                let piecesStack = this.pieces[i][j];
+                let piecesStack = this.state[i][j];
                 for (let k = 0; k < piecesStack.length; k++) {
                     piece += piecesStack[k].prologIdentifier();
                     if (k != piecesStack.length - 1) piece += ',';
@@ -145,5 +128,13 @@ class MyGameBoard extends CGFobject {
         }
         board += ']';
         return board;
+    }
+
+    setState(state) {
+        state = state.map(function(row) {
+            return row.map(color => new MyPiece(this.scene, color))
+        }.bind(this));
+
+        console.log(state)
     }
 }

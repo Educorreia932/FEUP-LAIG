@@ -1,9 +1,9 @@
 class MyPiece extends CGFobject {
-    constructor(scene, material, color) {
+    constructor(scene, color) {
         super(scene);
 
         this.body = new MyCylinder(this.scene, 0.4, 0.4, 0.2, 20, 10);
-        this.material = material;
+        this.material = this.scene.graph.materials[color];
         this.color = color;
     }
 

@@ -56,7 +56,7 @@
             <emissive r="0" g="0" b="0" a="1.0" />
         </material>
 
-        <material id="white">
+        <material id="w">
             <shininess value="0.1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
@@ -64,7 +64,7 @@
             <emissive r="0" g="0" b="0" a="1.0" />
         </material>
 
-        <material id="green">
+        <material id="g">
             <shininess value="0.2" />
             <ambient r="0.2" g="0.55" b="0.2" a="1.0" />
             <diffuse r="0.25" g="0.25" b="0.25" a="1.0" />
@@ -72,7 +72,7 @@
             <emissive r="0" g="0" b="0" a="1.0" />
         </material>
 
-        <material id="black">
+        <material id="b">
             <shininess value="0.5" />
             <ambient r="0.3" g="0.3" b="0.3" a="1.0" />
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
@@ -194,8 +194,10 @@
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
-                <noderef id="tile_border"/>
+                <noderef id="tile_border_north"/>
+                <noderef id="tile_border_west"/>
+                <noderef id="tile_border_south"/>
+                <noderef id="tile_border_east"/>
             </descendants>
         </node>
 

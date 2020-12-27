@@ -20,9 +20,11 @@ serialInclude([
     './animations/MyAnimator.js',
     './animations/MyKeyframeAnimation.js',
 
+    './game/MyGameBoard.js',
     './game/MyGameMove.js',
     './game/MyGameOrchestrator.js',
     './game/MyGameSequence.js',
+    './game/MyPrologInterface.js',
 
     './graph/MySceneGraph.js',
     './graph/MySceneTextures.js',
@@ -32,7 +34,6 @@ serialInclude([
 
     './primitives/MyCylinder.js',
     './primitives/MyDefBarrel.js',
-    './primitives/MyGameBoard.js',
     './primitives/MyPatch.js',
     './primitives/MyPiece.js',
     './primitives/MyPlane.js',
