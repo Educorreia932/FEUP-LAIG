@@ -7,15 +7,12 @@ class MyGameBoard extends CGFobject {
         this.columns = 6;
         this.tiles = [];
         this.state = null;
-        this.source = null;
-        this.target = null;
 
         for (let i = 0; i < this.rows; i++) {
             let tilesRow = [];
 
-            for (let j = 0; j < this.columns; j++) {
+            for (let j = 0; j < this.columns; j++) 
                 tilesRow.push(new MyTile(scene));
-            }
 
             this.tiles.push(tilesRow);
         }
@@ -28,28 +25,15 @@ class MyGameBoard extends CGFobject {
             this.scene.pushMatrix();
 
             for (let j = 0; j < this.columns; j++) {
-                this.scene.pushMatrix();
-                
-                this.scene.rotate(-Math.PI / 2, 1, 0, 0); // Place tiles on XZ plane
-
                 this.tiles[i][j].display();  
 
                 this.scene.pushMatrix();
 
                 if (this.state != null) {
-                    this.scene.registerForPick(i * this.columns + j + 1, this.state[i][j]);
-
-                    let piecesStack = this.state[i][j]
-    
-                    for (let piece of piecesStack) {
-                        piece.display();
-    
-                        this.scene.translate(0, 0, 0.2);
-                    }
+                    let stack = this.state[i][j]
+                    stack.display(i * this.columns + j + 1, this.state[i][j])
                 }
 
-                this.scene.popMatrix();
-                
                 this.scene.popMatrix();
 
                 this.scene.translate(1.1, 0, 0);
@@ -59,53 +43,21 @@ class MyGameBoard extends CGFobject {
 
             this.scene.translate(0, 0, 1.1);
         }
-
-        this.pickedPiece();
-        this.scene.clearPickRegistration();
     }
 
-    pickedPiece() {
-        if (this.scene.pickMode == false) {
-			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
-				for (var i = 0; i < this.scene.pickResults.length; i++) {
-                    let obj = this.scene.pickResults[i][0];
-                    
-					if (obj) {
-                        // Picking source stack
-                        if (this.source == null)
-                            this.source = this.scene.pickResults[i][1];
+    moveStack(source, target) {
+        let sourceJ = (source - 1) % this.rows;
+        let sourceI = Math.floor((source - 1) / this.rows);
 
-                        // Picking target stack
-                        else {
-                            this.target = this.scene.pickResults[i][1];
+        let sourceStack = this.state[sourceI][sourceJ];
 
-                            if (this.target != this.source)
-                                this.movePiece();
+        let targetJ = (target - 1) % this.rows;
+        let targetI = Math.floor((target - 1) / this.rows);
 
-                            this.source = null;
-                            this.target = null;
-                        }
-					}
-                }
-                
-				this.scene.pickResults.splice(0, this.scene.pickResults.length);
-			}
-		}
-    }
+        let targetStack = this.state[targetI][targetJ];
 
-    movePiece() {
-        let j = (this.source - 1) % this.rows;
-        let i = Math.floor((this.source - 1) / this.rows);
-
-        let sourcePiecesStack = this.state[i][j];
-
-        j = (this.target - 1) % this.rows;
-        i = Math.floor((this.target - 1) / this.rows);
-
-        let targetPiecesStack = this.state[i][j];
-
-        targetPiecesStack.push(...sourcePiecesStack);
-        sourcePiecesStack.splice(0, sourcePiecesStack.length); // Remove pieces from their original stack
+        targetStack.push(sourceStack);
+        sourceStack.clear();
     }
 
     convertToPrologBoard() {
@@ -120,23 +72,28 @@ class MyGameBoard extends CGFobject {
                     piece += piecesStack[k].prologIdentifier();
                     if (k != piecesStack.length - 1) piece += ',';
                 }
+                
                 piece += ']';
                 row += piece;
-                if (j != this.columns - 1) row += ',';
+
+                if (j != this.columns - 1) 
+                    row += ',';
             }
+
             row += ']';
             board += row;
-            if (i != this.rows - 1) board += ','; 
+
+            if (i != this.rows - 1) 
+                board += ','; 
         }
+
         board += ']';
         return board;
     }
 
     setState(state) {
         this.state = state.map(function(row) {
-            return row.map(collumn => [new MyPiece(this.scene, collumn[0])])
+            return row.map(collumn => new MyStack(this.scene, [new MyPiece(this.scene, collumn[0])]))
         }.bind(this));
-
-        console.log(this.state)
     }
 }

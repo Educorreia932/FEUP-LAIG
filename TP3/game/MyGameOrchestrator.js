@@ -1,5 +1,6 @@
 class MyGameOrchestrator {
     constructor(scene) {
+        this.scene = scene;
         this.gameSequence = new MyGameSequence(scene);
         this.animator = new MyAnimator();
         this.prolog = new MyPrologInterface();
@@ -34,6 +35,7 @@ class MyGameOrchestrator {
     }
 
     display() {
+        this.managePick(this.scene.pickMode, this.scene.pickResults);
         this.theme.display();
         this.gameboard.display();
         // this.animator.display();
@@ -41,5 +43,38 @@ class MyGameOrchestrator {
 
     setTheme(theme) {
         this.theme = theme;
+    }
+
+    managePick(mode, results) {
+        if (mode == false) {
+			if (results != null && results.length > 0) {
+				for (var i = 0; i < results.length; i++) {
+                    let object = results[i][0];
+                    let id = results[i][1];
+                    
+                    if (object)
+                        this.onObjectSelected(object, id);
+                }
+                
+				results.splice(0, results.length); // Clear results
+			}
+		}
+    }
+
+    onObjectSelected(object, id) {
+        // Picking source stack
+        if (this.source == null)
+            this.source = id;
+
+            // Picking target stack
+            else {
+                this.target = id;
+
+            if (this.target != this.source)
+                this.gameboard.moveStack(this.source, this.target);
+
+            this.source = null;
+            this.target = null;
+        }
     }
 }

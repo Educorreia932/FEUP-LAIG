@@ -12,6 +12,7 @@ class MyPiece extends CGFobject {
         this.scene.pushMaterial(this.material);
         this.scene.pushMatrix();
 
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0); // Place piece on XZ plane
         this.scene.translate(0.5, 0.5, 0);
 
         this.body.display();

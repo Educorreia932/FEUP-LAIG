@@ -39,6 +39,7 @@ serialInclude([
     './primitives/MyPlane.js',
     './primitives/MyRectangle.js',
     './primitives/MySphere.js',
+    './primitives/MyStack.js',
     './primitives/MyTile.js',
     './primitives/MyTorus.js',
     './primitives/MyTriangle.js',
