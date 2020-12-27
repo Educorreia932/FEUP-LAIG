@@ -19,5 +19,7 @@ class MyPiece extends CGFobject {
         this.scene.popMaterial();
     }
 
-    prologIdentifier() { return this.color.toLowerCase().charAt(0); }
+    prologIdentifier() {
+         return this.color.toLowerCase().charAt(0); 
+    }
 }

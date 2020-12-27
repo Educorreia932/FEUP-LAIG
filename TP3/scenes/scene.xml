@@ -81,7 +81,7 @@
         </material>
 
         <material id="dark_gray">
-            <shininess value="10">
+            <shininess value="10"/>
             <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
             <specular r="0.3" g="0.3" b="0.3" a="1.0" />
@@ -89,7 +89,7 @@
         </material>
 
         <material id="light_gray">
-            <shininess value="10">
+            <shininess value="10"/>
             <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
             <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
             <specular r="0.5" g="0.5" b="0.5" a="1.0" />
@@ -146,7 +146,6 @@
             </transformations>
 
             <descendants>
-                <leaf>
             </descendants>
         </node>
 
@@ -170,23 +169,6 @@
             <material id="light_gray"/>
 
             <texture id="clear">
-                <amplification afs="1.0" aft="1.0"/>
-            </texture>
-
-            <transformations>
-
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
-                <noderef id="tile_border"/>
-            </descendants>
-        </node>
-
-        <node id="tile">
-            <material id="null"/>
-
-            <texture id="null">
                 <amplification afs="1.0" aft="1.0"/>
             </texture>
 

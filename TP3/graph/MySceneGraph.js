@@ -1475,7 +1475,7 @@ class MySceneGraph {
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
-    displayScene() {
+    display() {
         if (this.nodes[this.idRoot] != null) {
             this.nodes[this.idRoot].display();
         }
