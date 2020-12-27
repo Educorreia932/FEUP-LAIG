@@ -60,39 +60,8 @@ class MyGameBoard extends CGFobject {
         sourceStack.clear();
     }
 
-    convertToPrologBoard() {
-        let board = '[';
-
-        for (let i = 0; i < this.rows; i++) {
-            let row = '[';
-            for (let j = 0; j < this.columns; j++) {
-                let piece = '[';
-                let piecesStack = this.state[i][j];
-                for (let k = 0; k < piecesStack.length; k++) {
-                    piece += piecesStack[k].prologIdentifier();
-                    if (k != piecesStack.length - 1) piece += ',';
-                }
-                
-                piece += ']';
-                row += piece;
-
-                if (j != this.columns - 1) 
-                    row += ',';
-            }
-
-            row += ']';
-            board += row;
-
-            if (i != this.rows - 1) 
-                board += ','; 
-        }
-
-        board += ']';
-        return board;
-    }
-
-    setState(state) {
-        this.state = state.map(function(row) {
+    setState(gameboard) {
+        this.state = gameboard.map(function(row) {
             return row.map(collumn => new MyStack(this.scene, [new MyPiece(this.scene, collumn[0])]))
         }.bind(this));
     }

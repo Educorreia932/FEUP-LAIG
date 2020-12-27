@@ -14,8 +14,8 @@ class MyGameOrchestrator {
 
         this.states = {
             menu: 0,
-            playerTurn: 1,
-            botTurn: 2,
+            whiteTurn: "w",
+            blackTurn: "b",
         };
 
         this.difficulties = {
@@ -24,10 +24,10 @@ class MyGameOrchestrator {
         };
     }
 
-    init() {
-        this.gameState = this.states.menu;
+    async init() {
+        this.gameState = this.states.whiteTurn;
         this.gameDifficulty = this.difficulties.easy;
-        this.prolog.generateBoard(this.gameboard);
+        this.gameboard.setState(await this.prolog.generateBoard(6, 6));
     }
 
     update(time) {
@@ -52,7 +52,7 @@ class MyGameOrchestrator {
                     let object = results[i][0];
                     let id = results[i][1];
                     
-                    if (object)
+                    if (object) 
                         this.onObjectSelected(object, id);
                 }
                 
@@ -70,8 +70,8 @@ class MyGameOrchestrator {
             else {
                 this.target = id;
 
-            if (this.target != this.source)
-                this.gameboard.moveStack(this.source, this.target);
+            if (this.target != this.source) 
+                this.gameboard.moveStack(this.source, this.target)
 
             this.source = null;
             this.target = null;
