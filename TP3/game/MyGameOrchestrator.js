@@ -3,8 +3,8 @@ class MyGameOrchestrator {
         this.scene = scene;
         this.gameSequence = new MyGameSequence(scene);
         this.animator = new MyAnimator();
-        this.prolog = new MyPrologInterface();
         this.gameboard = new MyGameBoard(scene);
+        this.prolog = new MyPrologInterface();
 
         this.modes = {
             PvP: 1,

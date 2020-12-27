@@ -81,7 +81,6 @@ read_request(_,syntax_error).
 read_request_aux([32|_],[46]) :- !.
 read_request_aux([C|Cs],[C|RCs]) :- read_request_aux(Cs, RCs).
 
-
 % Reads and Ignores the rest of the lines of the HTTP Header
 read_header(Stream) :-
 	repeat,
@@ -103,13 +102,15 @@ print_header_line(_).
 
 :- consult('game.pl').
 
-parse_input(test(C,N), Res) :- test(C,Res,N).
-test(_,[],N) :- N =< 0.
-test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
-
 parse_input(generate_board(Columns, Rows), Board) :- 
 	generate_board(Columns, Rows, Board).
 
-% parse_input(get_move(Player, GameState, Strat, NewGameState), NewGameState) :- !.
+parse_input(valid_move(Player, BoardIn, BoardOut), 'Valid move') :-
+	valid_move(Player, BoardIn, BoardOut).
+
+parse_input(valid_move(Player, BoardIn, BoardOut), 'Invalid move') :-
+	\+ valid_move(Player, BoardIn, BoardOut).
+
+parse_input(get_move(Player, GameState, Strat, NewGameState), NewGameState) :- !.
 
 % parse_input(value(GameState, Player, Value), Value) :- !.
