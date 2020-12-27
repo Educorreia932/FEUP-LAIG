@@ -28,7 +28,7 @@ class MyGameBoard extends CGFobject {
                 else
                     color = "black"
 
-                let piece = new MyPiece(scene, this.scene.graph.materials[color])
+                let piece = new MyPiece(scene, this.scene.graph.materials[color], color);
 
                 piecesRow.push([piece]);
             }
@@ -121,5 +121,29 @@ class MyGameBoard extends CGFobject {
 
         targetPiecesStack.push(...sourcePiecesStack);
         sourcePiecesStack.splice(0, sourcePiecesStack.length); // Remove pieces from their original stack
+    }
+
+    convertToPrologBoard() {
+        let board = '[';
+
+        for (let i = 0; i < this.rows; i++) {
+            let row = '[';
+            for (let j = 0; j < this.columns; j++) {
+                let piece = '[';
+                let piecesStack = this.pieces[i][j];
+                for (let k = 0; k < piecesStack.length; k++) {
+                    piece += piecesStack[k].prologIdentifier();
+                    if (k != piecesStack.length - 1) piece += ',';
+                }
+                piece += ']';
+                row += piece;
+                if (j != this.columns - 1) row += ',';
+            }
+            row += ']';
+            board += row;
+            if (i != this.rows - 1) board += ','; 
+        }
+        board += ']';
+        return board;
     }
 }

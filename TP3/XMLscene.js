@@ -48,7 +48,9 @@ class XMLscene extends CGFscene {
         this.defaultAppearance = new CGFappearance(this);
 
         // Enable picking
-		this.setPickEnabled(true);
+        this.setPickEnabled(true);
+        
+        this.gameOrchestrator = new MyGameOrchestrator(this);
     }
 
     // Texture & Material Stack Control
@@ -192,6 +194,8 @@ class XMLscene extends CGFscene {
         this.firstFrame = Date.now();
 
         this.sceneInited = true;
+
+        this.gameOrchestrator.setTheme(this.graph);
     }
 
     /**
@@ -224,9 +228,7 @@ class XMLscene extends CGFscene {
 
             this.defaultAppearance.apply();
 
-            // Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
-
+            this.gameOrchestrator.display();
         }
 
         else {
