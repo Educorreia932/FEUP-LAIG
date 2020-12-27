@@ -195,6 +195,7 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = true;
 
+        this.gameOrchestrator.init();
         this.gameOrchestrator.setTheme(this.graph);
     }
 

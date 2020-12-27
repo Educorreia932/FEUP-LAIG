@@ -5,8 +5,6 @@ class MyGameOrchestrator {
         this.prolog = new MyPrologInterface();
         this.gameboard = new MyGameBoard(scene);
 
-        this.prolog.generateBoard(this.gameboard);
-
         this.modes = {
             PvP: 1,
             PvE: 2,
@@ -28,6 +26,7 @@ class MyGameOrchestrator {
     init() {
         this.gameState = this.states.menu;
         this.gameDifficulty = this.difficulties.easy;
+        this.prolog.generateBoard(this.gameboard);
     }
 
     update(time) {

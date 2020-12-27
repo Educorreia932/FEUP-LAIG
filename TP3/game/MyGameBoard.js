@@ -6,7 +6,7 @@ class MyGameBoard extends CGFobject {
         this.rows = 6;
         this.columns = 6;
         this.tiles = [];
-        this.state = [];
+        this.state = null;
         this.source = null;
         this.target = null;
 
@@ -32,19 +32,21 @@ class MyGameBoard extends CGFobject {
                 
                 this.scene.rotate(-Math.PI / 2, 1, 0, 0); // Place tiles on XZ plane
 
-                // this.scene.registerForPick(i * this.columns + j + 1, this.state[i][j]);
-                
                 this.tiles[i][j].display();  
-
-                // let piecesStack = this.state[i][j]
 
                 this.scene.pushMatrix();
 
-                // for (let piece of piecesStack) {
-                //     piece.display();
+                if (this.state != null) {
+                    this.scene.registerForPick(i * this.columns + j + 1, this.state[i][j]);
 
-                //     this.scene.translate(0, 0, 0.2);
-                // }
+                    let piecesStack = this.state[i][j]
+    
+                    for (let piece of piecesStack) {
+                        piece.display();
+    
+                        this.scene.translate(0, 0, 0.2);
+                    }
+                }
 
                 this.scene.popMatrix();
                 
@@ -131,10 +133,10 @@ class MyGameBoard extends CGFobject {
     }
 
     setState(state) {
-        state = state.map(function(row) {
-            return row.map(color => new MyPiece(this.scene, color))
+        this.state = state.map(function(row) {
+            return row.map(collumn => [new MyPiece(this.scene, collumn[0])])
         }.bind(this));
 
-        console.log(state)
+        console.log(this.state)
     }
 }
