@@ -34,6 +34,9 @@ class MyPrologInterface {
         return MyPrologInterface.deserializeGameBoard(response);
     }
 
+    /**
+     *  Deserializes a gameboard
+     */
     static deserializeGameBoard(response) {
         return JSON.parse(
             response
@@ -43,7 +46,14 @@ class MyPrologInterface {
         );
     }
 
+    /**
+     *  Serializes a gameboard
+     */
     static serializeGameBoard(gameboard) {
-        
+        gameboard = gameboard.map(function(row) {
+            return row.map(stack => stack.pieces.map(piece => piece.color))
+        });
+
+        console.log(gameboard)
     }
 }

@@ -62,6 +62,8 @@ class MyGameOrchestrator {
     }
 
     onObjectSelected(object, id) {
+        MyPrologInterface.serializeGameBoard(this.gameboard.state);
+
         // Picking source stack
         if (this.source == null)
             this.source = id;
