@@ -39,6 +39,8 @@
     <!-- Textures -->
     <textures>
         <texture id="wood" path="./scenes/scene_home/wood.png"/>
+        <texture id="wood_table" path="./scenes/scene_home/wood_table.jpg"/>
+        <texture id="metal" path="./scenes/scene_home/metal.jpg"/>
     </textures>
 
     <!-- Spritesheets -->
@@ -124,14 +126,203 @@
             </texture>
 
             <transformations>
+                <rotation axis="x" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table"/>
+            </descendants>
+        </node>
+
+        <!-- BEGIN DECORATION -->
+
+        <!-- BEGIN TABLE -->
+        <node id="table">
+            <material id="default"/>
+
+            <texture id="wood_table">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
 
             </transformations>
 
             <descendants>
-                <!-- <leaf type="sphere" radius="1" slices="50" stacks="50"/> -->
+                <leaf type="cylinder" bottomRadius="5" topRadius="5" height="1" slices="12" stacks="4" />
+                <noderef id="table_legs"/>
                 <noderef id="gameBoard"/>
             </descendants>
         </node>
+
+        <node id="table_legs">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-5"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg_tl"/>
+                <noderef id="table_leg_tr"/>
+                <noderef id="table_leg_bl"/>
+                <noderef id="table_leg_br"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_tl">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="225"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_tr">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="135"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_bl">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="-45"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_br">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="45"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="3.5" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="defbarrel" base="0.3" middle="0.5" height="5" slices="10" stacks="10"/>
+                <noderef id="table_leg_metal_plates"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_metal_plates">
+            <material id="null"/>
+
+            <texture id="metal">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg_metal_plate_top"/>
+                <noderef id="table_leg_metal_plate_bot"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_metal_plate_top">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="4.9"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg_metal_plate"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_metal_plate_bot">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg_metal_plate"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_metal_plate">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <leaf type="defbarrel" base="0.33" middle="0.33" height="0.1" slices="10" stacks="10"/>
+            </descendants>
+        </node>
+
+        <!-- END TABLE -->
+
+        <!-- END DECORATION -->
 
         <!-- TILES -->
         <node id="tile_odd">
@@ -446,7 +637,7 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0.3" z="0"/>
+                <translation x="0" y="0" z="1.175"/>
             </transformations>
 
             <descendants>
@@ -462,22 +653,6 @@
                         <tile id="tile_even"/>
                     </tiles>
                 </leaf>
-                <noderef id="board_bottom"/>
-            </descendants>
-        </node>
-
-        <node id="board_bottom">
-            <material id="null"/>
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <scale sx="16" sy="1" sz="16"/>
-            </transformations>
-
-            <descendants>
             </descendants>
         </node>
 

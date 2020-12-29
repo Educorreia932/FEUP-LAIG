@@ -21,8 +21,9 @@ class MyGameBoard extends CGFobject {
     }
 
     display() {
-        this.scene.translate(0, 0, 1);
-
+        this.scene.pushMatrix();
+        this.scene.translate(-this.rows/2 * 1.1 + 1.1/2, this.columns/2 * 1.1 - 1.1/2, 0);
+        this.scene.rotate(Math.PI / 2, 1, 0, 0);
         for (let i = 0; i < this.rows; i++) {
             this.scene.pushMatrix();
 
@@ -45,6 +46,8 @@ class MyGameBoard extends CGFobject {
 
             this.scene.translate(0, 0, 1.1);
         }
+
+        this.scene.popMatrix();
     }
 
     moveStack(source, target) {
@@ -76,11 +79,13 @@ class MyGameBoard extends CGFobject {
 
         }
 
-        for (let i = 0; i < this.rows && i < this.state.length; i++) {
-            for (let j = 0; j < this.columns && j < this.state[i].length; j++) {
-                let piecesStack = this.state[i][j];
-                for (let k = 0; k < piecesStack.length; k++) {
-                    piecesStack[k].setTheme(this.orchestrator.theme.pieces[piecesStack[k].color]);
+        if (this.state != null) {
+            for (let i = 0; i < this.rows && i < this.state.length; i++) {
+                for (let j = 0; j < this.columns && j < this.state[i].length; j++) {
+                    let piecesStack = this.state[i][j];
+                    for (let k = 0; k < piecesStack.length; k++) {
+                        piecesStack[k].setTheme(this.orchestrator.theme.pieces[piecesStack[k].color]);
+                    }
                 }
             }
         }
