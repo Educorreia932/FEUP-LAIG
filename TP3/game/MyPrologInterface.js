@@ -8,37 +8,52 @@ class MyPrologInterface {
      * Performs a HTTP request to the Prolog server, sending a JSON object
      * 
      * @param {string} request_url     Server request URL
-     * @param {string} request_data    Request body 
-     * @param {Function} onLoad        Function to call on success
-     * @param {Function} onError       Function to call on error
      */
-    send_request(request_data, onLoad, onError) {
-        let request = new XMLHttpRequest();
-        request.open('GET', this.server_url + this.server_port + '/' + request_data, true);
+    async sendRequest(requestData) {
+        const url = this.server_url + this.server_port + '/' + requestData;
 
-        request.onload = onLoad || function(data){console.log("Request successful. Reply: " + data.target.response);};
-        request.onerror = onError || function(){console.log("Error waiting for response");};
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        request.send();
+        const response = await fetch(
+            url,
+            {
+                method: 'GET',
+                headers,
+            }
+        );
+
+        return await response.text();
     }
 
-    generateBoard(gameBoard) {
-        let columns = 6;
-        let rows = 6;
-        let requestData = `generate_board(${columns},${rows})`;
+    async generateBoard(columns, rows) {
+        const requestData = `generate_board(${columns},${rows})`
 
-        let response;
+        let response = await this.sendRequest(requestData);
 
-        this.send_request(requestData, function(data) {
-            response = data.target.response
+        return MyPrologInterface.deserializeGameBoard(response);
+    }
+
+    /**
+     *  Deserializes a gameboard
+     */
+    static deserializeGameBoard(response) {
+        return JSON.parse(
+            response
                 .replaceAll("w", "\"w\"")
                 .replaceAll("g", "\"g\"")
-                .replaceAll("b", "\"b\"");
+                .replaceAll("b", "\"b\"")
+        );
+    }
 
-            let responseArray = JSON.parse(response);
-
-            gameBoard.setState(responseArray)
+    /**
+     *  Serializes a gameboard
+     */
+    static serializeGameBoard(gameboard) {
+        gameboard = gameboard.map(function(row) {
+            return row.map(stack => stack.pieces.map(piece => piece.color))
         });
+
+        console.log(gameboard)
     }
 }

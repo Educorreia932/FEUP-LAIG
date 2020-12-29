@@ -2,6 +2,7 @@ class MyPiece extends CGFobject {
     constructor(scene, color) {
         super(scene);
         this.color = color;
+        this.material = this.scene.graph.materials[this.color];
     }
 
     display() {
@@ -10,9 +11,5 @@ class MyPiece extends CGFobject {
 
     setTheme(body) {
         this.body = body;
-    }
-
-    prologIdentifier() {
-         return this.color.toLowerCase().charAt(0); 
     }
 }

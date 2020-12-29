@@ -16,7 +16,6 @@ move(GameState, [I0, J0, I1, J1], NewGameState) :-
     replace(RowEnd, J1, Stack, Row),         % Move stack to final cell
     replace(BoardAux, I1, Row, NewGameState), !.
 
-
 % Checks if there are any pieces in the same line between two cells
 
 has_pieces_between(Board, I, J0, I, J1) :-    % Same row

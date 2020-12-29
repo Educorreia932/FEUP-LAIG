@@ -10,7 +10,13 @@ class MyTile extends CGFobject {
     }
 
     display() {
+        this.scene.pushMatrix();
+
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0); // Place tile on XZ plane
+
         this.body.display();
+
+        this.scene.popMatrix();
     }
 
     setTheme(body) {

@@ -16,8 +16,8 @@ class MyGameOrchestrator {
 
         this.states = {
             menu: 0,
-            playerTurn: 1,
-            botTurn: 2,
+            whiteTurn: "w",
+            blackTurn: "b",
         };
 
         this.difficulties = {
@@ -26,9 +26,10 @@ class MyGameOrchestrator {
         };
     }
 
-    init() {
-        this.gameState = this.states.menu;
+    async init() {
+        this.gameState = this.states.whiteTurn;
         this.gameDifficulty = this.difficulties.easy;
+        this.gameboard.setState(await this.prolog.generateBoard(6, 6));
     }
 
     update(time) {
@@ -36,6 +37,7 @@ class MyGameOrchestrator {
     }
 
     display() {
+        this.managePick(this.scene.pickMode, this.scene.pickResults);
         this.gameboard.display();
         // this.animator.display();
     }
@@ -62,5 +64,40 @@ class MyGameOrchestrator {
         }
 
         this.gameboard.setTheme();
+    }
+
+    managePick(mode, results) {
+        if (mode == false) {
+			if (results != null && results.length > 0) {
+				for (var i = 0; i < results.length; i++) {
+                    let object = results[i][0];
+                    let id = results[i][1];
+                    
+                    if (object) 
+                        this.onObjectSelected(object, id);
+                }
+                
+				results.splice(0, results.length); // Clear results
+			}
+		}
+    }
+
+    onObjectSelected(object, id) {
+        MyPrologInterface.serializeGameBoard(this.gameboard.state);
+
+        // Picking source stack
+        if (this.source == null)
+            this.source = id;
+
+            // Picking target stack
+            else {
+                this.target = id;
+
+            if (this.target != this.source) 
+                this.gameboard.moveStack(this.source, this.target)
+
+            this.source = null;
+            this.target = null;
+        }
     }
 }
