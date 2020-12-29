@@ -1,8 +1,8 @@
 class MyTile extends CGFobject {
-    constructor(scene) {
-        super(scene);
-
-        this.body = new MyRectangle(scene, 0, 0, 1, 1);
+    constructor(gameboard) {
+        super(gameboard.scene);
+        this.gameboard = gameboard;
+        this.scene = gameboard.scene;
     }
 
     initBuffers() {
@@ -11,5 +11,9 @@ class MyTile extends CGFobject {
 
     display() {
         this.body.display();
+    }
+
+    setTheme(body) {
+        this.body = body;
     }
 }

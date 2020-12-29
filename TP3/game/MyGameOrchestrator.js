@@ -1,9 +1,10 @@
 class MyGameOrchestrator {
     constructor(scene) {
-        this.gameSequence = new MyGameSequence(scene);
+        this.scene = scene;
+        this.gameSequence = new MyGameSequence(this);
         this.animator = new MyAnimator();
         this.prolog = new MyPrologInterface();
-        this.gameboard = new MyGameBoard(scene);
+        this.gameboard = new MyGameBoard(this);
 
         this.prolog.generateBoard(this.gameboard);
 
@@ -35,12 +36,31 @@ class MyGameOrchestrator {
     }
 
     display() {
-        this.theme.display();
         this.gameboard.display();
         // this.animator.display();
     }
 
-    setTheme(theme) {
-        this.theme = theme;
+    setTheme(graph) {
+        let board = graph.board;
+
+        if (board == null) return;
+
+        this.theme = {};
+
+        this.theme.pieces = [];
+
+        this.theme.pieces['white'] = graph.nodes[board.pieces[0]];
+        this.theme.pieces['green'] = graph.nodes[board.pieces[1]];
+        this.theme.pieces['black'] = graph.nodes[board.pieces[2]];
+
+        this.theme.tiles = [];
+
+        for (let i = 0; i < board.tiles.length; i++) {
+            if (graph.nodes[board.tiles[i]] != null) {
+                this.theme.tiles.push(graph.nodes[board.tiles[i]]);
+            }
+        }
+
+        this.gameboard.setTheme();
     }
 }

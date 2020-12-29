@@ -1,8 +1,9 @@
 class MyGameBoard extends CGFobject {
-    constructor(scene) {
-        super(scene);
+    constructor(orchestrator) {
+        super(orchestrator.scene);
 
-        this.scene = scene;
+        this.orchestrator = orchestrator;
+        this.scene = orchestrator.scene;
         this.rows = 6;
         this.columns = 6;
         this.tiles = [];
@@ -14,7 +15,7 @@ class MyGameBoard extends CGFobject {
             let tilesRow = [];
 
             for (let j = 0; j < this.columns; j++) {
-                tilesRow.push(new MyTile(scene));
+                tilesRow.push(new MyTile(this));
             }
 
             this.tiles.push(tilesRow);
@@ -136,5 +137,23 @@ class MyGameBoard extends CGFobject {
         }.bind(this));
 
         console.log(state)
+    }
+
+    setTheme() {
+        for (let i = 0; i < this.rows; i++) {
+            for (let j = 0; j < this.columns; j++) {
+                this.tiles[i][j].setTheme(this.orchestrator.theme.tiles[(i + j) % 2]);
+            }
+
+        }
+
+        for (let i = 0; i < this.rows && i < this.state.length; i++) {
+            for (let j = 0; j < this.columns && j < this.state[i].length; j++) {
+                let piecesStack = this.state[i][j];
+                for (let k = 0; k < piecesStack.length; k++) {
+                    piecesStack[k].setTheme(this.orchestrator.theme.pieces[piecesStack[k].color]);
+                }
+            }
+        }
     }
 }

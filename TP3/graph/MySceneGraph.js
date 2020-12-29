@@ -42,6 +42,7 @@ class MySceneGraph {
 
         // Graph containing the nodes of the scene
         this.nodes = [];
+        this.board = null;
 
         // Structures to store the materials, textures and animations defined in the scene
         this.textures = [];
@@ -939,6 +940,8 @@ class MySceneGraph {
                         if (typeof aux == "string") {
                             this.onXMLMinorError("invalid primitive for node " + nodeID + ":\n\t" + aux);
                             continue;
+                        } else if (aux === true) {
+                            continue;
                         }
 
                         node.addObject(aux);
@@ -946,7 +949,7 @@ class MySceneGraph {
                 }
             }
 
-            if (node.descendants.length < 1) {
+            if (node.id != "gameBoard" && node.descendants.length < 1) {
                 this.onXMLMinorError("node of ID " + nodeID + " must have atleast one descendant");
                 continue;
             }
@@ -960,11 +963,27 @@ class MySceneGraph {
 
         this.nodes[this.idRoot].initialize(this);
 
-        var aux = [];
+        if (this.board != null) {
+            this.initThemeBoard();
+        }
 
         this.log("Parsed nodes");
 
         return null;
+    }
+
+    initThemeBoard() {
+        for (let i = 0; i < this.board.pieces.length; i++) {
+            if (this.nodes[this.board.pieces[i]] != null) {
+                this.nodes[this.board.pieces[i]].initialize(this);
+            }
+        }
+
+        for (let i = 0; i < this.board.tiles.length; i++) {
+            if (this.nodes[this.board.tiles[i]] != null) {
+                this.nodes[this.board.tiles[i]].initialize(this);
+            }
+        }
     }
 
     parseBoolean(node, name, messageError) {
@@ -1359,23 +1378,76 @@ class MySceneGraph {
 
         // Board
         else if (type == "board") {
-            let rows = this.reader.getFloat(node, "rows");
-
-            if (rows == null || isNaN(rows))
-                return "Unable to parse rows value from the game board of the " + messageError;
-
-            let columns = this.reader.getFloat(node, "columns");
-
-            if (columns == null || isNaN(columns))
-                return "Unable to parse columns value from the game board of the " + messageError;
-
-            out = new MyGameBoard(this.scene, rows, columns);
+            this.board = this.parseBoard(node, messageError);
+            out = true;
         }
 
         else
             return "Unable to process primitive of the " + messageError;
 
         return out;
+    }
+
+    parseBoard(node, messageError) {
+        let board = {};
+
+        let children = node.children;
+
+        if (children.length == 0) return "Missing parts of the board of the " + messageError;
+
+        let nodeNames = [];
+
+        for (let i = 0; i < children.length; i++) {
+            nodeNames.push(children[i].nodeName);
+        }
+
+        let piecesIndex = nodeNames.indexOf("pieces");
+        let tilesIndex = nodeNames.indexOf("tiles");
+
+        if (piecesIndex == -1) return "Missing pieces specification of the board of the " + messageError 
+        if (tilesIndex == -1) return "Missing tiles specification of the board of the " + messageError 
+
+        let piecesNode = children[piecesIndex];
+
+        let pieceNodes = piecesNode.children;
+        
+        let pieces = [];
+
+        for (let i = 0; i < pieceNodes.length; i++) {
+            if (pieceNodes[i].nodeName != "piece") continue;
+
+            let id = this.reader.getString(pieceNodes[i], "id");
+
+            if (id == null) continue;
+
+            pieces.push(id);
+        }
+
+        if (pieces.length == 0) return "No pieces for board";
+        
+        board.pieces = pieces;
+
+        let tilesNode = children[tilesIndex];
+
+        let tileNodes = tilesNode.children;
+        
+        let tiles = [];
+
+        for (let i = 0; i < tileNodes.length; i++) {
+            if (tileNodes[i].nodeName != "tile") continue;
+
+            let id = this.reader.getString(tileNodes[i], "id");
+
+            if (id == null) continue;
+
+            tiles.push(id);
+        }
+
+        if (tiles.length == 0) return "No tiles for board";
+
+        board.tiles = tiles;
+
+        return board;
     }
 
     /**

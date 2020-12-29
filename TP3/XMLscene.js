@@ -193,9 +193,9 @@ class XMLscene extends CGFscene {
         
         this.firstFrame = Date.now();
 
-        this.sceneInited = true;
-
         this.gameOrchestrator.setTheme(this.graph);
+        
+        this.sceneInited = true;
     }
 
     /**
@@ -228,7 +228,7 @@ class XMLscene extends CGFscene {
 
             this.defaultAppearance.apply();
 
-            this.gameOrchestrator.display();
+            this.graph.display();
         }
 
         else {

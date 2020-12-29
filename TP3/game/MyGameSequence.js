@@ -1,6 +1,6 @@
 class MyGameSequence {
-    constructor(gameBoard) {
-        this.gameBoard = gameBoard;
+    constructor(orchestrator) {
+        this.orchestrator = orchestrator;
         this.moves = [];
     }   
 

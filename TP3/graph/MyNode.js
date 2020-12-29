@@ -148,10 +148,14 @@ class MyNode {
         if (this.animation != null) {
             this.animation.apply();
         }
+
+        if (this.animation == null || this.animation.started) {
+            if (this.id == "gameBoard")
+                this.scene.gameOrchestrator.display();
         
-        if (this.animation == null || this.animation.started)
             for (let i = 0; i < this.descendants.length; i++)
                 this.descendants[i].display();
+        }
 
         this.scene.popMatrix();
 
