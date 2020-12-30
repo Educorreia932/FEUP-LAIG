@@ -51,6 +51,13 @@ class XMLscene extends CGFscene {
         this.setPickEnabled(true);
         
         this.gameOrchestrator = new MyGameOrchestrator(this);
+
+        this.selectedGamemode = MyGameOrchestrator.modes.PvP;
+        this.selectedDifficulty = MyGameOrchestrator.difficulties.random;
+    }
+
+    newGame() {
+        this.gameOrchestrator.newGame();
     }
 
     // Texture & Material Stack Control
@@ -193,7 +200,7 @@ class XMLscene extends CGFscene {
         
         this.firstFrame = Date.now();
 
-        this.gameOrchestrator.init();
+        this.gameOrchestrator.newGame();
         this.sceneInited = true;
     }
 

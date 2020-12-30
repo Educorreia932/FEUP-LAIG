@@ -1,36 +1,35 @@
 class MyGameOrchestrator {
+    static modes = {
+        PvP: "Player VS Player",
+        PvE: "Player VS AI",
+        EvE: "AI VS AI"
+    };
+
+    static difficulties = {
+        random: "Random",
+        smart: "Smart"
+    };
+
+    static states = {
+        menu: 0,
+        whiteTurn: 1,
+        blackTurn: 2,
+    };
+
     constructor(scene) {
         this.scene = scene;
         this.gameSequence = new MyGameSequence(scene);
         this.animator = new MyAnimator(this);
         this.prolog = new MyPrologInterface();
-        this.gamemenu = new MyGameMenu(this);
         this.gameboard = new MyGameBoard(this);
 
-        this.modes = {
-            PvP: 1,
-            PvE: 2,
-            EvE: 3
-        };
-
-        this.states = {
-            menu: "menu",
-            whiteTurn: "w",
-            blackTurn: "b",
-        };
-
-        this.difficulties = {
-            easy: 1,
-            hard: 2
-        };
-
-        this.gameState = this.states.loading;
+        this.gameState = MyGameOrchestrator.states.menu;
     }
 
-    async init() {
+    async newGame() {
         this.setTheme(this.scene.graph);
-        this.gameState = this.states.whiteTurn;
-        this.gameDifficulty = this.difficulties.easy;
+        this.gameState = MyGameOrchestrator.states.whiteTurn;
+        this.gameDifficulty = MyGameOrchestrator.difficulties.easy;
         this.gameboard.setState(await this.prolog.generateBoard(6, 6));
     }
 
@@ -39,12 +38,15 @@ class MyGameOrchestrator {
     }
 
     display() {
-        if (this.gameState == this.states.menu) 
-            this.gamemenu.display();
+        if (this.gameState == MyGameOrchestrator.states.menu) 
+            ;
 
-        this.managePick(this.scene.pickMode, this.scene.pickResults);
-        this.gameboard.display();
-        this.animator.display();
+        // Game started
+        else {
+            this.managePick(this.scene.pickMode, this.scene.pickResults);
+            this.gameboard.display();
+            this.animator.display();
+        }
     }
 
     setTheme(graph) {
@@ -59,7 +61,6 @@ class MyGameOrchestrator {
         this.theme.pieces['w'] = graph.nodes[board.pieces[0]];
         this.theme.pieces['g'] = graph.nodes[board.pieces[1]];
         this.theme.pieces['b'] = graph.nodes[board.pieces[2]];
-        console.log(graph.nodes[board.pieces[0]])
 
         this.theme.tiles = [];
 
@@ -89,26 +90,31 @@ class MyGameOrchestrator {
     }
 
     onObjectSelected(object, id) {
-        // Picking source stack
-        if (this.source == null)
+        if (object instanceof MyStack) {
+            // Picking source stack
+            if (this.source == null)
             this.source = id;
 
             // Picking target stack
             else {
                 this.target = id;
 
-            if (this.target != this.source) {
-                let move = new MyGameMove(this.source, this.target);
-                this.gameboard.moveStack(this.source, this.target);
-                this.changePlayerTurn();
-            }
+                if (this.target != this.source) {
+                    let move = new MyGameMove(this.source, this.target);
+                    this.gameboard.moveStack(this.source, this.target);
+                    this.changePlayerTurn();
+                }
 
-            this.source = null;
-            this.target = null;
+                this.source = null;
+                this.target = null;
+            }
         }
     }
 
     changePlayerTurn() {
-        this.gameState = this.gameState == "w"? "b" : "w";
+        let whiteTurn = this.gamestates.blackTurn
+        let blackTurn = this.gamestates.blackTurn
+
+        this.gameState = (this.gameState == whiteTurn) ? blackTurn : whiteTurn;
     }
 }

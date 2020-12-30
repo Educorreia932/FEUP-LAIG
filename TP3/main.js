@@ -21,8 +21,6 @@ serialInclude([
 
     './game/MyAnimator.js',
     './game/MyGameBoard.js',
-    './game/MyGameMenu.js',
-    './game/MyGameMenuOption.js',
     './game/MyGameMove.js',
     './game/MyGameOrchestrator.js',
     './game/MyGameSequence.js',
