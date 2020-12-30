@@ -949,7 +949,7 @@ class MySceneGraph {
                 }
             }
 
-            if (node.id != "gameBoard" && node.descendants.length < 1) {
+            if (node.id != "gameBoard" && node.id != "gameMenu" && node.descendants.length < 1) {
                 this.onXMLMinorError("node of ID " + nodeID + " must have atleast one descendant");
                 continue;
             }
@@ -1379,6 +1379,12 @@ class MySceneGraph {
         // Board
         else if (type == "board") {
             this.board = this.parseBoard(node, messageError);
+            out = true;
+        }
+
+        // Menu
+        else if (type == "menu") {
+            // this.menu = this.parseMenu(node, messageError);
             out = true;
         }
 

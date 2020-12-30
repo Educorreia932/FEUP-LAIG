@@ -4,6 +4,7 @@ class MyGameOrchestrator {
         this.gameSequence = new MyGameSequence(scene);
         this.animator = new MyAnimator(this);
         this.prolog = new MyPrologInterface();
+        this.gamemenu = new MyGameMenu(this);
         this.gameboard = new MyGameBoard(this);
 
         this.modes = {
@@ -13,8 +14,7 @@ class MyGameOrchestrator {
         };
 
         this.states = {
-            loading: -1,
-            menu: 0,
+            menu: "menu",
             whiteTurn: "w",
             blackTurn: "b",
         };
@@ -39,8 +39,8 @@ class MyGameOrchestrator {
     }
 
     display() {
-        if (this.gameState == this.states.loading) 
-            return;
+        if (this.gameState == this.states.menu) 
+            this.gamemenu.display();
 
         this.managePick(this.scene.pickMode, this.scene.pickResults);
         this.gameboard.display();
@@ -75,7 +75,7 @@ class MyGameOrchestrator {
     managePick(mode, results) {
         if (mode == false) {
 			if (results != null && results.length > 0) {
-				for (var i = 0; i < results.length; i++) {
+				for (let i = 0; i < results.length; i++) {
                     let object = results[i][0];
                     let id = results[i][1];
                     

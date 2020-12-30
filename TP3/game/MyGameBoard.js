@@ -24,7 +24,7 @@ class MyGameBoard extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(-this.rows/2 * 1.1 + 1.1/2, this.columns/2 * 1.1 - 1.1/2, 0);
         this.scene.rotate(Math.PI / 2, 1, 0, 0);
-        
+
         for (let i = 0; i < this.rows; i++) {
             this.scene.pushMatrix();
 
@@ -73,7 +73,6 @@ class MyGameBoard extends CGFobject {
     }
 
     setTheme() {
-        console.log("wutt");
         for (let i = 0; i < this.rows; i++) 
             for (let j = 0; j < this.columns; j++) 
                 this.tiles[i][j].setTheme(this.orchestrator.theme.tiles[(i + j) % 2]);
