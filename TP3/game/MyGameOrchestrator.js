@@ -18,8 +18,8 @@ class MyGameOrchestrator {
 
     static states = {
         menu: 0,
-        whiteTurn: 1,
-        blackTurn: 2,
+        whiteTurn: "w",
+        blackTurn: "b",
     };
 
     constructor(scene) {
@@ -94,30 +94,35 @@ class MyGameOrchestrator {
 		}
     }
 
-    onObjectSelected(object, id) {
+    async onObjectSelected(object, id) {
         if (object instanceof MyStack) {
-            // Picking source stack
-            if (this.source == null)
-            this.source = id;
+            // Picking origin stack
+            if (this.originIndex == null)
+            this.originIndex = id;
 
-            // Picking target stack
+            // Picking destination stack
             else {
-                this.target = id;
+                this.destinationIndex = id;
 
-                if (this.target != this.source) {
-                    let move = new MyGameMove(this.source, this.target);
-                    this.gameboard.moveStack(this.source, this.target);
-                    this.changePlayerTurn();
+                if (this.destinationIndex != this.originIndex) {
+                    let originCoordinates = this.gameboard.convertIndex(this.originIndex);
+                    let destinationCoordinates = this.gameboard.convertIndex(this.destinationIndex);
+                    let move = new MyGameMove(this.gameState, originCoordinates, destinationCoordinates);
+
+                    if (await this.prolog.validMove(this.gameboard, move)) {
+                        this.gameboard.moveStack(move);
+                        this.changePlayerTurn();
+                    }
                 }
 
-                this.source = null;
-                this.target = null;
+                this.originIndex = null;
+                this.destinationIndex = null;
             }
         }
     }
 
     changePlayerTurn() {
-        let whiteTurn = MyGameOrchestrator.states.blackTurn;
+        let whiteTurn = MyGameOrchestrator.states.whiteTurn;
         let blackTurn = MyGameOrchestrator.states.blackTurn;
 
         this.gameState = (this.gameState == whiteTurn) ? blackTurn : whiteTurn;

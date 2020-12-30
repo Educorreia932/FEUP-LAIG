@@ -30,17 +30,20 @@ class MyInterface extends CGFinterface {
 
         // Board dimensions
         let dimensions = Object.values(MyGameOrchestrator.dimensions)
-        this.gui.add(this.scene, 'selectedDimension', dimensions).name('Board dimensions');
+        this.gui.add(this.scene, 'selectedDimension', dimensions).name('Board Dimensions');
 
         // Game modes
         let modes = Object.values(MyGameOrchestrator.modes)
-        this.gui.add(this.scene, 'selectedGamemode', modes).name('Game mode');
+        this.gui.add(this.scene, 'selectedGamemode', modes).name('Game Mode');
     
         // Game difficulties
         let difficulties = Object.values(MyGameOrchestrator.difficulties)
-        this.gui.add(this.scene, 'selectedDifficulty', difficulties).name('Game difficulty');
+        this.gui.add(this.scene, 'selectedDifficulty', difficulties).name('Game Difficulty');
     
         this.gui.add(this.scene, "newGame").name("New Game");
+
+        // TODO: this.gui.add(this.scene, "undo").name("Undo"); 
+        // TODO: this.gui.add(this.scene, "undo").name("Play Movie");
     }
 
     /**

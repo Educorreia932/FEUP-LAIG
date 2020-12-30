@@ -23,7 +23,7 @@ class MyStack extends CGFobject {
     }
 
     push(stack) {
-        this.pieces.push(...stack.pieces)
+        this.pieces.push(...stack.pieces);
     }
 
     clear() {

@@ -1,6 +1,10 @@
 class MyGameMove {
-    constructor(originStackIndex, movedStackIndex) {
-        let originJ = (originStackIndex - 1) % this.rows;
-        let originI = Math.floor((originStackIndex - 1) / this.rows);
+    constructor(player, originCoordinates, destinationCoordinates) {
+        this.player = player;
+
+        this.originI = originCoordinates[0];
+        this.originJ = originCoordinates[1];
+        this.destinationI = destinationCoordinates[0];
+        this.destinationJ = destinationCoordinates[1];
     }
 }
