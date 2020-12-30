@@ -59,6 +59,7 @@ class MyGameOrchestrator {
         this.theme.pieces['w'] = graph.nodes[board.pieces[0]];
         this.theme.pieces['g'] = graph.nodes[board.pieces[1]];
         this.theme.pieces['b'] = graph.nodes[board.pieces[2]];
+        console.log(graph.nodes[board.pieces[0]])
 
         this.theme.tiles = [];
 

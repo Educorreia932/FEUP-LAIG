@@ -3,6 +3,7 @@ class MyPiece extends CGFobject {
         super(orchestractor.scene);
 
         this.orchestractor = orchestractor;
+        this.scene = this.orchestractor.scene;
         this.color = color;
 
         this.setTheme(this.orchestractor.theme.pieces[this.color]);
@@ -14,6 +15,5 @@ class MyPiece extends CGFobject {
 
     setTheme(body) {
         this.body = body;
-        console.log(this.body)
     }
 }
