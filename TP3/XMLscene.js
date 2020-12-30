@@ -193,8 +193,7 @@ class XMLscene extends CGFscene {
         
         this.firstFrame = Date.now();
 
-        this.gameOrchestrator.setTheme(this.graph);
-        
+        this.gameOrchestrator.init();
         this.sceneInited = true;
     }
 

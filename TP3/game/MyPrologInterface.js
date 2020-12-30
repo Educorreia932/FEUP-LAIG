@@ -26,12 +26,21 @@ class MyPrologInterface {
         return await response.text();
     }
 
+    /**
+     *  Generates a gameboard
+     */
     async generateBoard(columns, rows) {
         const requestData = `generate_board(${columns},${rows})`
 
         let response = await this.sendRequest(requestData);
 
         return MyPrologInterface.deserializeGameBoard(response);
+    }
+
+    async validMove(move) {
+        console.log(MyPrologInterface.serializeGameBoard(gameboard));
+
+        const requestData = `generate_board(${columns},${rows})`
     }
 
     /**
@@ -50,10 +59,10 @@ class MyPrologInterface {
      *  Serializes a gameboard
      */
     static serializeGameBoard(gameboard) {
-        gameboard = gameboard.map(function(row) {
-            return row.map(stack => stack.pieces.map(piece => piece.color))
-        });
-
-        console.log(gameboard)
+        return JSON.stringify(
+            gameboard.map(function(row) {
+                return row.map(stack => stack.pieces.map(piece => piece.color))
+            })
+        ).replaceAll("\"", "");
     }
 }

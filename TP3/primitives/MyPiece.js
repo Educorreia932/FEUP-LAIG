@@ -1,8 +1,11 @@
 class MyPiece extends CGFobject {
-    constructor(scene, color) {
-        super(scene);
+    constructor(orchestractor, color) {
+        super(orchestractor.scene);
+
+        this.orchestractor = orchestractor;
         this.color = color;
-        this.material = this.scene.graph.materials[this.color];
+
+        this.setTheme(this.orchestractor.theme.pieces[this.color]);
     }
 
     display() {
@@ -11,5 +14,6 @@ class MyPiece extends CGFobject {
 
     setTheme(body) {
         this.body = body;
+        console.log(this.body)
     }
 }

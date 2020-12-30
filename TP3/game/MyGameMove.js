@@ -1,9 +1,6 @@
 class MyGameMove {
-    constructor() {
-        this.movedPiece;
-        this.originTile;
-        this.destinationTile; 
+    constructor(originStackIndex, movedStackIndex) {
+        let originJ = (originStackIndex - 1) % this.rows;
+        let originI = Math.floor((originStackIndex - 1) / this.rows);
     }
-
-    // Animation
 }

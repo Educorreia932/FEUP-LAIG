@@ -4,11 +4,15 @@ class MyGameSequence {
         this.moves = [];
     }   
 
-    undo() {
+    addMove(move) {
+        this.moves.push(move);
+    }
+
+    reset() {
 
     }
 
-    addMove() {
-        
+    undo() {
+
     }
 }

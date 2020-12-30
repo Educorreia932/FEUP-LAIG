@@ -1,12 +1,10 @@
 class MyGameOrchestrator {
     constructor(scene) {
         this.scene = scene;
-        this.gameSequence = new MyGameSequence(this);
-        this.animator = new MyAnimator();
+        this.gameSequence = new MyGameSequence(scene);
+        this.animator = new MyAnimator(this);
         this.prolog = new MyPrologInterface();
         this.gameboard = new MyGameBoard(this);
-
-        this.prolog.generateBoard(this.gameboard);
 
         this.modes = {
             PvP: 1,
@@ -15,6 +13,7 @@ class MyGameOrchestrator {
         };
 
         this.states = {
+            loading: -1,
             menu: 0,
             whiteTurn: "w",
             blackTurn: "b",
@@ -24,9 +23,12 @@ class MyGameOrchestrator {
             easy: 1,
             hard: 2
         };
+
+        this.gameState = this.states.loading;
     }
 
     async init() {
+        this.setTheme(this.scene.graph);
         this.gameState = this.states.whiteTurn;
         this.gameDifficulty = this.difficulties.easy;
         this.gameboard.setState(await this.prolog.generateBoard(6, 6));
@@ -37,9 +39,12 @@ class MyGameOrchestrator {
     }
 
     display() {
+        if (this.gameState == this.states.loading) 
+            return;
+
         this.managePick(this.scene.pickMode, this.scene.pickResults);
         this.gameboard.display();
-        // this.animator.display();
+        this.animator.display();
     }
 
     setTheme(graph) {
@@ -51,9 +56,9 @@ class MyGameOrchestrator {
 
         this.theme.pieces = [];
 
-        this.theme.pieces['white'] = graph.nodes[board.pieces[0]];
-        this.theme.pieces['green'] = graph.nodes[board.pieces[1]];
-        this.theme.pieces['black'] = graph.nodes[board.pieces[2]];
+        this.theme.pieces['w'] = graph.nodes[board.pieces[0]];
+        this.theme.pieces['g'] = graph.nodes[board.pieces[1]];
+        this.theme.pieces['b'] = graph.nodes[board.pieces[2]];
 
         this.theme.tiles = [];
 
@@ -83,8 +88,6 @@ class MyGameOrchestrator {
     }
 
     onObjectSelected(object, id) {
-        MyPrologInterface.serializeGameBoard(this.gameboard.state);
-
         // Picking source stack
         if (this.source == null)
             this.source = id;
@@ -93,11 +96,18 @@ class MyGameOrchestrator {
             else {
                 this.target = id;
 
-            if (this.target != this.source) 
-                this.gameboard.moveStack(this.source, this.target)
+            if (this.target != this.source) {
+                let move = new MyGameMove(this.source, this.target);
+                this.gameboard.moveStack(this.source, this.target);
+                this.changePlayerTurn();
+            }
 
             this.source = null;
             this.target = null;
         }
+    }
+
+    changePlayerTurn() {
+        this.gameState = this.gameState == "w"? "b" : "w";
     }
 }
