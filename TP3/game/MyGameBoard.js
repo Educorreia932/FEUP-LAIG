@@ -4,20 +4,6 @@ class MyGameBoard extends CGFobject {
 
         this.orchestrator = orchestrator;
         this.scene = orchestrator.scene;
-        this.rows = 6;
-        this.columns = 6;
-        this.tiles = [];
-        this.state = null;
-
-        for (let i = 0; i < this.rows; i++) {
-            let tilesRow = [];
-
-            for (let j = 0; j < this.columns; j++) {
-                tilesRow.push(new MyTile(this));
-            }
-
-            this.tiles.push(tilesRow);
-        }
     }
 
     display() {
@@ -67,7 +53,20 @@ class MyGameBoard extends CGFobject {
     }
 
     setState(gameboard) {
-        this.state = gameboard.map(function(row) {
+        this.tiles = [];
+        this.rows = gameboard[0];
+        this.columns = gameboard[1];
+
+        for (let i = 0; i < this.rows; i++) {
+            let tilesRow = [];
+
+            for (let j = 0; j < this.columns; j++)
+                tilesRow.push(new MyTile(this));
+
+            this.tiles.push(tilesRow);
+        }
+
+        this.state = gameboard[2].map(function(row) {
             return row.map(collumn => new MyStack(this.scene, [new MyPiece(this.orchestrator, collumn[0])]))
         }.bind(this));
     }
@@ -77,16 +76,13 @@ class MyGameBoard extends CGFobject {
             for (let j = 0; j < this.columns; j++) 
                 this.tiles[i][j].setTheme(this.orchestrator.theme.tiles[(i + j) % 2]);
 
-        // if (this.state != null) {
-        //     for (let i = 0; i < this.rows && i < this.state.length; i++) {
-        //         for (let j = 0; j < this.columns && j < this.state[i].length; j++) {
-        //             let piecesStack = this.state[i][j].pieces;
+        for (let i = 0; i < this.rows && i < this.state.length; i++) {
+            for (let j = 0; j < this.columns && j < this.state[i].length; j++) {
+                let piecesStack = this.state[i][j].pieces;
 
-        //             for (let k = 0; k < piecesStack.length; k++) {
-        //                 piecesStack[k].setTheme(this.orchestrator.theme.pieces[piecesStack[k].color]);
-        //             }
-        //         }
-        //     }
-        // }
+                for (let k = 0; k < piecesStack.length; k++)
+                    piecesStack[k].setTheme(this.orchestrator.theme.pieces[piecesStack[k].color]);
+            }
+        }
     }
 }

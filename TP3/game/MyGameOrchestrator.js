@@ -1,4 +1,10 @@
 class MyGameOrchestrator {
+    static dimensions = {
+        small: "6 x 6",
+        medium: "6 x 9",
+        large: "9 x 9"
+    };
+
     static modes = {
         PvP: "Player VS Player",
         PvE: "Player VS AI",
@@ -26,11 +32,12 @@ class MyGameOrchestrator {
         this.gameState = MyGameOrchestrator.states.menu;
     }
 
-    async newGame() {
+    async newGame(boardDimensions, gamemode, difficulty) {
+        this.gamemode = gamemode;
+        this.gameDifficulty = difficulty;
+        this.gameboard.setState(await this.prolog.generateBoard(boardDimensions));
         this.setTheme(this.scene.graph);
-        this.gameState = MyGameOrchestrator.states.whiteTurn;
-        this.gameDifficulty = MyGameOrchestrator.difficulties.easy;
-        this.gameboard.setState(await this.prolog.generateBoard(6, 6));
+        this.gameState = MyGameOrchestrator.states.blackTurn;
     }
 
     update(time) {
@@ -64,11 +71,9 @@ class MyGameOrchestrator {
 
         this.theme.tiles = [];
 
-        for (let i = 0; i < board.tiles.length; i++) {
-            if (graph.nodes[board.tiles[i]] != null) {
+        for (let i = 0; i < board.tiles.length; i++)
+            if (graph.nodes[board.tiles[i]] != null)
                 this.theme.tiles.push(graph.nodes[board.tiles[i]]);
-            }
-        }
 
         this.gameboard.setTheme();
     }
@@ -112,8 +117,8 @@ class MyGameOrchestrator {
     }
 
     changePlayerTurn() {
-        let whiteTurn = this.gamestates.blackTurn
-        let blackTurn = this.gamestates.blackTurn
+        let whiteTurn = MyGameOrchestrator.states.blackTurn;
+        let blackTurn = MyGameOrchestrator.states.blackTurn;
 
         this.gameState = (this.gameState == whiteTurn) ? blackTurn : whiteTurn;
     }

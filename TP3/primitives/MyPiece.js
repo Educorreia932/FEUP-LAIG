@@ -5,8 +5,6 @@ class MyPiece extends CGFobject {
         this.orchestractor = orchestractor;
         this.scene = this.orchestractor.scene;
         this.color = color;
-
-        this.setTheme(this.orchestractor.theme.pieces[this.color]);
     }
 
     display() {

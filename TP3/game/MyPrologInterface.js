@@ -29,12 +29,15 @@ class MyPrologInterface {
     /**
      *  Generates a gameboard
      */
-    async generateBoard(columns, rows) {
+    async generateBoard(boardDimensions) {
+        let rows = parseInt(boardDimensions[0]);
+        let columns = parseInt(boardDimensions[4]);
+
         const requestData = `generate_board(${columns},${rows})`
 
         let response = await this.sendRequest(requestData);
 
-        return MyPrologInterface.deserializeGameBoard(response);
+        return [rows, columns, MyPrologInterface.deserializeGameBoard(response)];
     }
 
     async validMove(move) {

@@ -26,31 +26,19 @@ class MyInterface extends CGFinterface {
     }
 
     addInterfaceElements() {
-        // ---- Lights Configuration
-        var lights_folder = this.gui.addFolder("Lights Configuration");
-        
-        lights_folder.add(this.scene, 'displayLights').name('Display Lights').onChange(this.scene.toggleDisplayLights.bind(this.scene)).listen();
+        // TODO: Add scene selection
 
-        for (let i = 0; i < this.scene.lights.length; i++) {
-            // Checkbox for enabling/disabling lights
-            lights_folder.add(this.scene.lights[i], 'enabled').name('Light ' + i + ' enabled').listen();
-        }
-
-        // ---- Cameras Configuration
-        var camera_folder = this.gui.addFolder("Cameras Configuration");
-
-        // Dropdown camera selection
-        camera_folder.add(this.scene, 'selectedCamera', this.scene.cameraIDs).name('Camera').onChange(this.scene.updateCamera.bind(this.scene)).listen();
-
-        camera_folder.open();
+        // Board dimensions
+        let dimensions = Object.values(MyGameOrchestrator.dimensions)
+        this.gui.add(this.scene, 'selectedDimension', dimensions).name('Board dimensions');
 
         // Game modes
         let modes = Object.values(MyGameOrchestrator.modes)
-        this.gui.add(this.scene, 'selectedGamemode', modes).name('Gamemode').onChange(this.scene.updateCamera.bind(this.scene)).listen();
+        this.gui.add(this.scene, 'selectedGamemode', modes).name('Game mode');
     
         // Game difficulties
         let difficulties = Object.values(MyGameOrchestrator.difficulties)
-        this.gui.add(this.scene, 'selectedDifficulty', difficulties).name('Difficulty').onChange(this.scene.updateCamera.bind(this.scene)).listen();
+        this.gui.add(this.scene, 'selectedDifficulty', difficulties).name('Game difficulty');
     
         this.gui.add(this.scene, "newGame").name("New Game");
     }

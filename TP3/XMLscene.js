@@ -52,12 +52,17 @@ class XMLscene extends CGFscene {
         
         this.gameOrchestrator = new MyGameOrchestrator(this);
 
+        this.selectedDimension = MyGameOrchestrator.dimensions.small;
         this.selectedGamemode = MyGameOrchestrator.modes.PvP;
         this.selectedDifficulty = MyGameOrchestrator.difficulties.random;
     }
 
     newGame() {
-        this.gameOrchestrator.newGame();
+        this.gameOrchestrator.newGame(
+            this.selectedDimension,
+            this.selectedGamemode, 
+            this.selectedDifficulty
+        );
     }
 
     // Texture & Material Stack Control
@@ -200,7 +205,7 @@ class XMLscene extends CGFscene {
         
         this.firstFrame = Date.now();
 
-        this.gameOrchestrator.newGame();
+        // this.gameOrchestrator.newGame();
         this.sceneInited = true;
     }
 
@@ -223,9 +228,8 @@ class XMLscene extends CGFscene {
 
         this.pushMatrix();
 
-        for (var i = 0; i < this.lights.length; i++) {
+        for (var i = 0; i < this.lights.length; i++) 
             this.lights[i].update();
-        }
 
         if (this.sceneInited) {
             // Draw axis
