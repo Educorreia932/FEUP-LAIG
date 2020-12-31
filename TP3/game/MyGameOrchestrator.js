@@ -42,6 +42,7 @@ class MyGameOrchestrator {
     }
 
     update(time) {
+        this.scoreboard.update(time);
         this.animator.update(time);
     }
 
@@ -52,6 +53,7 @@ class MyGameOrchestrator {
         // Game started
         else {
             this.managePick(this.scene.pickMode, this.scene.pickResults);
+            this.scoreboard.display();
             this.gameboard.display();
             this.animator.display();
         }
@@ -60,7 +62,8 @@ class MyGameOrchestrator {
     setTheme(graph) {
         let board = graph.board;
 
-        if (board == null) return;
+        if (board == null) 
+            return;
 
         this.theme = {};
 

@@ -1376,15 +1376,14 @@ class MySceneGraph {
             out = new MyDefBarrel(this.scene, base, middle, height, slices, stacks);
         }
 
-        // Board
+        // Gameboard
         else if (type == "board") {
             this.board = this.parseBoard(node, messageError);
             out = true;
         }
 
-        // Menu
-        else if (type == "menu") {
-            // this.menu = this.parseMenu(node, messageError);
+        // Scoreboard
+        else if (type == "scoreboard") {
             out = true;
         }
 

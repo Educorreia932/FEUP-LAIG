@@ -698,9 +698,9 @@
 
         <!-- END TABLE -->
 
-        <!-- START MENU -->
+        <!-- START SCOREBOARD -->
 
-        <node id="gameMenu">
+        <node id="scoreBoard">
             <material id="default"/>
 
             <texture id="clear">
@@ -708,15 +708,14 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="1.175"/>
             </transformations>
 
             <descendants>
-                <leaf type="menu"/>
+                <leaf type="scoreboard"/>
             </descendants>
         </node>
 
-        <!-- END MENU -->
+        <!-- END SCOREBOARD -->
 
         <!-- END DECORATION -->
 

@@ -1,7 +1,6 @@
 class MyGameMove {
     constructor(player, moveCoordinates) {
         this.player = player;
-        console.log(moveCoordinates)
 
         this.originI = moveCoordinates[0];
         this.originJ = moveCoordinates[1];

@@ -5,10 +5,6 @@ class MyTile extends CGFobject {
         this.scene = gameboard.scene;
     }
 
-    initBuffers() {
-        
-    }
-
     display() {
         this.scene.pushMatrix();
 

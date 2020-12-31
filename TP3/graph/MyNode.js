@@ -150,7 +150,7 @@ class MyNode {
         }
 
         if (this.animation == null || this.animation.started) {
-            if (this.id == "gameBoard" || this.id == "gameMenu")
+            if (this.id == "gameBoard" || this.id == "scoreBoard")
                 this.scene.gameOrchestrator.display();
         
             for (let i = 0; i < this.descendants.length; i++)
