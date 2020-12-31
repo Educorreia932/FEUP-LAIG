@@ -54,8 +54,6 @@ class MyPrologInterface {
             move.destinationJ
         ]);
 
-        console.log(player);
-
         const requestData = `valid_move(${player},${gameboardIn},${coordinates})`;
 
         let response = await this.sendRequest(requestData);
@@ -80,7 +78,7 @@ class MyPrologInterface {
      */
     static serializeGameBoard(gameboard) {
         return JSON.stringify(gameboard.state.map(function(row) {
-            return row.map(stack => stack.pieces.map(piece => piece.color))
+            return row.map(stack => stack.pieces.map(piece => piece.color).reverse())
         })).replaceAll("\"", "");
     }
 }

@@ -90,4 +90,8 @@ class MyGameBoard extends CGFobject {
 
         return [i, j];
     }
+
+    getStack(i, j) {
+        return this.state[i][j];
+    }
 }

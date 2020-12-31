@@ -28,6 +28,7 @@ class MyGameOrchestrator {
         this.animator = new MyAnimator(this);
         this.prolog = new MyPrologInterface();
         this.gameboard = new MyGameBoard(this);
+        this.scoreboard = new MyGameScoreBoard(this);
 
         this.gameState = MyGameOrchestrator.states.menu;
     }
@@ -110,6 +111,7 @@ class MyGameOrchestrator {
                     let move = new MyGameMove(this.gameState, originCoordinates, destinationCoordinates);
 
                     if (await this.prolog.validMove(this.gameboard, move)) {
+                        this.animator.addMoveAnimation(move);
                         this.gameboard.moveStack(move);
                         this.changePlayerTurn();
                     }

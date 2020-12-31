@@ -2,6 +2,7 @@ class MyAnimator {
     constructor(orchestractor) {
         this.orchestractor = orchestractor;
         this.scene = this.orchestractor.scene;
+        this.gameboard = this.orchestractor.gameboard;
         this.animations = [];
     }
 
@@ -30,10 +31,23 @@ class MyAnimator {
     }
 
     addMoveAnimation(move) {
+        let gameboard = this.orchestractor.gameboard;
+
         this.animations.push();
 
-        move.originCoordinates
-        move.destinationCoordinates
+        gameboard.getStack(move.originI, move.originJ).pieces.length;
+
+        // keyframe
+
+        // let translation = keyframes[this.actualKF]["instant"];
+        // let translation = keyframes[this.actualKF]["translation"];
+        // let rotation = keyframes[this.actualKF]["rotation"];
+        // let scale = keyframes[this.actualKF]["scale"];
+
+        // move.originI 
+        // move.originJ
+        // move.destinationI
+        // move.destinationJ
 
         let keyframes = [
             
