@@ -45,10 +45,18 @@ class MyPrologInterface {
      */
     async validMove(gameboard, move) {
         let player = move.player;
-        let gameboardIn = JSON.stringify(MyPrologInterface.serializeGameBoard(gameboard)).replaceAll("\"", "");
-        let gameboardOut = JSON.stringify(MyPrologInterface.moveStack(MyPrologInterface.serializeGameBoard(gameboard), move)).replaceAll("\"", "");
+        let gameboardIn = MyPrologInterface.serializeGameBoard(gameboard);
 
-        const requestData = `valid_move(${player},${gameboardIn},${gameboardOut})`;
+        let coordinates = JSON.stringify([
+            move.originI, 
+            move.originJ,
+            move.destinationI,
+            move.destinationJ
+        ]);
+
+        console.log(player);
+
+        const requestData = `valid_move(${player},${gameboardIn},${coordinates})`;
 
         let response = await this.sendRequest(requestData);
 
@@ -71,24 +79,8 @@ class MyPrologInterface {
      *  Serializes a gameboard to a JSON object
      */
     static serializeGameBoard(gameboard) {
-        return gameboard.state.map(function(row) {
+        return JSON.stringify(gameboard.state.map(function(row) {
             return row.map(stack => stack.pieces.map(piece => piece.color))
-        });
-    }
-
-    static moveStack(gameboard, move) {
-        let originI = move.originI;
-        let originJ = move.originJ;
-        let destinationI = move.destinationI;
-        let destinationJ = move.destinationJ;
-
-        let originStack = gameboard[originI][originJ];
-        let destinationStack = gameboard[destinationI][destinationJ];
-
-        destinationStack.push(...originStack);
-        destinationStack.reverse();
-        originStack.splice(0, originStack.length);
-
-        return gameboard;
+        })).replaceAll("\"", "");
     }
 }
