@@ -78,7 +78,7 @@ class MyPrologInterface {
         
         let response = await this.sendRequest(requestData);
 
-        console.log(response);
+        return JSON.parse(response);
     }
 
     /**

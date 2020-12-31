@@ -108,13 +108,18 @@ class MyGameOrchestrator {
                 if (this.destinationIndex != this.originIndex) {
                     let originCoordinates = this.gameboard.convertIndex(this.originIndex);
                     let destinationCoordinates = this.gameboard.convertIndex(this.destinationIndex);
-                    let move = new MyGameMove(this.gameState, originCoordinates, destinationCoordinates);
+                    let moveCoordinates = originCoordinates.concat(destinationCoordinates);
+                    let move = new MyGameMove(this.gameState, moveCoordinates);
 
                     if (await this.prolog.validMove(this.gameboard, move)) {
                         this.animator.addMoveAnimation(move);
                         this.gameboard.moveStack(move);
                         this.changePlayerTurn();
-                        await this.prolog.getMove(this.gameState, this.gameboard, this.gameDifficulty);
+
+                        if (this.gamemode != MyGameOrchestrator.modes.PvP) {
+                            let moveCoordinates = await this.prolog.getMove(this.gameState, this.gameboard, this.gameDifficulty);
+                            this.computerPlay(moveCoordinates);
+                        }
                     }
                 }
 
@@ -122,6 +127,14 @@ class MyGameOrchestrator {
                 this.destinationIndex = null;
             }
         }
+    }
+
+    computerPlay(moveCoordinates) {
+        let computerMove = new MyGameMove(this.gameState, moveCoordinates);
+
+        this.gameboard.moveStack(computerMove);
+
+        this.changePlayerTurn();
     }
 
     changePlayerTurn() {

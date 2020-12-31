@@ -1,14 +1,15 @@
 class MyGameMove {
-    constructor(player, originCoordinates, destinationCoordinates) {
+    constructor(player, moveCoordinates) {
         this.player = player;
+        console.log(moveCoordinates)
 
-        this.originI = originCoordinates[0];
-        this.originJ = originCoordinates[1];
-        this.destinationI = destinationCoordinates[0];
-        this.destinationJ = destinationCoordinates[1];
+        this.originI = moveCoordinates[0];
+        this.originJ = moveCoordinates[1];
+        this.destinationI = moveCoordinates[2];
+        this.destinationJ = moveCoordinates[3];
 
         // this.stackSize = stackSize;
-    }
+    };
 
     /**
      *  Swap origin and destination coordinates
