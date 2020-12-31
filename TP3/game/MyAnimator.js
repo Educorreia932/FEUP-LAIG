@@ -15,16 +15,15 @@ class MyAnimator {
     }
 
     update(time) {
-        for (let animation of this.animations) {
+        for (let animation of this.animations)
             animation.update(time);
-        }
     }
 
     display() {
         for (let animation of this.animations) {
             this.scene.pushMatrix();
 
-            animation.update(time);
+            animation.apply();
 
             this.scene.popMatrix();
         }
@@ -33,7 +32,6 @@ class MyAnimator {
     addMoveAnimation(move) {
         let gameboard = this.orchestractor.gameboard;
 
-        this.animations.push();
 
         gameboard.getStack(move.originI, move.originJ).pieces.length;
 
@@ -49,8 +47,19 @@ class MyAnimator {
         // move.destinationI
         // move.destinationJ
 
+        let keyframe0 = {
+            instant: 0,
+            translation: [4, 4, 0],
+            rotation: [0, 0, 0],
+            scale: [1, 1, 1]
+        }
+
         let keyframes = [
-            
+            keyframe0
         ];
+
+        let moveAnimation = new MyKeyframeAnimation(this.orchestractor.scene, keyframes);
+
+        this.animations.push(moveAnimation);
     }
 }

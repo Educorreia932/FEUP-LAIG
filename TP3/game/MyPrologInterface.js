@@ -41,7 +41,7 @@ class MyPrologInterface {
     }
 
     /**
-     *  Validates a move
+     *  Returns whether a move is valid or not
      */
     async validMove(gameboard, move) {
         let player = move.player;
@@ -59,6 +59,26 @@ class MyPrologInterface {
         let response = await this.sendRequest(requestData);
 
         return response == "Valid move";
+    }
+
+    /**
+     *  Returns AI move
+     */
+    async getMove(player, gameboard, difficulty) {
+        gameboard = MyPrologInterface.serializeGameBoard(gameboard);
+
+        let aiStrategies = {
+            "Random": "randomAI",
+            "Smart": "smartAI"
+        };
+
+        difficulty = aiStrategies[difficulty];
+
+        const requestData = `choose_move(${gameboard},${player},${difficulty})`;
+        
+        let response = await this.sendRequest(requestData);
+
+        console.log(response);
     }
 
     /**

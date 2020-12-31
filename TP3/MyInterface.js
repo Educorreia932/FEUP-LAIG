@@ -26,8 +26,6 @@ class MyInterface extends CGFinterface {
     }
 
     addInterfaceElements() {
-        // TODO: Add scene selection
-
         // Board dimensions
         let dimensions = Object.values(MyGameOrchestrator.dimensions)
         this.gui.add(this.scene, 'selectedDimension', dimensions).name('Board Dimensions');
@@ -42,8 +40,9 @@ class MyInterface extends CGFinterface {
     
         this.gui.add(this.scene, "newGame").name("New Game");
 
-        // TODO: this.gui.add(this.scene, "undo").name("Undo"); 
-        // TODO: this.gui.add(this.scene, "undo").name("Play Movie");
+        this.gui.add(this.scene, "undo").name("Undo"); 
+
+        this.gui.add(this.scene, "playMovie").name("Play Movie");
     }
 
     /**

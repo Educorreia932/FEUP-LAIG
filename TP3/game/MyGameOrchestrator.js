@@ -114,6 +114,7 @@ class MyGameOrchestrator {
                         this.animator.addMoveAnimation(move);
                         this.gameboard.moveStack(move);
                         this.changePlayerTurn();
+                        await this.prolog.getMove(this.gameState, this.gameboard, this.gameDifficulty);
                     }
                 }
 
@@ -128,5 +129,16 @@ class MyGameOrchestrator {
         let blackTurn = MyGameOrchestrator.states.blackTurn;
 
         this.gameState = (this.gameState == whiteTurn) ? blackTurn : whiteTurn;
+    }
+
+    /**
+     *  Undo the last move
+     */
+    undo() {
+        console.log("Not implemented yet");
+    }
+
+    playMovie() {
+        console.log("Not implemented yet");
     }
 }

@@ -102,17 +102,24 @@ print_header_line(_).
 
 :- consult('game.pl').
 
+% Generate a new gameboard
+
 parse_input(generate_board(Columns, Rows), Board) :- 
 	generate_board(Columns, Rows, Board).
 
+% Check if player move is valid
+
 parse_input(valid_move(Player, BoardIn, [I0, J0, I1, J1]), 'Valid move') :-
-	move(BoardIn, [I0, J0, I1, J1], BoardOut),
-	valid_move(Player, BoardIn, BoardOut).
+	valid_move(Player, BoardIn, [I0, J0, I1, J1]).
 
 parse_input(valid_move(Player, BoardIn, [I0, J0, I1, J1]), 'Invalid move') :-
-	move(BoardIn, [I0, J0, I1, J1], BoardOut),
-	\+ valid_move(Player, BoardIn, BoardOut).
+	\+ valid_move(Player, BoardIn, [I0, J0, I1, J1]).
 
-parse_input(get_move(Player, GameState, Strat, NewGameState), NewGameState) :- !.
+% Get AI move
 
-% parse_input(value(GameState, Player, Value), Value) :- !.
+parse_input(choose_move(GameState, Player, Strat), Move) :- 
+	choose_move(GameState, Player, Strat, Move), nl.
+
+% Get current board value
+
+parse_input(value(GameState, Player, Value), Value) :- !.
