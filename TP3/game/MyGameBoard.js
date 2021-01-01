@@ -50,8 +50,6 @@ class MyGameBoard extends CGFobject {
 
         destinationStack.push(originStack, stackSize);
         originStack.remove(stackSize);
-
-        console.log(destinationStack)
     }
 
     setState(gameboard) {

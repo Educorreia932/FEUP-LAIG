@@ -1,7 +1,7 @@
 class MyGameOrchestrator {
     static dimensions = {
         small: "3 x 3",
-        medium: "6 x 9",
+        medium: "6 x 6",
         large: "9 x 9"
     };
 
@@ -29,6 +29,11 @@ class MyGameOrchestrator {
         this.prolog = new MyPrologInterface();
         this.gameboard = new MyGameBoard(this);
         this.scoreboard = new MyGameScoreBoard(this);
+
+        this.scores = {
+            "w": 0,
+            "b": 0
+        };
 
         this.ended = {
             "w": false,
@@ -170,10 +175,11 @@ class MyGameOrchestrator {
         this.changePlayerTurn();
     }
 
-    makeMove(move) {
+    async makeMove(move) {
         this.animator.addMoveAnimation(move);
         this.gameSequence.addMove(move);
         this.gameboard.moveStack(move);
+        this.scores[this.gameState] = await this.prolog.getScore(this.gameState, this.gameboard);
     }
 
     /**

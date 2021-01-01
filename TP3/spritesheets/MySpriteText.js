@@ -38,4 +38,8 @@ class MySpriteText extends CGFobject {
         this.scene.popTexture(this.spritesheet.texture);
         this.scene.gl.disable(this.scene.gl.BLEND);
     }
+    
+    setText(text) {
+        this.text = text;
+    }
 }

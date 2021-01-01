@@ -706,25 +706,6 @@
 
         <!-- END TABLE -->
 
-        <!-- START SCOREBOARD -->
-
-        <node id="scoreBoard">
-            <material id="default"/>
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-            </transformations>
-
-            <descendants>
-                <leaf type="scoreboard"/>
-            </descendants>
-        </node>
-
-        <!-- END SCOREBOARD -->
-
         <!-- END DECORATION -->
 
         <!-- TILES -->

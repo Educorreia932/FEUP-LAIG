@@ -99,6 +99,19 @@ class MyPrologInterface {
     }
 
     /**
+     *  Returns player score
+     */
+    async getScore(player, gameboard) {
+        gameboard = MyPrologInterface.serializeGameBoard(gameboard);
+
+        const requestData = `value(${gameboard},${player})`;
+
+        let response = await this.sendRequest(requestData);
+
+        return response;
+    }
+
+    /**
      *  Deserializes a gameboard
      */
     static deserializeGameBoard(response) {

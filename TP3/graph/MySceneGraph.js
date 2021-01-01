@@ -1402,11 +1402,6 @@ class MySceneGraph {
             out = true;
         }
 
-        // Scoreboard
-        else if (type == "scoreboard") {
-            out = true;
-        }
-
         else
             return "Unable to process primitive of the " + messageError;
 
