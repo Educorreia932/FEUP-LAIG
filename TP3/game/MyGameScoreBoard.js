@@ -16,6 +16,6 @@ class MyGameScoreBoard extends CGFobject {
     }
 
     update(time) {
-
+        
     }
 }

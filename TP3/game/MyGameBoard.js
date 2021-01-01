@@ -94,4 +94,19 @@ class MyGameBoard extends CGFobject {
     getStack(i, j) {
         return this.state[i][j];
     }
+
+    hightlightTiles(moves) {
+        for (let move of moves) {
+            let i = move[2];
+            let j = move[3]; 
+
+            this.tiles[i][j].setHighlighted(true);
+        }
+    }
+
+    turnOffTiles() {
+        for (let row of this.tiles)
+            for (let tile of row)
+                tile.setHighlighted(false);
+    }
 }

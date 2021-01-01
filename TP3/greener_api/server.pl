@@ -107,6 +107,11 @@ print_header_line(_).
 parse_input(generate_board(Columns, Rows), Board) :- 
 	generate_board(Columns, Rows, Board).
 
+% Get list of valid moves
+
+parse_input(valid_moves(GameState, Player), ListOfMoves) :-
+	valid_moves(GameState, Player, ListOfMoves).
+
 % Check if player move is valid
 
 parse_input(valid_move(Player, BoardIn, [I0, J0, I1, J1]), 'Valid move') :-
@@ -122,4 +127,5 @@ parse_input(choose_move(GameState, Player, Strat), Move) :-
 
 % Get current board value
 
-parse_input(value(GameState, Player, Value), Value) :- !.
+parse_input(value(GameState, Player), Value) :- 
+	value(GameState, Player, Value).

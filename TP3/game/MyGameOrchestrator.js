@@ -101,8 +101,14 @@ class MyGameOrchestrator {
     async onObjectSelected(object, id) {
         if (object instanceof MyStack) {
             // Picking origin stack
-            if (this.originIndex == null)
-            this.originIndex = id;
+            if (this.originIndex == null) {
+                this.originIndex = id;
+
+                let originCoordinates = this.gameboard.convertIndex(this.originIndex);
+                let validMoves = await this.prolog.getValidMoves(this.gameboard, this.gameState, originCoordinates);
+
+                this.gameboard.hightlightTiles(validMoves);
+            }
 
             // Picking destination stack
             else {
@@ -125,6 +131,8 @@ class MyGameOrchestrator {
                         }
                     }
                 }
+
+                this.gameboard.turnOffTiles();
 
                 this.originIndex = null;
                 this.destinationIndex = null;

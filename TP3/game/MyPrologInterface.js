@@ -40,6 +40,20 @@ class MyPrologInterface {
         return [rows, columns, MyPrologInterface.deserializeGameBoard(response)];
     }
 
+     /**
+     *  Returns list of valid moves
+     */
+    async getValidMoves(gameboard, player, originCoordinates) {
+        gameboard = MyPrologInterface.serializeGameBoard(gameboard);
+
+        const requestData = `valid_moves(${gameboard},${player})`
+
+        let response = await this.sendRequest(requestData);
+        let validMoves = JSON.parse(response);
+
+        return validMoves.filter(move => move[0] == originCoordinates[0] && move[1] == originCoordinates[1]);
+    }
+
     /**
      *  Returns whether a move is valid or not
      */
