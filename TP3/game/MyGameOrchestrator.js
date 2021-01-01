@@ -1,6 +1,6 @@
 class MyGameOrchestrator {
     static dimensions = {
-        small: "6 x 6",
+        small: "3 x 3",
         medium: "6 x 9",
         large: "9 x 9"
     };
@@ -18,8 +18,8 @@ class MyGameOrchestrator {
 
     static states = {
         menu: 0,
-        whiteTurn: 1,
-        blackTurn: 2,
+        whiteTurn: "w",
+        blackTurn: "b",
     };
 
     constructor(scene) {
@@ -28,6 +28,12 @@ class MyGameOrchestrator {
         this.animator = new MyAnimator(this);
         this.prolog = new MyPrologInterface();
         this.gameboard = new MyGameBoard(this);
+        this.scoreboard = new MyGameScoreBoard(this);
+
+        this.ended = {
+            "w": false,
+            "b": false
+        };
 
         this.gameState = MyGameOrchestrator.states.menu;
     }
@@ -45,7 +51,16 @@ class MyGameOrchestrator {
     }
 
     update(time) {
+        this.scoreboard.update(time);
         this.animator.update(time);
+
+        if (!this.ended[this.gameState]) {
+            if (this.gamemode == MyGameOrchestrator.modes.EvE)
+                this.computerPlay();
+
+            else 
+                this.managePick(this.scene.pickMode, this.scene.pickResults);
+        }
     }
 
     display() {
@@ -54,7 +69,7 @@ class MyGameOrchestrator {
 
         // Game started
         else {
-            this.managePick(this.scene.pickMode, this.scene.pickResults);
+            this.scoreboard.display();
             this.gameboard.display();
             this.animator.display();
         }
@@ -63,7 +78,8 @@ class MyGameOrchestrator {
     setTheme(graph) {
         let board = graph.board;
 
-        if (board == null) return;
+        if (board == null) 
+            return;
 
         this.theme = {};
 
@@ -98,32 +114,90 @@ class MyGameOrchestrator {
 		}
     }
 
-    onObjectSelected(object, id) {
+    async onObjectSelected(object, id) {
         if (object instanceof MyStack) {
-            // Picking source stack
-            if (this.source == null)
-            this.source = id;
+            // Picking origin stack
+            if (this.originIndex == null) {
+                this.originIndex = id;
 
-            // Picking target stack
+                let originCoordinates = this.gameboard.convertIndex(this.originIndex);
+                let validMoves = await this.prolog.getValidMoves(this.gameboard, this.gameState, originCoordinates);
+
+                this.gameboard.hightlightTiles(validMoves);
+            }
+
+            // Picking destination stack
             else {
-                this.target = id;
+                this.destinationIndex = id;
 
-                if (this.target != this.source) {
-                    let move = new MyGameMove(this.source, this.target);
-                    this.gameboard.moveStack(this.source, this.target);
-                    this.changePlayerTurn();
+                if (this.destinationIndex != this.originIndex) {    
+                    let originCoordinates = this.gameboard.convertIndex(this.originIndex);
+                    let destinationCoordinates = this.gameboard.convertIndex(this.destinationIndex);
+                    let moveCoordinates = originCoordinates.concat(destinationCoordinates);
+                    let stackSize = this.gameboard.getStack(moveCoordinates[0], moveCoordinates[1]).getSize();
+                    let move = new MyGameMove(this.gameState, moveCoordinates, stackSize);
+
+                    if (await this.prolog.validMove(this.gameboard, move)) {
+                        this.makeMove(move);
+                        this.changePlayerTurn();
+
+                        if (this.gamemode == MyGameOrchestrator.modes.PvE)
+                            this.computerPlay();
+                    }
                 }
 
-                this.source = null;
-                this.target = null;
+                this.gameboard.turnOffTiles();
+
+                this.originIndex = null;
+                this.destinationIndex = null;
             }
         }
     }
 
+    async computerPlay() {
+        let moveCoordinates = await this.prolog.getMove(this.gameState, this.gameboard, this.gameDifficulty);
+
+        if (moveCoordinates == null)
+            this.ended[this.gameState] = true;
+    
+        else {
+            let stackSize = this.gameboard.getStack(moveCoordinates[0], moveCoordinates[1]).getSize();
+            let computerMove = new MyGameMove(this.gameState, moveCoordinates, stackSize);
+
+            this.makeMove(computerMove);
+        }
+
+        this.changePlayerTurn();
+    }
+
+    makeMove(move) {
+        this.animator.addMoveAnimation(move);
+        this.gameSequence.addMove(move);
+        this.gameboard.moveStack(move);
+    }
+
+    /**
+     *  Change player turn to next player
+     */
     changePlayerTurn() {
-        let whiteTurn = MyGameOrchestrator.states.blackTurn;
+        let whiteTurn = MyGameOrchestrator.states.whiteTurn;
         let blackTurn = MyGameOrchestrator.states.blackTurn;
 
         this.gameState = (this.gameState == whiteTurn) ? blackTurn : whiteTurn;
+    }
+
+    /**
+     *  Undo the last move
+     */
+    undo() {
+        let lastMove = this.gameSequence.removeLastMove();
+        this.gameboard.moveStack(lastMove);
+    }
+
+    /**
+     *  Play movie
+     */
+    playMovie() {
+        console.log("Not implemented yet");
     }
 }

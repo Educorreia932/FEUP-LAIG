@@ -73,6 +73,14 @@ class XMLscene extends CGFscene {
         );
     }
 
+    undo() {
+        this.gameOrchestrator.undo();
+    }
+
+    playMovie() {
+        this.gameOrchestrator.playMovie();
+    }
+
     // Texture & Material Stack Control
     pushTexture(texture) {
         this.textureStack.push(texture);
@@ -129,6 +137,7 @@ class XMLscene extends CGFscene {
             if (this.cameraAnimation != null) {
                 this.cameraAnimation.update((time - this.lastFrame) / 1000.0)
             }
+            this.gameOrchestrator.update(time);
         }
         this.lastFrame = time;
     }

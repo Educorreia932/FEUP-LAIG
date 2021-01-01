@@ -23,17 +23,27 @@ has_pieces_between(Board, I, J0, I, J1) :-    % Same row
     get_cell(Board, I, J, Stack),
     \+ is_empty(Stack).
 
+has_pieces_between(Board, I, J0, I, J1) :-    % Same row
+    exclusive_between(J1, J0, J),
+    get_cell(Board, I, J, Stack),
+    \+ is_empty(Stack).
+
 has_pieces_between(Board, I0, J, I1, J) :-    % Same column
     exclusive_between(I0, I1, I),
+    get_cell(Board, I, J, Stack),
+    \+ is_empty(Stack).
+
+has_pieces_between(Board, I0, J, I1, J) :-    % Same column
+    exclusive_between(I1, I0, I),
     get_cell(Board, I, J, Stack),
     \+ is_empty(Stack).
 
 % All possible and valid moves
 
 valid_moves(BoardIn, Player, ListOfMoves) :- % Gets all possible moves
-    findall(BoardOut, valid_move(Player, BoardIn, BoardOut), ListOfMoves).
+    findall(Move, valid_move(Player, BoardIn, Move), ListOfMoves).
 
-valid_move(Player, BoardIn, BoardOut) :-
+valid_move(Player, BoardIn, [I0, J0, I1, J1]) :-
     board_dimensions(BoardIn, Width, Height),
 
     exclusive_between(-1, Height, I0),                    % Generate start cell coordinates
@@ -48,23 +58,23 @@ valid_move(Player, BoardIn, BoardOut) :-
 
     \+ is_same_cell(I0, J0, I1, J1),                      % Start and cell coordinates are different
     (I0 == I1; J0 == J1),
-    \+ has_pieces_between(BoardIn, I0, J0, I1, J1),
-    move(BoardIn, [I0, J0, I1, J1], BoardOut).            % Make move
+    \+ has_pieces_between(BoardIn, I0, J0, I1, J1).
 
 % Choose move
 
-choose_move(GameState, Player, _, GameState) :-
+choose_move(GameState, Player, _, Move) :-
     valid_moves(GameState, Player, []).              % There are no valid moves          
 
 choose_move(GameState, Player, randomAI, Move) :-    % Random AI Strategy
     valid_moves(GameState, Player, ListOfMoves),     % Calculates valid moves
+    print(ListOfMoves), nl,
     length(ListOfMoves, NumberOfMoves),              % Gets number of valid moves
     random(0, NumberOfMoves, R),                     % Choose a random number
     nth0(R, ListOfMoves, Move).                      % Choose a random move
 
 choose_move(GameState, Player, smartAI, Move) :-     % Smart AI Strategy
     valid_moves(GameState, Player, ListOfMoves),     % Calculates valid moves
-    moves_values(ListOfMoves, Player, MovesValues),  % Calculate value for each move
+    moves_values(GameState, ListOfMoves, Player, MovesValues),  % Calculate value for each move
     max_list(MovesValues, _, Index),                 % Get the highest value move
     nth0(Index, ListOfMoves, Move).                  % Choose the highest value move
 
@@ -87,11 +97,12 @@ value(GameState, Player, Value) :-
 
 % Map values of each move
 
-moves_values([], _, []).                    % Stop Recursion
+moves_values(_ ,[], _, []).                    % Stop Recursion
 
-moves_values([C|R], Player, [Value|CR]) :-
-    value(C, Player, Value),                % Calculates value of GameState
-    moves_values(R, Player, CR).            % Recursion using tails of lists
+moves_values(GameState, [C|R], Player, [Value|CR]) :-
+    move(GameState, C, NewGameState),
+    value(NewGameState, Player, Value),                % Calculates value of GameState
+    moves_values(R, Player, CR).                       % Recursion using tails of lists
 
 % Retrieve stacks controlled by player
 

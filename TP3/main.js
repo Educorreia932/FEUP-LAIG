@@ -25,6 +25,7 @@ serialInclude([
     './game/MyGameMove.js',
     './game/MyGameOrchestrator.js',
     './game/MyGameSequence.js',
+    './game/MyGameScoreBoard.js',
     './game/MyPrologInterface.js',
 
     './graph/MySceneGraph.js',

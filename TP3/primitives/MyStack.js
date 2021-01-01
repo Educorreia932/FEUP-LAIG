@@ -22,11 +22,21 @@ class MyStack extends CGFobject {
         this.scene.clearPickRegistration();
     }
 
-    push(stack) {
-        this.pieces.push(...stack.pieces)
+    push(stack, stackSize) {
+        stack.pieces = stack.pieces.reverse();
+
+        for (let i = stackSize - 1; i >= 0; i--)
+            this.pieces.push(stack.pieces[i]);
     }
 
-    clear() {
-        this.pieces.splice(0, this.pieces.length); // Clear results
+    remove(stackSize) {
+        this.pieces = this.pieces.reverse();
+
+        for (let i = stackSize - 1; i >= 0; i--)
+            this.pieces.pop();
+    }
+
+    getSize() {
+        return this.pieces.length;
     }
 }

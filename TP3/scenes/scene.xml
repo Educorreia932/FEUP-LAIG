@@ -531,7 +531,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" bottomRadius="5" topRadius="5" height="1" slices="12" stacks="4" />
+                <leaf type="cylinder" bottomRadius="5" topRadius="5" height="1" slices="50" stacks="4" />
                 <noderef id="table_legs"/>
                 <noderef id="gameBoard"/>
                 <noderef id="chair_north"/>
@@ -706,9 +706,9 @@
 
         <!-- END TABLE -->
 
-        <!-- START MENU -->
+        <!-- START SCOREBOARD -->
 
-        <node id="gameMenu">
+        <node id="scoreBoard">
             <material id="default"/>
 
             <texture id="clear">
@@ -716,15 +716,14 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="1.175"/>
             </transformations>
 
             <descendants>
-                <leaf type="menu"/>
+                <leaf type="scoreboard"/>
             </descendants>
         </node>
 
-        <!-- END MENU -->
+        <!-- END SCOREBOARD -->
 
         <!-- END DECORATION -->
 

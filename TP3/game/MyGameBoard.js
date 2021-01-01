@@ -37,19 +37,21 @@ class MyGameBoard extends CGFobject {
         this.scene.popMatrix();
     }
 
-    moveStack(source, target) {
-        let sourceJ = (source - 1) % this.rows;
-        let sourceI = Math.floor((source - 1) / this.rows);
+    moveStack(move) {
+        let originI = move.originI;
+        let originJ = move.originJ;
+        let destinationI = move.destinationI;
+        let destinationJ = move.destinationJ;
 
-        let sourceStack = this.state[sourceI][sourceJ];
+        let originStack = this.state[originI][originJ];
+        let destinationStack = this.state[destinationI][destinationJ];
 
-        let targetJ = (target - 1) % this.rows;
-        let targetI = Math.floor((target - 1) / this.rows);
+        let stackSize = move.stackSize;
 
-        let targetStack = this.state[targetI][targetJ];
+        destinationStack.push(originStack, stackSize);
+        originStack.remove(stackSize);
 
-        targetStack.push(sourceStack);
-        sourceStack.clear();
+        console.log(destinationStack)
     }
 
     setState(gameboard) {
@@ -84,5 +86,31 @@ class MyGameBoard extends CGFobject {
                     piecesStack[k].setTheme(this.orchestrator.theme.pieces[piecesStack[k].color]);
             }
         }
+    }
+
+    convertIndex(index) {
+        let i = Math.floor((index - 1) / this.rows);
+        let j = (index - 1) % this.columns;
+
+        return [i, j];
+    }
+
+    getStack(i, j) {
+        return this.state[i][j];
+    }
+
+    hightlightTiles(moves) {
+        for (let move of moves) {
+            let i = move[2];
+            let j = move[3]; 
+
+            this.tiles[i][j].setHighlighted(true);
+        }
+    }
+
+    turnOffTiles() {
+        for (let row of this.tiles)
+            for (let tile of row)
+                tile.setHighlighted(false);
     }
 }
