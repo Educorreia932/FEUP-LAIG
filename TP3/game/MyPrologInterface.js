@@ -92,6 +92,9 @@ class MyPrologInterface {
         
         let response = await this.sendRequest(requestData);
 
+        if (response[0] == "_")
+            return null;
+
         return JSON.parse(response);
     }
 

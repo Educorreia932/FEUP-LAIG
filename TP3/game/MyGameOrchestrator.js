@@ -1,6 +1,6 @@
 class MyGameOrchestrator {
     static dimensions = {
-        small: "6 x 6",
+        small: "3 x 3",
         medium: "6 x 9",
         large: "9 x 9"
     };
@@ -30,6 +30,11 @@ class MyGameOrchestrator {
         this.gameboard = new MyGameBoard(this);
         this.scoreboard = new MyGameScoreBoard(this);
 
+        this.ended = {
+            "w": false,
+            "b": false
+        };
+
         this.gameState = MyGameOrchestrator.states.menu;
     }
 
@@ -44,6 +49,14 @@ class MyGameOrchestrator {
     update(time) {
         this.scoreboard.update(time);
         this.animator.update(time);
+
+        if (!this.ended[this.gameState]) {
+            if (this.gamemode == MyGameOrchestrator.modes.EvE)
+                this.computerPlay();
+
+            else 
+                this.managePick(this.scene.pickMode, this.scene.pickResults);
+        }
     }
 
     display() {
@@ -52,7 +65,6 @@ class MyGameOrchestrator {
 
         // Game started
         else {
-            this.managePick(this.scene.pickMode, this.scene.pickResults);
             this.scoreboard.display();
             this.gameboard.display();
             this.animator.display();
@@ -140,11 +152,18 @@ class MyGameOrchestrator {
 
     async computerPlay() {
         let moveCoordinates = await this.prolog.getMove(this.gameState, this.gameboard, this.gameDifficulty);
-        let computerMove = new MyGameMove(this.gameState, moveCoordinates);
 
-        this.gameboard.moveStack(computerMove);
+        if (moveCoordinates == null)
+            this.ended[this.gameState] = true;
+    
+        else {
+            let computerMove = new MyGameMove(this.gameState, moveCoordinates);
+
+            this.gameboard.moveStack(computerMove);
+        }
 
         this.changePlayerTurn();
+
     }
 
     changePlayerTurn() {
