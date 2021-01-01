@@ -8,6 +8,10 @@ class MyGameSequence {
         this.moves.push(move);
     }
 
+    removeLastMove() {
+        return this.moves.pop().swap();
+    }
+
     reset() {
 
     }

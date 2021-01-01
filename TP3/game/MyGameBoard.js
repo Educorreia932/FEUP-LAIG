@@ -46,8 +46,12 @@ class MyGameBoard extends CGFobject {
         let originStack = this.state[originI][originJ];
         let destinationStack = this.state[destinationI][destinationJ];
 
-        destinationStack.push(originStack);
-        originStack.clear();
+        let stackSize = move.stackSize;
+
+        destinationStack.push(originStack, stackSize);
+        originStack.remove(stackSize);
+
+        console.log(destinationStack)
     }
 
     setState(gameboard) {

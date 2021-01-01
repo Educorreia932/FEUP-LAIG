@@ -1,5 +1,5 @@
 class MyGameMove {
-    constructor(player, moveCoordinates) {
+    constructor(player, moveCoordinates, stackSize) {
         this.player = player;
 
         this.originI = moveCoordinates[0];
@@ -7,7 +7,7 @@ class MyGameMove {
         this.destinationI = moveCoordinates[2];
         this.destinationJ = moveCoordinates[3];
 
-        // this.stackSize = stackSize;
+        this.stackSize = stackSize;
     };
 
     /**
@@ -17,5 +17,7 @@ class MyGameMove {
     swap() {
         [this.originI, this.destinationI] = [this.destinationI, this.originI];
         [this.originJ, this.destinationJ] = [this.destinationJ, this.originJ];
+
+        return this;
     }
 }

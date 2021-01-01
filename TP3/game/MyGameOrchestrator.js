@@ -126,15 +126,15 @@ class MyGameOrchestrator {
             else {
                 this.destinationIndex = id;
 
-                if (this.destinationIndex != this.originIndex) {
+                if (this.destinationIndex != this.originIndex) {    
                     let originCoordinates = this.gameboard.convertIndex(this.originIndex);
                     let destinationCoordinates = this.gameboard.convertIndex(this.destinationIndex);
                     let moveCoordinates = originCoordinates.concat(destinationCoordinates);
-                    let move = new MyGameMove(this.gameState, moveCoordinates);
+                    let stackSize = this.gameboard.getStack(moveCoordinates[0], moveCoordinates[1]).getSize();
+                    let move = new MyGameMove(this.gameState, moveCoordinates, stackSize);
 
                     if (await this.prolog.validMove(this.gameboard, move)) {
-                        this.animator.addMoveAnimation(move);
-                        this.gameboard.moveStack(move);
+                        this.makeMove(move);
                         this.changePlayerTurn();
 
                         if (this.gamemode == MyGameOrchestrator.modes.PvE)
@@ -157,15 +157,24 @@ class MyGameOrchestrator {
             this.ended[this.gameState] = true;
     
         else {
-            let computerMove = new MyGameMove(this.gameState, moveCoordinates);
+            let stackSize = this.gameboard.getStack(moveCoordinates[0], moveCoordinates[1]).getSize();
+            let computerMove = new MyGameMove(this.gameState, moveCoordinates, stackSize);
 
-            this.gameboard.moveStack(computerMove);
+            this.makeMove(computerMove);
         }
 
         this.changePlayerTurn();
-
     }
 
+    makeMove(move) {
+        this.animator.addMoveAnimation(move);
+        this.gameSequence.addMove(move);
+        this.gameboard.moveStack(move);
+    }
+
+    /**
+     *  Change player turn to next player
+     */
     changePlayerTurn() {
         let whiteTurn = MyGameOrchestrator.states.whiteTurn;
         let blackTurn = MyGameOrchestrator.states.blackTurn;
@@ -177,9 +186,13 @@ class MyGameOrchestrator {
      *  Undo the last move
      */
     undo() {
-        console.log("Not implemented yet");
+        let lastMove = this.gameSequence.removeLastMove();
+        this.gameboard.moveStack(lastMove);
     }
 
+    /**
+     *  Play movie
+     */
     playMovie() {
         console.log("Not implemented yet");
     }
