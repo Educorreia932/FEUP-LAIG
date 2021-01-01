@@ -23,8 +23,18 @@ has_pieces_between(Board, I, J0, I, J1) :-    % Same row
     get_cell(Board, I, J, Stack),
     \+ is_empty(Stack).
 
+has_pieces_between(Board, I, J0, I, J1) :-    % Same row
+    exclusive_between(J1, J0, J),
+    get_cell(Board, I, J, Stack),
+    \+ is_empty(Stack).
+
 has_pieces_between(Board, I0, J, I1, J) :-    % Same column
     exclusive_between(I0, I1, I),
+    get_cell(Board, I, J, Stack),
+    \+ is_empty(Stack).
+
+has_pieces_between(Board, I0, J, I1, J) :-    % Same column
+    exclusive_between(I1, I0, I),
     get_cell(Board, I, J, Stack),
     \+ is_empty(Stack).
 

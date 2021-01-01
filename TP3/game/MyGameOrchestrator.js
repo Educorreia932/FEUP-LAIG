@@ -125,10 +125,8 @@ class MyGameOrchestrator {
                         this.gameboard.moveStack(move);
                         this.changePlayerTurn();
 
-                        if (this.gamemode != MyGameOrchestrator.modes.PvP) {
-                            let moveCoordinates = await this.prolog.getMove(this.gameState, this.gameboard, this.gameDifficulty);
-                            this.computerPlay(moveCoordinates);
-                        }
+                        if (this.gamemode == MyGameOrchestrator.modes.PvE)
+                            this.computerPlay();
                     }
                 }
 
@@ -140,7 +138,8 @@ class MyGameOrchestrator {
         }
     }
 
-    computerPlay(moveCoordinates) {
+    async computerPlay() {
+        let moveCoordinates = await this.prolog.getMove(this.gameState, this.gameboard, this.gameDifficulty);
         let computerMove = new MyGameMove(this.gameState, moveCoordinates);
 
         this.gameboard.moveStack(computerMove);
