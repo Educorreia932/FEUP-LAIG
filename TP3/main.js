@@ -18,6 +18,7 @@ serialInclude([
 
     './animations/MyAnimation.js',
     './animations/MyKeyframeAnimation.js',
+    './animations/CameraAnimation.js',
 
     './game/MyAnimator.js',
     './game/MyGameBoard.js',

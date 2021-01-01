@@ -25,6 +25,7 @@ class XMLscene extends CGFscene {
         // List to store the ID of the cameras read on parser, to be displayed on the GUI
         this.cameraIDs = [];
         this.selectedCamera = null;
+        this.cameraAnimation = null;
 
         // Stack to store materials and textures being applied
         this.textureStack = [];
@@ -51,6 +52,13 @@ class XMLscene extends CGFscene {
         this.setPickEnabled(true);
         
         this.gameOrchestrator = new MyGameOrchestrator(this);
+
+        this.selectedTheme = 0;
+
+        this.themes = {
+            0: 'scene.xml',
+            1: 'test.xml'
+        };
 
         this.selectedDimension = MyGameOrchestrator.dimensions.small;
         this.selectedGamemode = MyGameOrchestrator.modes.PvP;
@@ -114,8 +122,15 @@ class XMLscene extends CGFscene {
     }
 
     update(time) {
-        if (this.sceneInited)
+        if (this.sceneInited) {
             this.graph.updateAnimations((time - this.firstFrame) / 1000.0);
+            
+            
+            if (this.cameraAnimation != null) {
+                this.cameraAnimation.update((time - this.lastFrame) / 1000.0)
+            }
+        }
+        this.lastFrame = time;
     }
 
     /**
@@ -138,9 +153,7 @@ class XMLscene extends CGFscene {
 
     // Trigger to be called upon update of selected camera on GUI
     updateCamera() {
-        this.camera = this.graph.cameras[this.selectedCamera];
-
-        this.interface.setActiveCamera(this.camera);
+        this.cameraAnimation = new CameraAnimation(this, this.camera, this.graph.cameras[this.selectedCamera], 4);
     }
 
     // Enable/Disable lights drawing
@@ -182,6 +195,11 @@ class XMLscene extends CGFscene {
         }
     }
 
+    changeTheme() {
+        this.sceneInited = false;
+        this.graph.reinit(this.themes[this.selectedTheme]);
+    }
+
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
@@ -204,8 +222,10 @@ class XMLscene extends CGFscene {
         this.setUpdatePeriod(100);
         
         this.firstFrame = Date.now();
+        this.lastFrame = this.firstFrame;
 
-        // this.gameOrchestrator.newGame();
+        this.gameOrchestrator.reapplyTheme();
+
         this.sceneInited = true;
     }
 
@@ -214,6 +234,10 @@ class XMLscene extends CGFscene {
      */
     display() {
         // ---- BEGIN Background, camera and axis setup
+
+        if (this.cameraAnimation != null) {
+            this.cameraAnimation.apply();
+        }
 
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -228,6 +252,7 @@ class XMLscene extends CGFscene {
 
         this.pushMatrix();
 
+        console.log(this.camera);
         for (var i = 0; i < this.lights.length; i++) 
             this.lights[i].update();
 

@@ -32,6 +32,10 @@ class MyGameOrchestrator {
         this.gameState = MyGameOrchestrator.states.menu;
     }
 
+    reapplyTheme() {
+        this.setTheme(this.scene.graph);
+    }
+
     async newGame(boardDimensions, gamemode, difficulty) {
         this.gamemode = gamemode;
         this.gameDifficulty = difficulty;

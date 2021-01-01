@@ -22,11 +22,13 @@ class MyInterface extends CGFinterface {
 
         this.initKeys();
 
+        this.hasElements = false;
+
         return true;
     }
 
     addInterfaceElements() {
-        // TODO: Add scene selection
+        if(this.hasElements) return;
 
         // Board dimensions
         let dimensions = Object.values(MyGameOrchestrator.dimensions)
@@ -41,6 +43,19 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'selectedDifficulty', difficulties).name('Game difficulty');
     
         this.gui.add(this.scene, "newGame").name("New Game");
+
+        this.game_options();
+
+        // ---- Cameras Configuration
+        var camera_folder = this.gui.addFolder("Cameras Configuration");
+
+        // Dropdown camera selection
+        camera_folder.add(this.scene, 'selectedCamera', this.scene.cameraIDs).name('Camera').onChange(this.scene.updateCamera.bind(this.scene)).listen();
+
+
+        camera_folder.open();
+
+        this.hasElements = true;
     }
 
     /**
@@ -62,5 +77,12 @@ class MyInterface extends CGFinterface {
 
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;
+    }
+
+    /** Theme Changing */
+    game_options() {
+        this.gui.add(this.scene, 'selectedTheme', {'Home' : 0, 'Test' : 1})
+                .name('Theme ')
+                .onChange(this.scene.changeTheme.bind(this.scene));
     }
 }

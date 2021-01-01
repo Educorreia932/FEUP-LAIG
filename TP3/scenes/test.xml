@@ -11,20 +11,12 @@
             <from x="10" y="10" z="10" />
             <to x="0" y="0" z="0" />
         </perspective>
-        <perspective id="Close Up" near="0.1" far="500" angle="45">
-            <from x="0" y="5.5" z="7.5" />
-            <to x="0" y="0" z="0.2" />
-        </perspective>
 
-        <perspective id="Player 1" near="0.1" far="500" angle="45">
-            <from x="-9.5" y="5" z="0" />
-            <to x="0.6" y="2" z="0" />
-        </perspective>
-
-        <perspective id="Player 2" near="0.1" far="500" angle="45">
-            <from x="9.5" y="5" z="0" />
-            <to x="0.6" y="2" z="0" />
-        </perspective>
+        <ortho id="birdView" near="0.1" far="500" left="-75" right="75" top="75" bottom="-75">
+            <from x="20" y="120" z="0" />
+            <to x="0" y="0" z="0" />
+            <up x="0" y="0" z="-100" />
+        </ortho>
     </views>
 
     <!-- Illumination -->
@@ -534,8 +526,6 @@
                 <leaf type="cylinder" bottomRadius="5" topRadius="5" height="1" slices="12" stacks="4" />
                 <noderef id="table_legs"/>
                 <noderef id="gameBoard"/>
-                <noderef id="chair_north"/>
-                <noderef id="chair_south"/>
             </descendants>
         </node>
 
