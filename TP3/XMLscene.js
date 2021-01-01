@@ -261,7 +261,6 @@ class XMLscene extends CGFscene {
 
         this.pushMatrix();
 
-        console.log(this.camera);
         for (var i = 0; i < this.lights.length; i++) 
             this.lights[i].update();
 
