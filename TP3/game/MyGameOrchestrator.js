@@ -33,8 +33,8 @@ class MyGameOrchestrator {
         this.scoreboard = new MyGameScoreBoard(this);
 
         this.scores = {
-            "w": 0,
-            "b": 0
+            "w": "0",
+            "b": "0"
         };
 
         this.ended = {

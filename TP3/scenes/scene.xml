@@ -49,11 +49,6 @@
         <texture id="wood" path="./scenes/scene_home/wood.png"/>
         <texture id="wood_table" path="./scenes/scene_home/wood_table.jpg"/>
         <texture id="metal" path="./scenes/scene_home/metal.jpg"/>
-
-
-
-
-        
         <texture id="debug" path="./scenes/debug_textures/debug.jpg"/>
     </textures>
 
@@ -81,10 +76,10 @@
         </material>
 
         <material id="green">
-            <shininess value="0.6" />
+            <shininess value="0.8" />
             <ambient r="0.2" g="0.5" b="0.2" a="1.0" />
-            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
-            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+            <specular r="0.25" g="0.25" b="0.25" a="1.0" />
             <emissive r="0" g="0" b="0" a="1.0" />
         </material>
 
@@ -1000,16 +995,16 @@
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="-90"/>
+                <scale sx="0.5" sy="1" sz="0.5"/>
+                <rotation axis="y" angle="45"/>
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" bottomRadius="0.4" topRadius="0.4" height="0.2" slices="50" stacks="5"/>
+                <leaf type="pyramid" slices="4" stacks="4"/>
             </descendants>
         </node>
 
         <!-- END PIECES -->
-
 
         <!-- BEGIN BOARD -->
         
@@ -1041,7 +1036,5 @@
         </node>
 
         <!-- END BOARD -->
-
-        
     </nodes>
 </lsf>
