@@ -1021,7 +1021,7 @@
 
             <descendants>
                 <leaf type="board">
-                    <pieces>
+                    <pieces height="1" offset="0.8">
                         <piece id="white_piece"/>
                         <piece id="green_piece"/>
                         <piece id="black_piece"/>

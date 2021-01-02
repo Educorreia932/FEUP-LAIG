@@ -4,7 +4,7 @@ class MyKeyframeAnimation extends Animation {
         this.scene = scene;
         this.keyframes = keyframes;
 
-        this.interpolations = interpolations || Array(this.keyframes.length).fill(this.linearInterpolation);
+        this.interpolations = interpolations || Array(this.keyframes.length - 1).fill(this.linearInterpolation);
 
         this.actualKF = 0;
         this.nextKF = 1;
@@ -68,22 +68,15 @@ class MyKeyframeAnimation extends Animation {
             this.nextKF++;
         }
 
-        console.log('TIMES')
-        console.log(this.startInstant)
-        console.log(this.endInstant)
-
         // Create animation matrix
         this.Ma = mat4.create();
 
         // Calculate interpolated transfomation values
         let t = (time - this.startInstant) / (this.endInstant - this.startInstant);
-        let translationValues = this.interpolations[this.actualKF](t, this.startTranslation, this.endTranslation);
-        let rotationValues = this.interpolations[this.actualKF](t, this.startRotation, this.endRotation);
-        let scaleValues = this.interpolations[this.actualKF](t, this.startScale, this.endScale);
+        let translationValues = this.interpolations[this.actualKF - 1](t, this.startTranslation, this.endTranslation);
+        let rotationValues = this.linearInterpolation(t, this.startRotation, this.endRotation);
+        let scaleValues = this.linearInterpolation(t, this.startScale, this.endScale);
         
-        console.log('Before');
-        console.log(this.Ma);
-        console.log(translationValues);
         this.Ma = mat4.translate(this.Ma, this.Ma, translationValues);
 
         this.Ma = mat4.rotate(this.Ma, this.Ma, rotationValues[0], [1 ,0, 0]);
@@ -91,8 +84,6 @@ class MyKeyframeAnimation extends Animation {
         this.Ma = mat4.rotate(this.Ma, this.Ma, rotationValues[2], [0, 0, 1]);
 
         this.Ma = mat4.scale(this.Ma, this.Ma, scaleValues);
-        console.log('After');
-        console.log(this.Ma);
     }
 
     apply() {

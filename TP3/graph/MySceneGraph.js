@@ -1444,7 +1444,10 @@ class MySceneGraph {
         if (piecesIndex == -1) return "Missing pieces specification of the board of the " + messageError 
         if (tilesIndex == -1) return "Missing tiles specification of the board of the " + messageError 
 
+        
         let piecesNode = children[piecesIndex];
+        let piecesHeight = this.reader.getString(piecesNode, 'height');
+        let piecesOffset = this.reader.getString(piecesNode, 'offset');
 
         let pieceNodes = piecesNode.children;
         
@@ -1463,6 +1466,9 @@ class MySceneGraph {
         if (pieces.length == 0) return "No pieces for board";
         
         board.pieces = pieces;
+
+        board.piecesHeight = piecesHeight;
+        board.heightOffsetPercent = piecesOffset;
 
         let tilesNode = children[tilesIndex];
 

@@ -64,7 +64,6 @@ class MyGameOrchestrator {
         this.scoreboard.update(time);
         this.animator.update(time);
 
-        console.log(this.gameState)
 
         if (this.movingPiece != null) {
             if (this.movingPiece.animation.ended) {
@@ -76,7 +75,6 @@ class MyGameOrchestrator {
                 this.updateScore();
             }
         } else if (this.isPlayerTurn() && !this.ended[this.gameState]) {
-            console.log('here')
             if (this.gamemode == MyGameOrchestrator.modes.EvE)
                 this.computerPlay();
 
@@ -112,6 +110,9 @@ class MyGameOrchestrator {
             return;
 
         this.theme = {};
+
+        this.theme.piecesHeight = board.piecesHeight;
+        this.theme.heightOffsetPercent = board.heightOffsetPercent;
 
         this.theme.pieces = [];
 
