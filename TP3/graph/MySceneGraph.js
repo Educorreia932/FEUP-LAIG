@@ -1227,6 +1227,23 @@ class MySceneGraph {
             out = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3, textureAfs, textureAft);
         }
 
+
+        else if (type == "pyramid") {
+            // Slices
+            let slices = this.reader.getFloat(node, 'slices');
+
+            if (slices == null || isNaN(slices))
+                return "unable to parse slices component from the pyramid of the " + messageError;
+
+            // Stacks
+            let stacks = this.reader.getFloat(node, 'stacks');
+
+            if (stacks == null || isNaN(stacks))
+                return "unable to parse stacks component from the pyramid of the " + messageError;
+
+            out = new MyPyramid(this.scene, slices, stacks);
+        }
+
         // Sphere
         else if (type == "sphere") {
             let radius = this.reader.getFloat(node, "radius");
