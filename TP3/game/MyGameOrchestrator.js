@@ -18,8 +18,10 @@ class MyGameOrchestrator {
 
     static states = {
         menu: 0,
+        moving: 1,
+        waitingForAI: 2,
         whiteTurn: "w",
-        blackTurn: "b",
+        blackTurn: "b"
     };
 
     constructor(scene) {
@@ -41,6 +43,8 @@ class MyGameOrchestrator {
         };
 
         this.gameState = MyGameOrchestrator.states.menu;
+
+        this.movingPiece = null;
     }
 
     reapplyTheme() {
@@ -53,19 +57,41 @@ class MyGameOrchestrator {
         this.gameboard.setState(await this.prolog.generateBoard(boardDimensions));
         this.setTheme(this.scene.graph);
         this.gameState = MyGameOrchestrator.states.blackTurn;
+        this.lastPlayer = MyGameOrchestrator.states.whiteTurn;
     }
 
     update(time) {
         this.scoreboard.update(time);
         this.animator.update(time);
 
-        if (!this.ended[this.gameState]) {
+        console.log(this.gameState)
+
+        if (this.movingPiece != null) {
+            if (this.movingPiece.animation.ended) {
+                this.animator.animations.pop();
+                let move = this.gameSequence.moves[this.gameSequence.moves.length - 1];
+                this.gameboard.moveStack(move);
+                this.movingPiece = null;
+                this.changePlayerTurn();
+                this.updateScore();
+            }
+        } else if (this.isPlayerTurn() && !this.ended[this.gameState]) {
+            console.log('here')
             if (this.gamemode == MyGameOrchestrator.modes.EvE)
                 this.computerPlay();
 
             else 
                 this.managePick(this.scene.pickMode, this.scene.pickResults);
         }
+    }
+
+    isPlayerTurn() {
+        return this.gameState == MyGameOrchestrator.states.blackTurn ||
+                this.gameState == MyGameOrchestrator.states.whiteTurn; 
+    }
+
+    async updateScore() {
+        this.scores[this.gameState] = await this.prolog.getScore(this.gameState, this.gameboard);
     }
 
     display() {
@@ -76,7 +102,6 @@ class MyGameOrchestrator {
         else {
             this.scoreboard.display();
             this.gameboard.display();
-            this.animator.display();
         }
     }
 
@@ -121,46 +146,49 @@ class MyGameOrchestrator {
 
     async onObjectSelected(object, id) {
         if (object instanceof MyStack) {
-            // Picking origin stack
-            if (this.originIndex == null) {
-                this.originIndex = id;
+            if (this.gameState != MyGameOrchestrator.states.moving) {
+                // Picking origin stack
+                if (this.originIndex == null) {
+                    this.originIndex = id;
 
-                let originCoordinates = this.gameboard.convertIndex(this.originIndex);
-                let validMoves = await this.prolog.getValidMoves(this.gameboard, this.gameState, originCoordinates);
-
-                this.gameboard.hightlightTiles(validMoves);
-            }
-
-            // Picking destination stack
-            else {
-                this.destinationIndex = id;
-
-                if (this.destinationIndex != this.originIndex) {    
                     let originCoordinates = this.gameboard.convertIndex(this.originIndex);
-                    let destinationCoordinates = this.gameboard.convertIndex(this.destinationIndex);
-                    let moveCoordinates = originCoordinates.concat(destinationCoordinates);
-                    let stackSize = this.gameboard.getStack(moveCoordinates[0], moveCoordinates[1]).getSize();
-                    let move = new MyGameMove(this.gameState, moveCoordinates, stackSize);
+                    let validMoves = await this.prolog.getValidMoves(this.gameboard, this.gameState, originCoordinates);
 
-                    if (await this.prolog.validMove(this.gameboard, move)) {
-                        this.makeMove(move);
-                        this.changePlayerTurn();
-
-                        if (this.gamemode == MyGameOrchestrator.modes.PvE)
-                            this.computerPlay();
-                    }
+                    this.gameboard.hightlightTiles(validMoves);
                 }
 
-                this.gameboard.turnOffTiles();
+                // Picking destination stack
+                else {
+                    this.destinationIndex = id;
 
-                this.originIndex = null;
-                this.destinationIndex = null;
+                    if (this.destinationIndex != this.originIndex) {    
+                        let originCoordinates = this.gameboard.convertIndex(this.originIndex);
+                        let destinationCoordinates = this.gameboard.convertIndex(this.destinationIndex);
+                        let moveCoordinates = originCoordinates.concat(destinationCoordinates);
+                        let stackSize = this.gameboard.getStack(moveCoordinates[0], moveCoordinates[1]).getSize();
+                        let move = new MyGameMove(this.gameState, moveCoordinates, stackSize);
+
+                        if (await this.prolog.validMove(this.gameboard, move)) {
+                            this.makeMove(move);
+
+                            if (this.gamemode == MyGameOrchestrator.modes.PvE)
+                                this.computerPlay();
+                        }
+                    }
+
+                    this.gameboard.turnOffTiles();
+
+                    this.originIndex = null;
+                    this.destinationIndex = null;
+                }
             }
         }
     }
 
     async computerPlay() {
-        let moveCoordinates = await this.prolog.getMove(this.gameState, this.gameboard, this.gameDifficulty);
+        let turn = this.gameState;
+        this.gameState = MyGameOrchestrator.states.waitingForAI;
+        let moveCoordinates = await this.prolog.getMove(turn, this.gameboard, this.gameDifficulty);
 
         if (moveCoordinates == null)
             this.ended[this.gameState] = true;
@@ -171,25 +199,21 @@ class MyGameOrchestrator {
 
             this.makeMove(computerMove);
         }
-
-        this.changePlayerTurn();
     }
 
-    async makeMove(move) {
-        this.animator.addMoveAnimation(move);
+    makeMove(move) {
         this.gameSequence.addMove(move);
-        this.gameboard.moveStack(move);
-        this.scores[this.gameState] = await this.prolog.getScore(this.gameState, this.gameboard);
+        this.movingPiece = this.gameboard.setMovingPiece(move);
+        this.gameState = MyGameOrchestrator.states.moving;
     }
 
     /**
      *  Change player turn to next player
      */
     changePlayerTurn() {
-        let whiteTurn = MyGameOrchestrator.states.whiteTurn;
-        let blackTurn = MyGameOrchestrator.states.blackTurn;
+        this.gameState = this.lastPlayer;
 
-        this.gameState = (this.gameState == whiteTurn) ? blackTurn : whiteTurn;
+        this.lastPlayer = (this.gameState == MyGameOrchestrator.states.whiteTurn) ? MyGameOrchestrator.states.blackTurn : MyGameOrchestrator.states.whiteTurn;
     }
 
     /**
@@ -198,6 +222,8 @@ class MyGameOrchestrator {
     undo() {
         let lastMove = this.gameSequence.removeLastMove();
         this.gameboard.moveStack(lastMove);
+        this.changePlayerTurn();
+        this.updateScore();
     }
 
     /**

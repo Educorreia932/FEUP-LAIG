@@ -137,7 +137,7 @@ class XMLscene extends CGFscene {
             if (this.cameraAnimation != null) {
                 this.cameraAnimation.update((time - this.lastFrame) / 1000.0)
             }
-            this.gameOrchestrator.update(time);
+            this.gameOrchestrator.update(time / 1000.0);
         }
         this.lastFrame = time;
     }

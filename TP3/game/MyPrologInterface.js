@@ -44,9 +44,9 @@ class MyPrologInterface {
      *  Returns list of valid moves
      */
     async getValidMoves(gameboard, player, originCoordinates) {
-        gameboard = MyPrologInterface.serializeGameBoard(gameboard);
+        let gameboardIn = MyPrologInterface.serializeGameBoard(gameboard);
 
-        const requestData = `valid_moves(${gameboard},${player})`
+        const requestData = `valid_moves(${gameboardIn},${player})`
 
         let response = await this.sendRequest(requestData);
         let validMoves = JSON.parse(response);
@@ -79,7 +79,7 @@ class MyPrologInterface {
      *  Returns AI move
      */
     async getMove(player, gameboard, difficulty) {
-        gameboard = MyPrologInterface.serializeGameBoard(gameboard);
+        let gameboardIn = MyPrologInterface.serializeGameBoard(gameboard);
 
         let aiStrategies = {
             "Random": "randomAI",
@@ -88,7 +88,7 @@ class MyPrologInterface {
 
         difficulty = aiStrategies[difficulty];
 
-        const requestData = `choose_move(${gameboard},${player},${difficulty})`;
+        const requestData = `choose_move(${gameboardIn},${player},${difficulty})`;
         
         let response = await this.sendRequest(requestData);
 

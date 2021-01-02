@@ -37,6 +37,13 @@ class MyGameBoard extends CGFobject {
         this.scene.popMatrix();
     }
 
+    setMovingPiece(move) {
+        let originI = move.originI;
+        let originJ = move.originJ;
+        this.state[originI][originJ].setAnimation(move, Date.now() / 1000);
+        return this.state[originI][originJ];
+    }
+
     moveStack(move) {
         let originI = move.originI;
         let originJ = move.originJ;
@@ -50,6 +57,7 @@ class MyGameBoard extends CGFobject {
 
         destinationStack.push(originStack, stackSize);
         originStack.remove(stackSize);
+        originStack.animation = null;
     }
 
     setState(gameboard) {
