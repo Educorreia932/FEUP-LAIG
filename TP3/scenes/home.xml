@@ -46,15 +46,15 @@
 
     <!-- Textures -->
     <textures>
-        <texture id="golden" path="./scenes/scene_home/golden.jpg"/>
-        <texture id="wood" path="./scenes/scene_home/wood.png"/>
-        <texture id="dark_wood" path="./scenes/scene_home/dark_wood.jpg"/>
-        <texture id="wood_table" path="./scenes/scene_home/wood_table.jpg"/>
-        <texture id="metal" path="./scenes/scene_home/metal.jpg"/>
-        <texture id="home_ceiling" path="./scenes/scene_home/ceiling.jpg"/>
-        <texture id="home_floor" path="./scenes/scene_home/floor.jpg"/>
-        <texture id="home_walls" path="./scenes/scene_home/walls.jpg"/>
-        <texture id="door" path="./scenes/scene_home/door.jpg"/>
+        <texture id="golden" path="./scenes/home_textures/golden.jpg"/>
+        <texture id="wood" path="./scenes/home_textures/wood.png"/>
+        <texture id="dark_wood" path="./scenes/home_textures/dark_wood.jpg"/>
+        <texture id="wood_table" path="./scenes/home_textures/wood_table.jpg"/>
+        <texture id="metal" path="./scenes/home_textures/metal.jpg"/>
+        <texture id="home_ceiling" path="./scenes/home_textures/ceiling.jpg"/>
+        <texture id="home_floor" path="./scenes/home_textures/floor.jpg"/>
+        <texture id="home_walls" path="./scenes/home_textures/walls.jpg"/>
+        <texture id="door" path="./scenes/home_textures/door.jpg"/>
     </textures>
 
     <!-- Spritesheets -->
