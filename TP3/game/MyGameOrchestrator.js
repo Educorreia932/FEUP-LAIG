@@ -52,23 +52,11 @@ class MyGameOrchestrator {
     }
 
     async newGame(boardDimensions, gamemode, difficulty) {
+        this.gameState = MyGameOrchestrator.states.menu;
+
         this.resetPicking();
         this.movingPiece = null;
         this.frames = [];
-
-        this.gameSequence = new MyGameSequence();
-        this.animator = new MyAnimator(this);
-        this.gamemode = gamemode;
-        this.gameDifficulty = difficulty;
-        this.initialGameboard = await this.prolog.generateBoard(boardDimensions);
-        this.gameboard.setState(this.initialGameboard);
-        this.setTheme(this.scene.graph);
-        
-        this.gameState = MyGameOrchestrator.states.playerTurn;
-        this.nowPlaying = "b";
-
-        this.startedTime = Date.now() / 1000;
-        this.elapsedTime = 0;
 
         this.scores = {
             "w": "0",
@@ -79,16 +67,34 @@ class MyGameOrchestrator {
             "w": false,
             "b": false
         };
+
+        this.nowPlaying = "b";
+        
+        this.startedTime = Date.now() / 1000;
+        this.elapsedTime = 0;
+
+        this.gameSequence = new MyGameSequence();
+        this.animator = new MyAnimator(this);
+        this.gamemode = gamemode;
+        this.gameDifficulty = difficulty;
+        this.initialGameboard = await this.prolog.generateBoard(boardDimensions);
+        this.gameboard.setState(this.initialGameboard);
+        this.setTheme(this.scene.graph);
+        
+        this.gameState = MyGameOrchestrator.states.playerTurn;
     }
 
     update(time) {
+        if (this.gameState == MyGameOrchestrator.states.menu)
+            return;
+
         this.elapsedTime = Math.floor(time - this.startedTime);
 
         this.scoreboard.update(time);
         this.animator.update(time);
 
         // Moving piece animation ended
-        if (this.movingPiece != null) {
+        if (this.gameState == MyGameOrchestrator.states.moving) {
             if (this.movingPiece.animation.ended) {
                 this.animator.animations.pop();
 

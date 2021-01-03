@@ -6,24 +6,25 @@
     </initials>
 
     <!-- Views -->
-    <views default="defaultCamera">
-        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="10" y="10" z="10" />
-            <to x="0" y="0" z="0" />
+    <views default="Default">
+        <perspective id="Default" near="0.1" far="500" angle="45">
+            <from x="60" y="40" z="60" />
+            <to x="0" y="10" z="0" />
         </perspective>
+        
         <perspective id="Close Up" near="0.1" far="500" angle="45">
-            <from x="0" y="8.5" z="7.5" />
-            <to x="0" y="0" z="0.2" />
+            <from x="0" y="80" z="0" />
+            <to x="0" y="5" z="0" />
         </perspective>
 
         <perspective id="Player 1" near="0.1" far="500" angle="45">
-            <from x="-12.5" y="5" z="0" />
-            <to x="0.6" y="2" z="0" />
+            <from x="-70" y="70" z="0" />
+            <to x="0" y="30" z="0" />
         </perspective>
 
         <perspective id="Player 2" near="0.1" far="500" angle="45">
-            <from x="12.5" y="5" z="0" />
-            <to x="0.6" y="2" z="0" />
+            <from x="70" y="70" z="0" />
+            <to x="0" y="30" z="0" />
         </perspective>
     </views>
 
@@ -115,6 +116,30 @@
             <specular r="0.1" g="0.1" b="0.1" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
+
+        <material id="White">
+            <shininess value="0.8" />
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.3" g="0.3" b="0.3" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
+        <material id="Green">
+            <shininess value="0.8" />
+            <ambient r="0.2" g="0.5" b="0.2" a="1.0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+            <specular r="0.25" g="0.25" b="0.25" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
+        <material id="Black">
+            <shininess value="0.8" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
     </materials>
 
     <!-- Animations -->
@@ -136,9 +161,9 @@
 
             <descendants>
                 <noderef id="skybox"/>
-                <noderef id="arc"/>
                 <noderef id="sandPillar"/>
                 <noderef id="rock"/>
+                <noderef id="arc"/>
                 <noderef id="R2-D2" />
             </descendants>
         </node>
@@ -151,7 +176,7 @@
             </texture>
 
             <transformations>
-                <translation x="20" y="25" z="-50"/>
+                <translation x="30" y="25" z="-50"/>
                 <rotation axis="x" angle="90"/>
                 <scale sx="5" sy="5" sz="5"/>
             </transformations>
@@ -231,7 +256,7 @@
             </texture>
 
             <transformations>
-                <translation x="-40" y="0" z="0"/>
+                <translation x="-70" y="0" z="0"/>
                 <scale sx="50" sy="35" sz="40"/>
                 <rotation axis="z" angle="180"/>
                 <rotation axis="y" angle="100"/>
@@ -1259,7 +1284,7 @@
 
         <!-- TILES -->
         <node id="tile_odd">
-            <material id="dark_gray"/>
+            <material id="Dark Gray Metal"/>
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0"/>
@@ -1275,7 +1300,7 @@
         </node>
 
         <node id="tile_even">
-            <material id="light_gray"/>
+            <material id="White Metal"/>
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0"/>
@@ -1304,6 +1329,24 @@
             <descendants>
                 <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
                 <noderef id="tile_border"/>
+                <noderef id="tile_bottom"/>
+            </descendants>
+        </node>
+
+        <node id="tile_bottom">
+            <material id="Dark Gray Metal"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-0.1"/>
+                <rotation axis="x" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.55" y1="-0.55" x2="0.55" y2="0.55"/>
             </descendants>
         </node>
 
@@ -1494,7 +1537,7 @@
         <!-- PIECES -->
 
         <node id="white_piece">
-            <material id="White Metal"/>
+            <material id="White"/>
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0"/>
@@ -1510,7 +1553,7 @@
         </node>
 
         <node id="green_piece">
-            <material id="Gray Metal"/>
+            <material id="Green"/>
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0"/>
@@ -1526,7 +1569,7 @@
         </node>
 
         <node id="black_piece">
-            <material id="Dark Gray Metal"/>
+            <material id="Black"/>
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0"/>
@@ -1549,12 +1592,11 @@
             </texture>
 
             <transformations>
-                <scale sx="0.5" sy="1" sz="0.5"/>
-                <rotation axis="y" angle="45"/>
+                <rotation axis="x" angle="-90"/>
             </transformations>
 
             <descendants>
-                <leaf type="pyramid" slices="4" stacks="4"/>
+                <leaf type="cylinder" bottomRadius="0.4" topRadius="0.4" height="0.2" slices="50" stacks="5"/>
             </descendants>
         </node>
 
@@ -1572,11 +1614,12 @@
             <transformations>
                 <scale sx="5" sy="5" sz="5"/>
                 <translation x="0" y="0" z="1.175"/>
+                <rotation axis="z" angle="180"/>
             </transformations>
 
             <descendants>
                 <leaf type="board">
-                    <pieces height="1" offset="0.8">
+                    <pieces height="0.2" offset="0">
                         <piece id="white_piece"/>
                         <piece id="green_piece"/>
                         <piece id="black_piece"/>
