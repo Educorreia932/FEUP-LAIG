@@ -6,24 +6,25 @@
     </initials>
 
     <!-- Views -->
-    <views default="defaultCamera">
-        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="10" y="10" z="10" />
-            <to x="0" y="0" z="0" />
+    <views default="Default">
+        <perspective id="Default" near="0.1" far="500" angle="45">
+            <from x="10" y="10" z="20" />
+            <to x="0" y="5" z="0" />
         </perspective>
+        
         <perspective id="Close Up" near="0.1" far="500" angle="45">
-            <from x="0" y="8.5" z="7.5" />
-            <to x="0" y="0" z="0.2" />
+            <from x="0" y="14.5" z="7.5" />
+            <to x="0" y="5" z="0.2" />
         </perspective>
 
         <perspective id="Player 1" near="0.1" far="500" angle="45">
-            <from x="-12.5" y="5" z="0" />
-            <to x="0.6" y="2" z="0" />
+            <from x="-13" y="15" z="0" />
+            <to x="3" y="5" z="0" />
         </perspective>
 
         <perspective id="Player 2" near="0.1" far="500" angle="45">
-            <from x="12.5" y="5" z="0" />
-            <to x="0.6" y="2" z="0" />
+            <from x="13" y="15" z="0" />
+            <to x="-3" y="5" z="0" />
         </perspective>
     </views>
 

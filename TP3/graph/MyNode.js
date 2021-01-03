@@ -130,6 +130,8 @@ class MyNode {
     }
 
     display() {
+        this.scene.gl.enable(this.scene.gl.BLEND);
+        this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE_MINUS_SRC_ALPHA);
         if (this.material instanceof CGFappearance) {
             this.scene.pushMaterial(this.material);
         }
@@ -166,6 +168,6 @@ class MyNode {
         if (this.material instanceof CGFappearance) {
             this.scene.popMaterial();
         }
-    
+        this.scene.gl.disable(this.scene.gl.BLEND);
     }
 }
