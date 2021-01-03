@@ -20,7 +20,7 @@ uniform vec2 charCoords;
 varying vec2 vTextureCoord;
 
 void main() {
-    vec3 offset = vec3(0.5, 0.0, 0.0) * char_index;
+    vec3 offset = vec3(0.4, 0.0, 0.0) * char_index;
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition + offset, 1.0);
 
     vTextureCoord = (aTextureCoord + vec2(charCoords[0], charCoords[1])) * vec2(size_c, size_l) ;
