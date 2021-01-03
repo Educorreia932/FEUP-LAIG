@@ -604,6 +604,14 @@ class MySceneGraph {
 
             var animationID = this.reader.getString(children[i], 'id');
 
+            let loop = this.reader.getString(children[i], 'loop');
+
+            if (loop == null || loop == "0" || loop == "") {
+                loop = false;
+            } else {
+                loop = true;
+            }
+
             if (animationID == null) {
                 this.onXMLMinorError("no ID defined for animation number #" + i);
                 continue;
@@ -650,7 +658,7 @@ class MySceneGraph {
                     a_i++;
             }
 
-            let animation = new MyKeyframeAnimation(this.scene, keyframes);
+            let animation = new MyKeyframeAnimation(this.scene, keyframes, loop);
 
             this.animations[animationID] = animation;
         }

@@ -1,8 +1,9 @@
 class MyKeyframeAnimation extends Animation {
-    constructor(scene, keyframes, interpolations) {
+    constructor(scene, keyframes, loop, interpolations) {
         super();
         this.scene = scene;
         this.keyframes = keyframes;
+        this.loop = loop;
 
         this.interpolations = interpolations || Array(this.keyframes.length - 1).fill(this.linearInterpolation);
 
@@ -29,6 +30,8 @@ class MyKeyframeAnimation extends Animation {
 
             this.Ma = mat4.scale(this.Ma, this.Ma, scale);
         }
+
+        this.lastLoopTime = 0;
     }
 
     update(time) {
@@ -43,12 +46,19 @@ class MyKeyframeAnimation extends Animation {
         // Update current and next keyframes
         // When the update function is called, a keyframe might be skipped, that's why the while cycle is needed
         // TODO: move down?
-        while (time >= this.keyframes[this.actualKF]["instant"]) {
+        while ((time - this.lastLoopTime) >= this.keyframes[this.actualKF]["instant"]) {
             // Animation ended
             if (this.nextKF >= this.keyframes.length) {
-                this.ended = true;
+                if (this.loop) {
+                    this.actualKF = 0;
+                    this.nextKF = 1;
+                    this.lastLoopTime = time;
+                    if (this.keyframes.length == 1) return;
+                } else {
+                    this.ended = true;
+                    return;
+                }
                 
-                return;
             }
 
             // Save start and end transformations and instants for current segment
@@ -72,7 +82,7 @@ class MyKeyframeAnimation extends Animation {
         this.Ma = mat4.create();
 
         // Calculate interpolated transfomation values
-        let t = (time - this.startInstant) / (this.endInstant - this.startInstant);
+        let t = ((time - this.lastLoopTime) - this.startInstant) / (this.endInstant - this.startInstant);
         let translationValues = this.interpolations[this.actualKF - 1](t, this.startTranslation, this.endTranslation);
         let rotationValues = this.linearInterpolation(t, this.startRotation, this.endRotation);
         let scaleValues = this.linearInterpolation(t, this.startScale, this.endScale);

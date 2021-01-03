@@ -57,6 +57,7 @@
         <texture id="home_walls" path="./scenes/home_textures/walls.jpg"/>
         <texture id="door" path="./scenes/home_textures/door.jpg"/>
         <texture id="black_plastic" path="./scenes/home_textures/black_plastic.jpg"/>
+        <texture id="plasma" path="./scenes/home_textures/plasma.jpg"/>
     </textures>
 
     <!-- Spritesheets -->
@@ -115,23 +116,656 @@
         </material>
         <material id="plasma_lamp_glass">
             <shininess value="2.0"/>
-            <ambient  r="0.50" g="0.15" b="0.50" a="0.4"/>
-            <diffuse  r="0.50" g="0.15" b="0.50" a="0.4"/>
-            <specular r="0.50" g="0.15" b="0.50" a="0.4"/>
-            <emissive r="0.65" g="0.3" b="0.65" a="0.4"/>
+            <ambient  r="0.15" g="0.15" b="0.35" a="0.4"/>
+            <diffuse  r="0.15" g="0.15" b="0.35" a="0.4"/>
+            <specular r="0.15" g="0.15" b="0.35" a="0.4"/>
+            <emissive r="0.45" g="0.55" b="0.65" a="0.4"/>
         </material>
         <material id="plasma_lamp_center">
             <shininess value="2.0"/>
             <ambient  r="0.05" g="0.05" b="0.05" a="1.0"/>
             <diffuse  r="0.15" g="0.05" b="0.15" a="1.0"/>
             <specular r="0.20" g="0.1" b="0.20" a="1.0"/>
-            <emissive r="0.50" g="0.4" b="0.70" a="1.0"/>
+            <emissive r="0.50" g="0.4" b="0.90" a="1.0"/>
+        </material>
+        <material id="plasma_lamp_ray">
+            <shininess value="2.0"/>
+            <ambient  r="0.05" g="0.05" b="0.05" a="1.0"/>
+            <diffuse  r="0.15" g="0.05" b="0.65" a="1.0"/>
+            <specular r="0.20" g="0.1" b="0.60" a="1.0"/>
+            <emissive r="0.5" g="0.5" b="0.90" a="1.0"/>
         </material>
     </materials>
 
     <!-- Animations -->
     <animations>
-
+        <animation id="plasma_center" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1.2" sy="0.8" sz="1"/>
+            </keyframe>
+            <keyframe instant="2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1.4" sy="0.6" sz="1.2"/>
+            </keyframe>
+            <keyframe instant="3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="45"/>
+                <scale sx="1.6" sy="0.4" sz="1.4"/>
+            </keyframe>
+            <keyframe instant="4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="90"/>
+                <scale sx="1.8" sy="0.6" sz="1.2"/>
+            </keyframe>
+            <keyframe instant="5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="135"/>
+                <scale sx="1.6" sy="0.8" sz="1"/>
+            </keyframe>
+            <keyframe instant="6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="180"/>
+                <scale sx="1.4" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="7">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="225"/>
+                <scale sx="1.2" sy="1.2" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="270"/>
+                <scale sx="1" sy="1.4" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="9">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="315"/>
+                <scale sx="0.8" sy="1.2" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="10">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_1" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="1.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="1.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="1.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="1.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="2.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_2" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="1.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="1.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="1.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="1.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="2.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_3" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="4"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="1.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="1.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="1.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="-4"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="1.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="2.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_4" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="4"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="0.5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="0.7">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="-4"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="0.9">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_5" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.05">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.15">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="0.25">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="0.35">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="0.45">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="0.5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_6" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="0.5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="0.7">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="0.9">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_7" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="1.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="1.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="6"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="1.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="2.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="2.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="3.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="-4"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="3.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="4.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_8" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.05">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="3"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="6"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.15">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="9"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="12"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="0.25">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="9"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="6"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="0.35">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="9"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="6"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="0.45">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="3"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="0.5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_9" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="-36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="-108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="4"/><rotation axis="z" angle="-144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="0.5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="-180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="0.7">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="-252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="-4"/><rotation axis="z" angle="-288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="0.9">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="-324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_10" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="1.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="1.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="1.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="1.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="2.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
     </animations>
 
     <!-- Nodes -->
@@ -153,8 +787,8 @@
                 <noderef id="skybox"/>
                 <noderef id="door"/>
                 <noderef id="ceiling_lamp"/>
-                <noderef id="table"/>
                 <noderef id="plasma_lamps"/>
+                <noderef id="table"/>
             </descendants>
         </node>
 
@@ -219,7 +853,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" bottomRadius="2" topRadius="1" height="4" slices="20" stacks="10" />
+                <leaf type="cylinder" bottomRadius="2" topRadius="1.2" height="4" slices="20" stacks="10" />
             </descendants>
         </node>
 
@@ -231,11 +865,11 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="12.05"/>
+                <translation x="0" y="0" z="12"/>
             </transformations>
 
             <descendants>
-                <leaf type="defbarrel" base="1" middle="0.7" height="-8" slices="20" stacks="10"/>
+                <leaf type="defbarrel" base="1.2" middle="1" height="-8" slices="20" stacks="10"/>
             </descendants>
         </node>
 
@@ -247,28 +881,158 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="13.1"/>
+                <translation x="0" y="0" z="13"/>
                 <rotation axis="x" angle="180"/>
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" bottomRadius="1.2" topRadius="1" height="1" slices="20" stacks="10" />
+                <leaf type="cylinder" bottomRadius="1.5" topRadius="1.2" height="1" slices="20" stacks="10" />
             </descendants>
         </node>
 
         <node id="plasma_lamp_rays">
-            <material id="plasma_lamp_center"/>
+            <material id="null"/>
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="10"/>
+                <translation x="0" y="0" z="8"/>
             </transformations>
 
             <descendants>
+                <noderef id="plasma_lamp_center"/>
+                <noderef id="plasma_lamp_ray_1"/><noderef id="plasma_lamp_ray_2"/><noderef id="plasma_lamp_ray_3"/><noderef id="plasma_lamp_ray_4"/><noderef id="plasma_lamp_ray_5"/><noderef id="plasma_lamp_ray_6"/><noderef id="plasma_lamp_ray_7"/><noderef id="plasma_lamp_ray_8"/><noderef id="plasma_lamp_ray_9"/><noderef id="plasma_lamp_ray_10"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_center">
+            <material id="plasma_lamp_center"/>
+
+            <texture id="plasma">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+            <animationref id="plasma_center"/>
+
+            <descendants>
                 <leaf type="sphere" radius="0.4" slices="10" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_ray_1">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+            </transformations>
+            <animationref id="plasma_ray_1"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_2">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="x" angle="180"/>
+            </transformations>
+            <animationref id="plasma_ray_2"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_3">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="x" angle="10"/>
+                <rotation axis="y" angle="10"/>
+                <scale sx="1" sy="1" sz="0.7"/>
+            </transformations>
+            <animationref id="plasma_ray_3"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_4">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="x" angle="45"/>
+                <rotation axis="y" angle="-34"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </transformations>
+            <animationref id="plasma_ray_4"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_5">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="-20"/>
+                <rotation axis="x" angle="-180"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </transformations>
+            <animationref id="plasma_ray_5"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_6">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="5"/>
+                <rotation axis="x" angle="-180"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </transformations>
+            <animationref id="plasma_ray_6"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_7">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="20"/>
+                <rotation axis="x" angle="-20"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </transformations>
+            <animationref id="plasma_ray_7"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_8">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="-5"/>
+                <rotation axis="x" angle="-160"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </transformations>
+            <animationref id="plasma_ray_8"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_9">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="65"/>
+                <rotation axis="x" angle="-150"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </transformations>
+            <animationref id="plasma_ray_9"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_10">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="5"/>
+                <rotation axis="x" angle="-170"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </transformations>
+            <animationref id="plasma_ray_10"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        
+
+        <node id="plasma_lamp_ray">
+            <material id="plasma_lamp_ray"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.01" topRadius="0.01" height="4" slices="20" stacks="10" />
             </descendants>
         </node>
 

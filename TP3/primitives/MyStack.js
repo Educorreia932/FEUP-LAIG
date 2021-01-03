@@ -96,7 +96,7 @@ class MyStack extends CGFobject {
 
         let interpolations = [this.linearInterpolation.bind(this), this.arcInterpolation.bind(this), this.linearInterpolation.bind(this)];
 
-        this.animation = new MyKeyframeAnimation(this.scene, keyframes, interpolations);
+        this.animation = new MyKeyframeAnimation(this.scene, keyframes, false, interpolations);
         this.scene.gameOrchestrator.animator.animations.push(this.animation);
     }
 
