@@ -1448,6 +1448,7 @@ class MySceneGraph {
 
         let piecesIndex = nodeNames.indexOf("pieces");
         let tilesIndex = nodeNames.indexOf("tiles");
+        let scoreboardIndex = nodeNames.indexOf("scoreboard");
 
         if (piecesIndex == -1) return "Missing pieces specification of the board of the " + messageError 
         if (tilesIndex == -1) return "Missing tiles specification of the board of the " + messageError 
@@ -1497,6 +1498,30 @@ class MySceneGraph {
         if (tiles.length == 0) return "No tiles for board";
 
         board.tiles = tiles;
+
+        
+        let transfMatrix = mat4.create();
+        
+        if (scoreboardIndex != -1) {
+            let scoreboardNode = children[scoreboardIndex];
+            let transformations = scoreboardNode.children;
+            let transformationMatrixParser = new MySceneTransformationMatrix(this, " of the scoreboard");
+
+            // Iterate over transformations
+            for (let t = 0; t < transformations.length; t++) {
+                var aux = transformationMatrixParser.parse(transformations[t], transfMatrix);
+
+                if (typeof aux === 'string') { // An error occurred
+                    this.onXMLMinorError(aux);
+                    continue;
+                }
+
+                transfMatrix = aux;
+            }
+        }
+
+        board.scoreboard = {};
+        board.scoreboard.transformation = transfMatrix;
 
         return board;
     }

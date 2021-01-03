@@ -99,6 +99,22 @@
             <emissive r="0" g="0" b="0" a="1.0" />
         </material>
 
+        <material id="dark">
+            <shininess value="0.1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
+        <material id="shiny_dark">
+            <shininess value="5.0" />
+            <ambient r="0.05" g="0.05" b="0.05" a="1.0" />
+            <diffuse r="0.05" g="0.05" b="0.05" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
         <material id="dark_gray">
             <shininess value="10"/>
             <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
@@ -788,11 +804,260 @@
                 <noderef id="door"/>
                 <noderef id="ceiling_lamp"/>
                 <noderef id="plasma_lamps"/>
+                <noderef id="monitor"/>
                 <noderef id="table"/>
             </descendants>
         </node>
 
         <!-- START INNER DECORATION -->
+        <node id="monitor">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="20.5" z="10"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_support"/>
+                <noderef id="monitor_screen"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-2" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_body"/>
+                <noderef id="monitor_screen_borders"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_body">
+            <material id="dark"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="14" sy="0.2" sz="8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_borders">
+            <material id="shiny_dark"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border_w"/>
+                <noderef id="monitor_screen_border_e"/>
+                <noderef id="monitor_screen_border_n"/>
+                <noderef id="monitor_screen_border_s"/>
+                <noderef id="monitor_screen_border_back"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_border_w">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-7.2" y="0" z="0"/>
+                <scale sx="0.4" sy="1" sz="8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_border_e">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="7.2" y="0" z="0"/>
+                <scale sx="0.4" sy="1" sz="8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_border_n">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="4.2"/>
+                <scale sx="14.8" sy="1" sz="0.4"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_border_s">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-4.2"/>
+                <scale sx="14.8" sy="1" sz="0.4"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border"/>
+            </descendants>
+        </node>
+        <node id="monitor_screen_border_back">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.25" z="0"/>
+                <scale sx="14.8" sy="1" sz="8.8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_border">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="1" sy="0.3" sz="1"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_support">
+            <material id="dark_gray"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_support_arms"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_support_arms">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_support_arm_w"/>
+                <noderef id="monitor_support_arm_e"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_support_arm_w">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-3" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_support_arm"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_support_arm_e">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="3" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_support_arm"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_support_arm">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="110" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.1" topRadius="0.1" height="2" slices="20" stacks="10" />
+            </descendants>
+        </node>
+
         <node id="plasma_lamps">
             <material id="null"/>
 
@@ -801,11 +1066,12 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="15" z="0"/>
+                <translation x="0" y="17" z="0"/>
             </transformations>
 
             <descendants>
                 <noderef id="plasma_lamp_w"/>
+                <noderef id="plasma_lamp_e"/>
             </descendants>
         </node>
 
@@ -817,6 +1083,23 @@
             </texture>
 
             <transformations>
+                <translation x="-10" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="plasma_lamp"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_e">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="10" y="0" z="0"/>
             </transformations>
 
             <descendants>
@@ -2412,6 +2695,11 @@
                         <tile id="tile_odd"/>
                         <tile id="tile_even"/>
                     </tiles>
+
+                    <scoreboard>
+                        <translation x="0" y="18.39" z="5"/>
+                        <rotation axis="x" angle="90"/>
+                    </scoreboard>
                 </leaf>
             </descendants>
         </node>

@@ -8,13 +8,14 @@ class MyGameScoreBoard extends CGFobject {
         this.blackScore = new MySpriteText(this.scene, "Black: 0");
         this.timeElapsed = new MySpriteText(this.scene, "Time elapsed: 0 seconds");
         this.nowPlaying = new MySpriteText(this.scene, "Black is now playing");
+
+        this.matrix = mat4.create();
     }
 
     display() {
         this.scene.pushMatrix();
 
-        this.scene.translate(0, 10, 5);
-        this.scene.rotate(Math.PI / 2, 1, 0, 0);
+        this.scene.multMatrix(this.matrix);
 
         // White score
 
@@ -71,5 +72,9 @@ class MyGameScoreBoard extends CGFobject {
             this.timeElapsed.setText("Time elapsed: " + this.orchestrator.elapsedTime + " seconds");
             this.nowPlaying.setText(turn[this.orchestrator.nowPlaying] + " is now playing");
         }
+    }
+
+    setTheme() {
+        this.matrix = this.orchestrator.theme.scoreboard.transformation;
     }
 }

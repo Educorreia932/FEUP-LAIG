@@ -1586,6 +1586,10 @@
                         <tile id="tile_odd"/>
                         <tile id="tile_even"/>
                     </tiles>
+                    <scoreboard>
+                        <translation x="0" y="10" z="5"/>
+                        <rotation axis="x" angle="90"/>
+                    </scoreboard>
                 </leaf>
             </descendants>
         </node>
