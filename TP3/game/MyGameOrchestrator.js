@@ -64,7 +64,6 @@ class MyGameOrchestrator {
         this.scoreboard.update(time);
         this.animator.update(time);
 
-
         if (this.movingPiece != null) {
             if (this.movingPiece.animation.ended) {
                 this.animator.animations.pop();
@@ -217,14 +216,28 @@ class MyGameOrchestrator {
         this.lastPlayer = (this.gameState == MyGameOrchestrator.states.whiteTurn) ? MyGameOrchestrator.states.blackTurn : MyGameOrchestrator.states.whiteTurn;
     }
 
+    undo() {
+        if (this.isPlayerTurn()) {
+            if (this.gamemode == MyGameOrchestrator.modes.PvP) {
+                this.undoMove();
+            }
+    
+            else if (this.gamemode == MyGameOrchestrator.modes.PvE && this.gameState == MyGameOrchestrator.states.blackTurn) {
+                this.undoMove();
+                this.undoMove();
+            }
+
+            this.updateScore();
+        }
+    }
+
     /**
      *  Undo the last move
      */
-    undo() {
+    undoMove() {
         let lastMove = this.gameSequence.removeLastMove();
         this.gameboard.moveStack(lastMove);
         this.changePlayerTurn();
-        this.updateScore();
     }
 
     /**

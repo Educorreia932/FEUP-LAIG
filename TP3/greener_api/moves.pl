@@ -62,7 +62,7 @@ valid_move(Player, BoardIn, [I0, J0, I1, J1]) :-
 
 % Choose move
 
-choose_move(GameState, Player, _, Move) :-
+choose_move(GameState, Player, _, _) :-
     valid_moves(GameState, Player, []).              % There are no valid moves          
 
 choose_move(GameState, Player, randomAI, Move) :-    % Random AI Strategy
