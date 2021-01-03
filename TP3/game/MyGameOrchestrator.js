@@ -46,6 +46,8 @@ class MyGameOrchestrator {
 
         this.gameState = MyGameOrchestrator.states.menu;
         this.gameID = -1;
+
+        this.timeout = 30;
     }
 
     reapplyTheme() {
@@ -101,30 +103,31 @@ class MyGameOrchestrator {
                 this.gameboard.moveStack(move);
                 this.movingPiece = null;
                 this.gameState = MyGameOrchestrator.states.playerTurn;
-                this.changePlayerTurn();
+                this.changePlayerTurn(time);
                 this.updateScore();
             }
         }
-
+        
         // Movie is playing
         else if (this.frames.length != 0) {
             let move = this.frames.pop();
-
+            
             this.makeMove(move);
         }
         
         else if (this.gameState == MyGameOrchestrator.states.playerTurn && !this.ended[this.gameState]) {
-            if (!this.waitingForNewGame) {
-                if (this.gamemode == MyGameOrchestrator.modes.EvE)
-                    this.computerPlay();
-
-                else if (this.gamemode == MyGameOrchestrator.modes.PvE && this.nowPlaying == "w")
-                    this.computerPlay();
-
-                // Human play
-                else
-                    this.humanPlay();
+            if (this.elapsedTime >= this.timeout) {
+                this.changePlayerTurn(time);
             }
+            if (this.gamemode == MyGameOrchestrator.modes.EvE)
+                this.computerPlay();
+
+            else if (this.gamemode == MyGameOrchestrator.modes.PvE && this.nowPlaying == "w")
+                this.computerPlay();
+
+            // Human play
+            else
+                this.humanPlay();
         }
     }
 
@@ -242,7 +245,7 @@ class MyGameOrchestrator {
         if (moveCoordinates == null || this.ended[this.nowPlaying]) {
             this.ended[this.nowPlaying] = true;
             this.gameState = MyGameOrchestrator.states.playerTurn;
-            this.changePlayerTurn();
+            this.changePlayerTurn(Date.now() / 1000);
         }
 
         else {
@@ -262,7 +265,7 @@ class MyGameOrchestrator {
         if (this.gameID != gameID) return;
         if (validMoves == null) {
             this.ended[this.nowPlaying] = true;
-            this.changePlayerTurn();
+            this.changePlayerTurn(Date.now() / 1000);
         }
 
         else
@@ -278,7 +281,10 @@ class MyGameOrchestrator {
     /**
      *  Change player turn to next player
      */
-    changePlayerTurn() {
+    changePlayerTurn(time) {
+        this.resetPicking();
+        this.elapsedTime = 0;
+        this.startedTime = time;
         this.nowPlaying = this.nowPlaying == "w" ? "b" : "w";
     }
 
@@ -306,7 +312,7 @@ class MyGameOrchestrator {
     undoMove() {
         let lastMove = this.gameSequence.undo();
         this.gameboard.moveStack(lastMove);
-        this.changePlayerTurn();
+        this.changePlayerTurn(Date.now()/1000);
     }
 
     /**

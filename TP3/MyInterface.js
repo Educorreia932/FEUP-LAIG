@@ -48,6 +48,8 @@ class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, "playMovie").name("Play Movie");
 
+        this.gui.add(this.scene.gameOrchestrator, "timeout", 5, 120, 1).name("Timeout");
+
         this.game_options();
 
         // ---- Cameras Configuration

@@ -69,7 +69,7 @@ class MyGameScoreBoard extends CGFobject {
             this.nowPlaying.setText("Game finished");
 
         else {
-            this.timeElapsed.setText("Time elapsed: " + this.orchestrator.elapsedTime + " seconds");
+            this.timeElapsed.setText("Time remaining: " + (this.orchestrator.timeout - this.orchestrator.elapsedTime) + " seconds");
             this.nowPlaying.setText(turn[this.orchestrator.nowPlaying] + " is now playing");
         }
     }
