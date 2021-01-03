@@ -67,21 +67,21 @@ class MyStack extends CGFobject {
         }
 
         let keyframe_1 = {
-            instant: instant + 1,
+            instant: instant + 0.33,
             translation: [0, (destHeight + 0.5) * height, 0],
             rotation: [0, 0, 0],
             scale: [1, 1, 1]
         }
 
         let keyframe_2 = {
-            instant: instant + 2,
+            instant: instant + 0.66,
             translation: [dx, (destHeight + 0.5) * height, dy],
             rotation: [0, 0, 0],
             scale: [1, 1, 1]
         }
 
         let keyframe_3 = {
-            instant: instant + 3,
+            instant: instant + 1,
             translation: [dx, (destHeight - percent) * height, dy],
             rotation: [0, 0, 0],
             scale: [1, 1, 1]
