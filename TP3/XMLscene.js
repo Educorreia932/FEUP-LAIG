@@ -21,6 +21,7 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = false;
 
+        this.lightIDs = Array(8).fill('');
         this.displayLights = false; // Checkbox for drawing lights or not
         // List to store the ID of the cameras read on parser, to be displayed on the GUI
         this.cameraIDs = [];
@@ -185,7 +186,7 @@ class XMLscene extends CGFscene {
 
             if (this.graph.lights.hasOwnProperty(key)) {
                 var graphLight = this.graph.lights[key];
-
+                this.lightIDs[i] = key;
                 this.lights[i].setPosition(...graphLight[1]);
                 this.lights[i].setAmbient(...graphLight[2]);
                 this.lights[i].setDiffuse(...graphLight[3]);

@@ -35,21 +35,26 @@
 
      <!-- Lights -->
      <lights>
-        <light id="firstLight">
-            <enable value="1" />
-            <position x="10" y="12" z="9.5" w="1.0" />
-            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        <light id="lamp">
+            <enable value="0" />
+            <position x="0" y="17.2" z="0" w="1.0" />
+            <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
         </light>
     </lights>
 
     <!-- Textures -->
     <textures>
+        <texture id="golden" path="./scenes/scene_home/golden.jpg"/>
         <texture id="wood" path="./scenes/scene_home/wood.png"/>
+        <texture id="dark_wood" path="./scenes/scene_home/dark_wood.jpg"/>
         <texture id="wood_table" path="./scenes/scene_home/wood_table.jpg"/>
         <texture id="metal" path="./scenes/scene_home/metal.jpg"/>
-        <texture id="debug" path="./scenes/debug_textures/debug.jpg"/>
+        <texture id="home_ceiling" path="./scenes/scene_home/ceiling.jpg"/>
+        <texture id="home_floor" path="./scenes/scene_home/floor.jpg"/>
+        <texture id="home_walls" path="./scenes/scene_home/walls.jpg"/>
+        <texture id="door" path="./scenes/scene_home/door.jpg"/>
     </textures>
 
     <!-- Spritesheets -->
@@ -129,9 +134,491 @@
             </transformations>
 
             <descendants>
+                <noderef id="skybox"/>
+                <noderef id="door"/>
+                <noderef id="lamp"/>
                 <noderef id="table"/>
             </descendants>
         </node>
+
+        <!-- START INNER DECORATION -->
+        <node id="lamp">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="17.2"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_body"/>
+                <noderef id="lamp_support"/>
+            </descendants>
+        </node>
+        
+        <node id="lamp_body">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="0.8" outer="2" slices="20" loops="20" />
+            </descendants>
+        </node>
+
+        <node id="lamp_support">
+            <material id="null"/>
+
+            <texture id="golden">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="0.8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire_n"/>
+                <noderef id="lamp_wire_s"/>
+                <noderef id="lamp_wire_w"/>
+                <noderef id="lamp_wire_e"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_n">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-2" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_s">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_w">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-2" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_e">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="2" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.05" topRadius="0.05" height="2" slices="10" stacks="5" />
+                <noderef id="lamp_wire_bases"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_bases">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire_base_bot"/>
+                <noderef id="lamp_wire_base_top"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_base_bot">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire_base"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_base_top">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="2"/>
+                <rotation axis="x" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire_base"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_base">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.2" topRadius="0.05" height="0.1" slices="10" stacks="5" />
+            </descendants>
+        </node>
+
+        <node id="door">
+            <material id="null"/>
+
+            <texture id="door">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="20" y="19.9" z="8"/>
+                <rotation axis="z" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="door_body"/>
+                <noderef id="door_borders"/>
+                <noderef id="door_handle"/>
+            </descendants>
+        </node>
+
+        <node id="door_body">
+            <material id="null"/>
+
+            <texture id="door">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="10" sy="1" sz="16"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="6" npartsV="10"/>
+            </descendants>
+        </node>
+
+        <node id="door_handle">
+            <material id="null"/>
+
+            <texture id="golden">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="4" y="0" z="1.1"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="door_support"/>
+                <noderef id="door_knob"/>
+            </descendants>
+        </node>
+
+        <node id="door_knob">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.7" z="0"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="0.4" slices="10" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="door_support">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.4" z="0"/>
+                <rotation axis="x" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.2" topRadius="0.5" height="0.4" slices="10" stacks="5" />
+            </descendants>
+        </node>
+
+        <node id="door_borders">
+            <material id="null"/>
+
+            <texture id="dark_wood">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="door_border_top"/>
+                <noderef id="door_border_left"/>
+                <noderef id="door_border_right"/>
+            </descendants>
+        </node>
+
+        <node id="door_border_top">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="8.4"/>
+                <scale sx="10" sy="0.5" sz="0.8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="door_border_left">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="5.4" y="0" z="0.4"/>
+                <scale sx="0.8" sy="0.5" sz="16.8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="door_border_right">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-5.4" y="0" z="0.4"/>
+                <scale sx="0.8" sy="0.5" sz="16.8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <!-- END INNER DECORATION -->
+
+        <!-- START SKYBOX -->
+        <node id="skybox">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="skyboxTopFace"/>
+                <noderef id="skyboxBottomFace"/>
+                <noderef id="skyboxRightFace"/>
+                <noderef id="skyboxLeftFace"/>
+                <noderef id="skyboxFrontFace" />
+                <noderef id="skyboxBackFace" />
+            </descendants>
+        </node>
+
+        <node id="skyboxTopFace">
+            <material id="null" />
+
+            <texture id="home_ceiling">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="60" sy="40" sz="1"/>
+                <translation x="0" y="0" z="20"/>
+                <rotation axis="x" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+        
+        <node id="skyboxBottomFace">
+            <material id="null" />
+
+            <texture id="home_floor">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="60" sy="40" sz="1"/>
+                <rotation axis="x" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+
+        <node id="skyboxRightFace">
+            <material id="null" />
+
+            <texture id="home_walls">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="20" z="10"/>
+                <rotation axis="z" angle="180"/>
+                <scale sx="60" sy="1" sz="20"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+
+        <node id="skyboxLeftFace">
+            <material id="null" />
+
+            <texture id="home_walls">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-20" z="10"/>
+                <scale sx="60" sy="1" sz="20"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+
+        <node id="skyboxFrontFace">
+            <material id="null" />
+
+            <texture id="home_walls">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-30" y="0" z="10"/>
+                <scale sx="1" sy="40" sz="20"/>
+                <rotation axis="z" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+
+        <node id="skyboxBackFace">
+            <material id="null" />
+
+            <texture id="home_walls">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="30" y="0" z="10"/>
+                <scale sx="1" sy="40" sz="20"/>
+                <rotation axis="z" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+
+        <!-- END SKYBOX -->
 
         <!-- BEGIN BASIC SHAPES -->
         <node id="cube">
@@ -522,7 +1009,7 @@
             </texture>
 
             <transformations>
-
+                <translation x="0" y="0" z="5"/>
             </transformations>
 
             <descendants>
