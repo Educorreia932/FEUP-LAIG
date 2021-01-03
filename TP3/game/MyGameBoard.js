@@ -4,6 +4,8 @@ class MyGameBoard extends CGFobject {
 
         this.orchestrator = orchestrator;
         this.scene = orchestrator.scene;
+        this.tiles = [];
+
     }
 
     display() {

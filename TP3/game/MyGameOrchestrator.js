@@ -53,6 +53,7 @@ class MyGameOrchestrator {
     }
 
     async newGame(boardDimensions, gamemode, difficulty) {
+        this.resetPicking();
         this.gamemode = gamemode;
         this.gameDifficulty = difficulty;
         this.initialGameboard = await this.prolog.generateBoard(boardDimensions)
@@ -213,6 +214,13 @@ class MyGameOrchestrator {
                 }
             }
         }
+    }
+
+    resetPicking() {
+        this.gameboard.turnOffTiles();
+
+        this.originIndex = null;
+        this.destinationIndex = null;
     }
 
     async computerPlay() {

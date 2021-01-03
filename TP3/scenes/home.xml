@@ -36,7 +36,7 @@
      <!-- Lights -->
      <lights>
         <light id="lamp">
-            <enable value="0" />
+            <enable value="1" />
             <position x="0" y="17.2" z="0" w="1.0" />
             <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
             <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
@@ -51,10 +51,12 @@
         <texture id="dark_wood" path="./scenes/home_textures/dark_wood.jpg"/>
         <texture id="wood_table" path="./scenes/home_textures/wood_table.jpg"/>
         <texture id="metal" path="./scenes/home_textures/metal.jpg"/>
+        <texture id="dark_metal" path="./scenes/home_textures/dark_metal.jpg"/>
         <texture id="home_ceiling" path="./scenes/home_textures/ceiling.jpg"/>
         <texture id="home_floor" path="./scenes/home_textures/floor.jpg"/>
         <texture id="home_walls" path="./scenes/home_textures/walls.jpg"/>
         <texture id="door" path="./scenes/home_textures/door.jpg"/>
+        <texture id="black_plastic" path="./scenes/home_textures/black_plastic.jpg"/>
     </textures>
 
     <!-- Spritesheets -->
@@ -111,6 +113,20 @@
             <specular r="0.5" g="0.5" b="0.5" a="1.0" />
             <emissive r="0" g="0" b="0" a="1.0" />
         </material>
+        <material id="plasma_lamp_glass">
+            <shininess value="2.0"/>
+            <ambient  r="0.50" g="0.15" b="0.50" a="0.4"/>
+            <diffuse  r="0.50" g="0.15" b="0.50" a="0.4"/>
+            <specular r="0.50" g="0.15" b="0.50" a="0.4"/>
+            <emissive r="0.65" g="0.3" b="0.65" a="0.4"/>
+        </material>
+        <material id="plasma_lamp_center">
+            <shininess value="2.0"/>
+            <ambient  r="0.05" g="0.05" b="0.05" a="1.0"/>
+            <diffuse  r="0.15" g="0.05" b="0.15" a="1.0"/>
+            <specular r="0.20" g="0.1" b="0.20" a="1.0"/>
+            <emissive r="0.50" g="0.4" b="0.70" a="1.0"/>
+        </material>
     </materials>
 
     <!-- Animations -->
@@ -136,13 +152,127 @@
             <descendants>
                 <noderef id="skybox"/>
                 <noderef id="door"/>
-                <noderef id="lamp"/>
+                <noderef id="ceiling_lamp"/>
                 <noderef id="table"/>
+                <noderef id="plasma_lamps"/>
             </descendants>
         </node>
 
         <!-- START INNER DECORATION -->
-        <node id="lamp">
+        <node id="plasma_lamps">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="15" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="plasma_lamp_w"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_w">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="plasma_lamp"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp">
+            <material id="null"/>
+
+            <texture id="black_plastic">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="plasma_lamp_top"/>
+                <noderef id="plasma_lamp_glass"/>
+                <noderef id="plasma_lamp_base"/>
+                <noderef id="plasma_lamp_rays"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_base">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="2" topRadius="1" height="4" slices="20" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_glass">
+            <material id="plasma_lamp_glass"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="12.05"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="defbarrel" base="1" middle="0.7" height="-8" slices="20" stacks="10"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_top">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="13.1"/>
+                <rotation axis="x" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="1.2" topRadius="1" height="1" slices="20" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_rays">
+            <material id="plasma_lamp_center"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="10"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="0.4" slices="10" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="ceiling_lamp">
             <material id="null"/>
 
             <texture id="null">
@@ -175,9 +305,9 @@
         </node>
 
         <node id="lamp_support">
-            <material id="null"/>
+            <material id="dark_gray"/>
 
-            <texture id="golden">
+            <texture id="dark_metal">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
