@@ -1,7 +1,7 @@
 <lsf>
     <!-- Initials -->
     <initials>
-        <reference length="1" />
+        <reference length="0" />
         <root id="root" />
     </initials>
 
