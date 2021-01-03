@@ -52,14 +52,20 @@ class MyGameOrchestrator {
     }
 
     async newGame(boardDimensions, gamemode, difficulty) {
+        this.movingPiece = null;
+        this.frames = [];
+
+        this.gameSequence = new MyGameSequence();
+        this.animator = new MyAnimator(this);
         this.gamemode = gamemode;
         this.gameDifficulty = difficulty;
-        this.initialGameboard = await this.prolog.generateBoard(boardDimensions)
+        this.initialGameboard = await this.prolog.generateBoard(boardDimensions);
         this.gameboard.setState(this.initialGameboard);
         this.setTheme(this.scene.graph);
+        
         this.gameState = MyGameOrchestrator.states.playerTurn;
         this.nowPlaying = "b";
-        
+
         this.startedTime = Date.now() / 1000;
         this.elapsedTime = 0;
 
@@ -72,9 +78,6 @@ class MyGameOrchestrator {
             "w": false,
             "b": false
         };
-
-        this.movingPiece = null;
-        this.frames = [];
     }
 
     update(time) {
@@ -96,6 +99,13 @@ class MyGameOrchestrator {
                 this.updateScore();
             }
         } 
+
+        // Movie is playing
+        else if (this.frames.length != 0) {
+            let move = this.frames.pop();
+
+            this.makeMove(move);
+        }
         
         else if (this.gameState == MyGameOrchestrator.states.playerTurn && !this.ended[this.gameState]) {
             if (this.gamemode == MyGameOrchestrator.modes.EvE)
@@ -107,13 +117,6 @@ class MyGameOrchestrator {
             // Human play
             else
                 this.humanPlay();
-        }
-
-        // Movie is playing
-        else if (this.frames.length != 0) {
-            let move = this.frames.pop();
-
-            this.makeMove(move);
         }
     }
 
@@ -285,7 +288,7 @@ class MyGameOrchestrator {
      *  Play movie
      */
     playMovie() {
-        if (this.gameEnded() && this.frames.length == 0) {
+        if (this.gameEnded() && this.frames.length == 0 && this.gameState != MyGameOrchestrator.states.moving) {
             this.gameboard.setState(this.initialGameboard);
             this.reapplyTheme();
             

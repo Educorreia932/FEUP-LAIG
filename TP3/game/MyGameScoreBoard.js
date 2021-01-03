@@ -4,11 +4,10 @@ class MyGameScoreBoard extends CGFobject {
         this.orchestrator = orchestrator;
         this.scene = orchestrator.scene;
 
-        // this.background = new Rectangle(this.scene, )
         this.whiteScore = new MySpriteText(this.scene, "White: 0");
         this.blackScore = new MySpriteText(this.scene, "Black: 0");
         this.timeElapsed = new MySpriteText(this.scene, "Time elapsed: 0 seconds");
-        this.nowPlaying = new MySpriteText(this.scene, "White is now playing");
+        this.nowPlaying = new MySpriteText(this.scene, "Black is now playing");
     }
 
     display() {
