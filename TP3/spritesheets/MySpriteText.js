@@ -42,4 +42,8 @@ class MySpriteText extends CGFobject {
     setText(text) {
         this.text = text;
     }
+
+    getLength() {
+        return this.text.length;
+    }
 }

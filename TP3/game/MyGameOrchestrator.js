@@ -60,6 +60,9 @@ class MyGameOrchestrator {
         this.setTheme(this.scene.graph);
         this.gameState = MyGameOrchestrator.states.blackTurn;
         this.lastPlayer = MyGameOrchestrator.states.whiteTurn;
+        
+        this.startedTime = Date.now() / 1000;
+        this.elapsedTime = 0;
 
         this.scores = {
             "w": "0",
@@ -76,6 +79,8 @@ class MyGameOrchestrator {
     }
 
     update(time) {
+        this.elapsedTime = Math.floor(time - this.startedTime);
+
         this.scoreboard.update(time);
         this.animator.update(time);
 
