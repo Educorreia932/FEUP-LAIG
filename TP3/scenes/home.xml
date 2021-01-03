@@ -1,0 +1,2710 @@
+<lsf>
+    <!-- Initials -->
+    <initials>
+        <reference length="0" />
+        <root id="root" />
+    </initials>
+
+    <!-- Views -->
+    <views default="Default">
+        <perspective id="Default" near="0.1" far="500" angle="45">
+            <from x="10" y="10" z="20" />
+            <to x="0" y="5" z="0" />
+        </perspective>
+        
+        <perspective id="Close Up" near="0.1" far="500" angle="45">
+            <from x="0" y="14.5" z="7.5" />
+            <to x="0" y="5" z="0.2" />
+        </perspective>
+
+        <perspective id="Player 1" near="0.1" far="500" angle="45">
+            <from x="-13" y="15" z="0" />
+            <to x="3" y="5" z="0" />
+        </perspective>
+
+        <perspective id="Player 2" near="0.1" far="500" angle="45">
+            <from x="13" y="15" z="0" />
+            <to x="-3" y="5" z="0" />
+        </perspective>
+    </views>
+
+    <!-- Illumination -->
+    <illumination>
+        <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+        <background r="0.5" g="0.8" b="0.9" a="1.0" />
+    </illumination>
+
+     <!-- Lights -->
+     <lights>
+        <light id="lamp">
+            <enable value="1" />
+            <position x="0" y="17.2" z="0" w="1.0" />
+            <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
+        </light>
+    </lights>
+
+    <!-- Textures -->
+    <textures>
+        <texture id="golden" path="./scenes/home_textures/golden.jpg"/>
+        <texture id="wood" path="./scenes/home_textures/wood.png"/>
+        <texture id="dark_wood" path="./scenes/home_textures/dark_wood.jpg"/>
+        <texture id="wood_table" path="./scenes/home_textures/wood_table.jpg"/>
+        <texture id="metal" path="./scenes/home_textures/metal.jpg"/>
+        <texture id="dark_metal" path="./scenes/home_textures/dark_metal.jpg"/>
+        <texture id="home_ceiling" path="./scenes/home_textures/ceiling.jpg"/>
+        <texture id="home_floor" path="./scenes/home_textures/floor.jpg"/>
+        <texture id="home_walls" path="./scenes/home_textures/walls.jpg"/>
+        <texture id="door" path="./scenes/home_textures/door.jpg"/>
+        <texture id="black_plastic" path="./scenes/home_textures/black_plastic.jpg"/>
+        <texture id="plasma" path="./scenes/home_textures/plasma.jpg"/>
+    </textures>
+
+    <!-- Spritesheets -->
+    <spritesheets>
+
+    </spritesheets>
+
+    <!-- Materials -->
+    <materials>
+        <material id="default">
+            <shininess value="0.1" />
+            <ambient r="0.6" g="0.6" b="0.6" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
+        <material id="white">
+            <shininess value="0.8" />
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.3" g="0.3" b="0.3" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
+        <material id="green">
+            <shininess value="0.8" />
+            <ambient r="0.2" g="0.5" b="0.2" a="1.0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+            <specular r="0.25" g="0.25" b="0.25" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
+        <material id="black">
+            <shininess value="0.8" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
+        <material id="dark">
+            <shininess value="0.1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
+        <material id="shiny_dark">
+            <shininess value="5.0" />
+            <ambient r="0.05" g="0.05" b="0.05" a="1.0" />
+            <diffuse r="0.05" g="0.05" b="0.05" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
+        <material id="dark_gray">
+            <shininess value="10"/>
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.3" g="0.3" b="0.3" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+
+        <material id="light_gray">
+            <shininess value="10"/>
+            <ambient r="0.6" g="0.6" b="0.6" a="1.0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="plasma_lamp_glass">
+            <shininess value="2.0"/>
+            <ambient  r="0.15" g="0.15" b="0.35" a="0.4"/>
+            <diffuse  r="0.15" g="0.15" b="0.35" a="0.4"/>
+            <specular r="0.15" g="0.15" b="0.35" a="0.4"/>
+            <emissive r="0.45" g="0.55" b="0.65" a="0.4"/>
+        </material>
+        <material id="plasma_lamp_center">
+            <shininess value="2.0"/>
+            <ambient  r="0.05" g="0.05" b="0.05" a="1.0"/>
+            <diffuse  r="0.15" g="0.05" b="0.15" a="1.0"/>
+            <specular r="0.20" g="0.1" b="0.20" a="1.0"/>
+            <emissive r="0.50" g="0.4" b="0.90" a="1.0"/>
+        </material>
+        <material id="plasma_lamp_ray">
+            <shininess value="2.0"/>
+            <ambient  r="0.05" g="0.05" b="0.05" a="1.0"/>
+            <diffuse  r="0.15" g="0.05" b="0.65" a="1.0"/>
+            <specular r="0.20" g="0.1" b="0.60" a="1.0"/>
+            <emissive r="0.5" g="0.5" b="0.90" a="1.0"/>
+        </material>
+    </materials>
+
+    <!-- Animations -->
+    <animations>
+        <animation id="plasma_center" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1.2" sy="0.8" sz="1"/>
+            </keyframe>
+            <keyframe instant="2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1.4" sy="0.6" sz="1.2"/>
+            </keyframe>
+            <keyframe instant="3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="45"/>
+                <scale sx="1.6" sy="0.4" sz="1.4"/>
+            </keyframe>
+            <keyframe instant="4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="90"/>
+                <scale sx="1.8" sy="0.6" sz="1.2"/>
+            </keyframe>
+            <keyframe instant="5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="135"/>
+                <scale sx="1.6" sy="0.8" sz="1"/>
+            </keyframe>
+            <keyframe instant="6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="180"/>
+                <scale sx="1.4" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="7">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="225"/>
+                <scale sx="1.2" sy="1.2" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="270"/>
+                <scale sx="1" sy="1.4" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="9">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="315"/>
+                <scale sx="0.8" sy="1.2" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="10">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_1" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="1.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="1.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="1.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="1.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="2.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_2" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="1.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="1.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="1.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="1.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="2.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_3" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="4"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="1.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="1.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="1.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="-4"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="1.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="2.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_4" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="4"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="0.5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="0.7">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="-4"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="0.9">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_5" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.05">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.15">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="0.25">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="0.35">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="0.45">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="0.5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_6" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="0.5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="0.7">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="0.9">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_7" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="1.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="1.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="6"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="1.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="2.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="2.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="3.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="-4"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="3.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="4.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_8" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.05">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="3"/><rotation axis="z" angle="36"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="6"/><rotation axis="z" angle="72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.15">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="9"/><rotation axis="z" angle="108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="12"/><rotation axis="z" angle="144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="0.25">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="9"/><rotation axis="z" angle="180"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="6"/><rotation axis="z" angle="216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="0.35">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="9"/><rotation axis="z" angle="252"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="6"/><rotation axis="z" angle="288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="0.45">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="3"/><rotation axis="z" angle="324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="0.5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_9" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.1">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="-36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.3">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="-108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="4"/><rotation axis="z" angle="-144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="0.5">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="2"/><rotation axis="z" angle="-180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="0.7">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="-252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="-4"/><rotation axis="z" angle="-288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="0.9">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="-2"/><rotation axis="z" angle="-324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+        <animation id="plasma_ray_10" loop="1">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="0"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="0.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-36"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-72"/>
+                <scale sx="1" sy="1" sz="0.6"/>
+            </keyframe>
+            <keyframe instant="0.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-108"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="0.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-144"/>
+                <scale sx="1" sy="1" sz="0.3"/>
+            </keyframe>
+            <keyframe instant="1.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-180"/>
+                <scale sx="1" sy="1" sz="0.1"/>
+            </keyframe>
+            <keyframe instant="1.2">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-10"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-216"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </keyframe>
+            <keyframe instant="1.4">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="-5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-252"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </keyframe>
+            <keyframe instant="1.6">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-288"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </keyframe>
+            <keyframe instant="1.8">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="5"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-324"/>
+                <scale sx="1" sy="1" sz="0.9"/>
+            </keyframe>
+            <keyframe instant="2.0">
+                <translation x="0" y="0" z="0"/>
+                <rotation axis="x" angle="0"/><rotation axis="y" angle="0"/><rotation axis="z" angle="-360"/>
+                <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+        </animation>
+    </animations>
+
+    <!-- Nodes -->
+    <nodes>
+
+        <!-- ROOT -->
+        <node id="root">
+            <material id="default"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="skybox"/>
+                <noderef id="door"/>
+                <noderef id="ceiling_lamp"/>
+                <noderef id="plasma_lamps"/>
+                <noderef id="monitor"/>
+                <noderef id="table"/>
+            </descendants>
+        </node>
+
+        <!-- START INNER DECORATION -->
+        <node id="monitor">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="20.5" z="10"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_support"/>
+                <noderef id="monitor_screen"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-2" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_body"/>
+                <noderef id="monitor_screen_borders"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_body">
+            <material id="dark"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="14" sy="0.2" sz="8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_borders">
+            <material id="shiny_dark"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border_w"/>
+                <noderef id="monitor_screen_border_e"/>
+                <noderef id="monitor_screen_border_n"/>
+                <noderef id="monitor_screen_border_s"/>
+                <noderef id="monitor_screen_border_back"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_border_w">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-7.2" y="0" z="0"/>
+                <scale sx="0.4" sy="1" sz="8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_border_e">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="7.2" y="0" z="0"/>
+                <scale sx="0.4" sy="1" sz="8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_border_n">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="4.2"/>
+                <scale sx="14.8" sy="1" sz="0.4"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_border_s">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-4.2"/>
+                <scale sx="14.8" sy="1" sz="0.4"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border"/>
+            </descendants>
+        </node>
+        <node id="monitor_screen_border_back">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.25" z="0"/>
+                <scale sx="14.8" sy="1" sz="8.8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_screen_border"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_screen_border">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="1" sy="0.3" sz="1"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_support">
+            <material id="dark_gray"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_support_arms"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_support_arms">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_support_arm_w"/>
+                <noderef id="monitor_support_arm_e"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_support_arm_w">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-3" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_support_arm"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_support_arm_e">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="3" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="monitor_support_arm"/>
+            </descendants>
+        </node>
+
+        <node id="monitor_support_arm">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="110" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.1" topRadius="0.1" height="2" slices="20" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="plasma_lamps">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="17" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="plasma_lamp_w"/>
+                <noderef id="plasma_lamp_e"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_w">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-10" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="plasma_lamp"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_e">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="10" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="plasma_lamp"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp">
+            <material id="null"/>
+
+            <texture id="black_plastic">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="plasma_lamp_top"/>
+                <noderef id="plasma_lamp_glass"/>
+                <noderef id="plasma_lamp_base"/>
+                <noderef id="plasma_lamp_rays"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_base">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="2" topRadius="1.2" height="4" slices="20" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_glass">
+            <material id="plasma_lamp_glass"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="12"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="defbarrel" base="1.2" middle="1" height="-8" slices="20" stacks="10"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_top">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="13"/>
+                <rotation axis="x" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="1.5" topRadius="1.2" height="1" slices="20" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_rays">
+            <material id="null"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="plasma_lamp_center"/>
+                <noderef id="plasma_lamp_ray_1"/><noderef id="plasma_lamp_ray_2"/><noderef id="plasma_lamp_ray_3"/><noderef id="plasma_lamp_ray_4"/><noderef id="plasma_lamp_ray_5"/><noderef id="plasma_lamp_ray_6"/><noderef id="plasma_lamp_ray_7"/><noderef id="plasma_lamp_ray_8"/><noderef id="plasma_lamp_ray_9"/><noderef id="plasma_lamp_ray_10"/>
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_center">
+            <material id="plasma_lamp_center"/>
+
+            <texture id="plasma">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+            <animationref id="plasma_center"/>
+
+            <descendants>
+                <leaf type="sphere" radius="0.4" slices="10" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="plasma_lamp_ray_1">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+            </transformations>
+            <animationref id="plasma_ray_1"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_2">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="x" angle="180"/>
+            </transformations>
+            <animationref id="plasma_ray_2"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_3">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="x" angle="10"/>
+                <rotation axis="y" angle="10"/>
+                <scale sx="1" sy="1" sz="0.7"/>
+            </transformations>
+            <animationref id="plasma_ray_3"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_4">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="x" angle="45"/>
+                <rotation axis="y" angle="-34"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </transformations>
+            <animationref id="plasma_ray_4"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_5">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="-20"/>
+                <rotation axis="x" angle="-180"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </transformations>
+            <animationref id="plasma_ray_5"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_6">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="5"/>
+                <rotation axis="x" angle="-180"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </transformations>
+            <animationref id="plasma_ray_6"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_7">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="20"/>
+                <rotation axis="x" angle="-20"/>
+                <scale sx="1" sy="1" sz="0.4"/>
+            </transformations>
+            <animationref id="plasma_ray_7"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_8">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="-5"/>
+                <rotation axis="x" angle="-160"/>
+                <scale sx="1" sy="1" sz="0.5"/>
+            </transformations>
+            <animationref id="plasma_ray_8"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_9">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="65"/>
+                <rotation axis="x" angle="-150"/>
+                <scale sx="1" sy="1" sz="0.2"/>
+            </transformations>
+            <animationref id="plasma_ray_9"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        <node id="plasma_lamp_ray_10">
+            <material id="null"/><texture id="clear"><amplification afs="1.0" aft="1.0" /></texture>
+            <transformations>
+                <rotation axis="y" angle="5"/>
+                <rotation axis="x" angle="-170"/>
+                <scale sx="1" sy="1" sz="0.8"/>
+            </transformations>
+            <animationref id="plasma_ray_10"/>
+            <descendants><noderef id="plasma_lamp_ray"/></descendants>
+        </node>
+        
+
+        <node id="plasma_lamp_ray">
+            <material id="plasma_lamp_ray"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.01" topRadius="0.01" height="4" slices="20" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="ceiling_lamp">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="17.2"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_body"/>
+                <noderef id="lamp_support"/>
+            </descendants>
+        </node>
+        
+        <node id="lamp_body">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="0.8" outer="2" slices="20" loops="20" />
+            </descendants>
+        </node>
+
+        <node id="lamp_support">
+            <material id="dark_gray"/>
+
+            <texture id="dark_metal">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="0.8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire_n"/>
+                <noderef id="lamp_wire_s"/>
+                <noderef id="lamp_wire_w"/>
+                <noderef id="lamp_wire_e"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_n">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-2" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_s">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_w">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-2" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_e">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="2" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.05" topRadius="0.05" height="2" slices="10" stacks="5" />
+                <noderef id="lamp_wire_bases"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_bases">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire_base_bot"/>
+                <noderef id="lamp_wire_base_top"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_base_bot">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire_base"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_base_top">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="2"/>
+                <rotation axis="x" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp_wire_base"/>
+            </descendants>
+        </node>
+
+        <node id="lamp_wire_base">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.2" topRadius="0.05" height="0.1" slices="10" stacks="5" />
+            </descendants>
+        </node>
+
+        <node id="door">
+            <material id="null"/>
+
+            <texture id="door">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="20" y="19.9" z="8"/>
+                <rotation axis="z" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="door_body"/>
+                <noderef id="door_borders"/>
+                <noderef id="door_handle"/>
+            </descendants>
+        </node>
+
+        <node id="door_body">
+            <material id="null"/>
+
+            <texture id="door">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="10" sy="1" sz="16"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="6" npartsV="10"/>
+            </descendants>
+        </node>
+
+        <node id="door_handle">
+            <material id="null"/>
+
+            <texture id="golden">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="4" y="0" z="1.1"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="door_support"/>
+                <noderef id="door_knob"/>
+            </descendants>
+        </node>
+
+        <node id="door_knob">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.7" z="0"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="0.4" slices="10" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="door_support">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.4" z="0"/>
+                <rotation axis="x" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.2" topRadius="0.5" height="0.4" slices="10" stacks="5" />
+            </descendants>
+        </node>
+
+        <node id="door_borders">
+            <material id="null"/>
+
+            <texture id="dark_wood">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="door_border_top"/>
+                <noderef id="door_border_left"/>
+                <noderef id="door_border_right"/>
+            </descendants>
+        </node>
+
+        <node id="door_border_top">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="8.4"/>
+                <scale sx="10" sy="0.5" sz="0.8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="door_border_left">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="5.4" y="0" z="0.4"/>
+                <scale sx="0.8" sy="0.5" sz="16.8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="door_border_right">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-5.4" y="0" z="0.4"/>
+                <scale sx="0.8" sy="0.5" sz="16.8"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <!-- END INNER DECORATION -->
+
+        <!-- START SKYBOX -->
+        <node id="skybox">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="skyboxTopFace"/>
+                <noderef id="skyboxBottomFace"/>
+                <noderef id="skyboxRightFace"/>
+                <noderef id="skyboxLeftFace"/>
+                <noderef id="skyboxFrontFace" />
+                <noderef id="skyboxBackFace" />
+            </descendants>
+        </node>
+
+        <node id="skyboxTopFace">
+            <material id="null" />
+
+            <texture id="home_ceiling">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="60" sy="40" sz="1"/>
+                <translation x="0" y="0" z="20"/>
+                <rotation axis="x" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+        
+        <node id="skyboxBottomFace">
+            <material id="null" />
+
+            <texture id="home_floor">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="60" sy="40" sz="1"/>
+                <rotation axis="x" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+
+        <node id="skyboxRightFace">
+            <material id="null" />
+
+            <texture id="home_walls">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="20" z="10"/>
+                <rotation axis="z" angle="180"/>
+                <scale sx="60" sy="1" sz="20"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+
+        <node id="skyboxLeftFace">
+            <material id="null" />
+
+            <texture id="home_walls">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-20" z="10"/>
+                <scale sx="60" sy="1" sz="20"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+
+        <node id="skyboxFrontFace">
+            <material id="null" />
+
+            <texture id="home_walls">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-30" y="0" z="10"/>
+                <scale sx="1" sy="40" sz="20"/>
+                <rotation axis="z" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+
+        <node id="skyboxBackFace">
+            <material id="null" />
+
+            <texture id="home_walls">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="30" y="0" z="10"/>
+                <scale sx="1" sy="40" sz="20"/>
+                <rotation axis="z" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="16" npartsV="16" />
+            </descendants>
+        </node>
+
+        <!-- END SKYBOX -->
+
+        <!-- BEGIN BASIC SHAPES -->
+        <node id="cube">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube_face_top"/>
+                <noderef id="cube_face_bot"/>
+                <noderef id="cube_face_right"/>
+                <noderef id="cube_face_left"/>
+                <noderef id="cube_face_front"/>
+                <noderef id="cube_face_back"/>
+            </descendants>
+        </node>
+
+        <node id="cube_face_top">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="0.5"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube_face"/>
+            </descendants>
+        </node>
+
+        <node id="cube_face_bot">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-0.5"/>
+                <rotation axis="y" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube_face"/>
+            </descendants>
+        </node>
+
+        <node id="cube_face_right">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.5" z="0"/>
+                <rotation axis="x" angle="-90"/>
+                <rotation axis="z" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube_face"/>
+            </descendants>
+        </node>
+
+        <node id="cube_face_left">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-0.5" z="0"/>
+                <rotation axis="x" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube_face"/>
+            </descendants>
+        </node>
+
+        <node id="cube_face_front">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.5" y="0" z="0"/>
+                <rotation axis="y" angle="90"/>
+                <rotation axis="z" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube_face"/>
+            </descendants>
+        </node>
+
+        <node id="cube_face_back">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="0" z="0"/>
+                <rotation axis="y" angle="-90"/>
+                <rotation axis="z" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube_face"/>
+            </descendants>
+        </node>
+
+        <node id="cube_face">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
+            </descendants>
+        </node>
+
+
+        <!-- END BASIC SHAPES -->
+
+        <!-- BEGIN DECORATION -->
+
+        <!-- BEGIN CHAIR -->
+        <node id="chair_north">
+            <material id="default"/>
+
+            <texture id="wood_table">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-8.2" y="0" z="-2"/>
+                <rotation axis="z" angle="-135"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair"/>
+            </descendants>
+        </node>
+
+        <node id="chair_south">
+            <material id="default"/>
+
+            <texture id="wood_table">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="8.2" y="0" z="-2"/>
+                <rotation axis="z" angle="45"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair"/>
+            </descendants>
+        </node>
+
+        <node id="chair">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="2" topRadius="2" height="0.3" slices="4" stacks="4" />
+                <noderef id="chair_legs"/>
+                <noderef id="chair_top"/>
+            </descendants>
+        </node>
+
+        <node id="chair_top">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1" y="-0.9" z="0.3"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_pole_left"/>
+                <noderef id="chair_pole_right"/>
+                <noderef id="chair_back_support"/>
+            </descendants>
+        </node>
+
+        <node id="chair_back_support">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="135"/>
+                <translation x="0" y="0.08" z="2.5"/>
+                <scale sx="0.2" sy="3" sz="1"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="cube"/>
+            </descendants>
+        </node>
+
+        <node id="chair_pole_left">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-1" y="-1" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_pole"/>
+            </descendants>
+        </node>
+
+        <node id="chair_pole_right">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.9" y="0.9" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_pole"/>
+            </descendants>
+        </node>
+
+        <node id="chair_pole">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.1" topRadius="0.1" height="2.5" slices="4" stacks="4" />
+            </descendants>
+        </node>
+
+        <node id="chair_legs">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_leg_tl"/>
+                <noderef id="chair_leg_tr"/>
+                <noderef id="chair_leg_bl"/>
+                <noderef id="chair_leg_br"/>
+            </descendants>
+        </node>
+
+        <node id="chair_leg_tl">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-1.8" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_leg"/>
+            </descendants>
+        </node>
+
+        <node id="chair_leg_tr">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="1.8" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_leg"/>
+            </descendants>
+        </node>
+
+        <node id="chair_leg_bl">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-1.8" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_leg"/>
+            </descendants>
+        </node>
+
+        <node id="chair_leg_br">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.8" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_leg"/>
+            </descendants>
+        </node>
+
+        <node id="chair_leg">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-3.0"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="0.2" topRadius="0.2" height="3" slices="4" stacks="4" />
+            </descendants>
+        </node>
+
+        <!-- END CHAIR -->
+
+        <!-- BEGIN TABLE -->
+        <node id="table">
+            <material id="default"/>
+
+            <texture id="wood_table">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="5"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" bottomRadius="7.2" topRadius="7.2" height="1" slices="25" stacks="4" />
+                <noderef id="table_legs"/>
+                <noderef id="gameBoard"/>
+                <noderef id="chair_north"/>
+                <noderef id="chair_south"/>
+            </descendants>
+        </node>
+
+        <node id="table_legs">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-5"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg_tl"/>
+                <noderef id="table_leg_tr"/>
+                <noderef id="table_leg_bl"/>
+                <noderef id="table_leg_br"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_tl">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="225"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_tr">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="135"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_bl">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="-45"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_br">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="45"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="5.5" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="defbarrel" base="0.3" middle="0.5" height="5" slices="10" stacks="10"/>
+                <noderef id="table_leg_metal_plates"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_metal_plates">
+            <material id="null"/>
+
+            <texture id="metal">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg_metal_plate_top"/>
+                <noderef id="table_leg_metal_plate_bot"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_metal_plate_top">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="4.9"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg_metal_plate"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_metal_plate_bot">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="table_leg_metal_plate"/>
+            </descendants>
+        </node>
+
+        <node id="table_leg_metal_plate">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <leaf type="defbarrel" base="0.33" middle="0.33" height="0.1" slices="10" stacks="10"/>
+            </descendants>
+        </node>
+
+        <!-- END TABLE -->
+
+        <!-- END DECORATION -->
+
+        <!-- TILES -->
+        <node id="tile_odd">
+            <material id="dark_gray"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="tile"/>
+            </descendants>
+        </node>
+
+        <node id="tile_even">
+            <material id="light_gray"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="tile"/>
+            </descendants>
+        </node>
+
+        <node id="tile">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
+                <noderef id="tile_border"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border">
+            <material id="null"/>
+
+            <texture id="wood">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="tile_border_north"/>
+                <noderef id="tile_border_west"/>
+                <noderef id="tile_border_south"/>
+                <noderef id="tile_border_east"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border_north">
+            <material id="null"/>
+
+            <texture id="wood">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="tile_border_top"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border_west">
+            <material id="null"/>
+
+            <texture id="wood">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="tile_border_top"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border_south">
+            <material id="null"/>
+
+            <texture id="wood">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="180"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="tile_border_top"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border_east">
+            <material id="null"/>
+
+            <texture id="wood">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="tile_border_top"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border_top">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+                <translation x="0.525" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.025" y1="-0.5" x2="0.025" y2="0.5"/>
+                <noderef id="tile_border_corner"/>
+                <noderef id="tile_border_wall"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border_corner">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.525" z="0"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.025" y1="-0.025" x2="0.025" y2="0.025"/>
+                <noderef id="tile_border_corner_wall_north"/>
+                <noderef id="tile_border_corner_wall_west"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border_corner_wall_north">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="tile_border_corner_wall"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border_corner_wall_west">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="tile_border_corner_wall"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border_corner_wall">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+                <translation x="0.025" y="0" z="-0.075"/>
+                <rotation axis="y" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.075" y1="-0.025" x2="0.075" y2="0.025"/>
+            </descendants>
+        </node>
+
+        <node id="tile_border_wall">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+                <translation x="0.025" y="0" z="-0.075"/>
+                <rotation axis="y" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.075" y1="-0.5" x2="0.075" y2="0.5"/>
+            </descendants>
+        </node>
+
+        <!-- END TILES -->
+
+        <!-- PIECES -->
+
+        <node id="white_piece">
+            <material id="white"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="piece"/>
+            </descendants>
+        </node>
+
+        <node id="green_piece">
+            <material id="green"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="piece"/>
+            </descendants>
+        </node>
+
+        <node id="black_piece">
+            <material id="black"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="piece"/>
+            </descendants>
+        </node>
+
+        <node id="piece">
+            <material id="null"/>
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0"/>
+            </texture>
+
+            <transformations>
+                <scale sx="0.5" sy="1" sz="0.5"/>
+                <rotation axis="y" angle="45"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="pyramid" slices="4" stacks="4"/>
+            </descendants>
+        </node>
+
+        <!-- END PIECES -->
+
+        <!-- BEGIN BOARD -->
+        
+        <node id="gameBoard">
+            <material id="default"/>
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="1.175"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="board">
+                    <pieces height="1" offset="0.8">
+                        <piece id="white_piece"/>
+                        <piece id="green_piece"/>
+                        <piece id="black_piece"/>
+                    </pieces>
+
+                    <tiles>
+                        <tile id="tile_odd"/>
+                        <tile id="tile_even"/>
+                    </tiles>
+
+                    <scoreboard>
+                        <translation x="0" y="18.39" z="5"/>
+                        <rotation axis="x" angle="90"/>
+                    </scoreboard>
+                </leaf>
+            </descendants>
+        </node>
+
+        <!-- END BOARD -->
+    </nodes>
+</lsf>

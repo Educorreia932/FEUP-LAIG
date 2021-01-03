@@ -27,12 +27,5 @@ instantiation.
 
 ----
 
-### [TP3 - ...](TP3)
-- (items briefly describing main strong points)
-
-
-
-# LAIG 2020/2021 - TP1
-
 
 
