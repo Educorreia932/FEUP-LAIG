@@ -48,6 +48,12 @@ class MyGameOrchestrator {
         this.gameID = -1;
 
         this.timeout = 30;
+
+        this.prepMovie = false;
+        this.playingMovie = false;
+        this.movieCanMove = false;
+
+        this.updating = false;
     }
 
     reapplyTheme() {
@@ -60,6 +66,10 @@ class MyGameOrchestrator {
         this.resetPicking();
         this.movingPiece = null;
         this.frames = [];
+
+        this.prepMovie = false;
+        this.playingMovie = false;
+        this.movieCanMove = false;
 
         this.gameSequence = new MyGameSequence();
         this.animator = new MyAnimator(this);
@@ -87,32 +97,42 @@ class MyGameOrchestrator {
     }
 
     update(time) {
-        if (this.gameState == MyGameOrchestrator.states.menu) return;
-
+        if (this.gameState == MyGameOrchestrator.states.menu || this.prepMovie) return;
+        if (this.updating) return;
+        this.updating = true;
+        
         this.elapsedTime = Math.floor(time - this.startedTime);
-
+        
         this.scoreboard.update(time);
         this.animator.update(time);
+        
 
         // Moving piece animation ended
-        if (this.gameState == MyGameOrchestrator.states.moving) {
+        if (this.gameState == MyGameOrchestrator.states.moving || this.movingPiece != null) {
             if (this.movingPiece.animation.ended) {
                 this.animator.animations.pop();
-
+                
                 let move = this.gameSequence.moves[this.gameSequence.moves.length - 1];
                 this.gameboard.moveStack(move);
                 this.movingPiece = null;
-                this.gameState = MyGameOrchestrator.states.playerTurn;
                 this.changePlayerTurn(time);
                 this.updateScore();
+                if (this.playingMovie) {
+                    this.movieCanMove = true;
+                }
+                this.gameState = MyGameOrchestrator.states.playerTurn;
             }
         }
-        
+    
         // Movie is playing
-        else if (this.frames.length != 0) {
-            let move = this.frames.pop();
-            
-            this.makeMove(move);
+        else if (this.frames.length != 0 && this.playingMovie) {
+            console.log(this.movingPiece);
+            console.log(this.movieCanMove);
+            if (this.movieCanMove || this.movingPiece == null) {
+                let move = this.frames.pop();
+                this.movieCanMove = false;
+                this.makeMove(move);
+            }
         }
         
         else if (this.gameState == MyGameOrchestrator.states.playerTurn && !this.ended[this.gameState]) {
@@ -120,22 +140,24 @@ class MyGameOrchestrator {
                 this.changePlayerTurn(time);
             }
             if (this.gamemode == MyGameOrchestrator.modes.EvE)
-                this.computerPlay();
-
+            this.computerPlay();
+            
             else if (this.gamemode == MyGameOrchestrator.modes.PvE && this.nowPlaying == "w")
-                this.computerPlay();
-
+            this.computerPlay();
+            
             // Human play
             else
-                this.humanPlay();
+            this.humanPlay();
         }
+        if (this.frames.length == 0) this.playingMovie = false;
+        this.updating = false;
     }
-
+    
     async updateScore() {
         this.scores["w"] = await this.prolog.getScore("w", this.gameboard);
         this.scores["b"] = await this.prolog.getScore("b", this.gameboard);
     }
-
+    
     display() {
         // Game started
         if (this.gameState != MyGameOrchestrator.states.menu) {
@@ -273,9 +295,9 @@ class MyGameOrchestrator {
     }
 
     makeMove(move) {
+        this.gameState = MyGameOrchestrator.states.moving;
         this.gameSequence.addMove(move);
         this.movingPiece = this.gameboard.setMovingPiece(move);
-        this.gameState = MyGameOrchestrator.states.moving;
     }
 
     /**
@@ -319,13 +341,19 @@ class MyGameOrchestrator {
      *  Play movie
      */
     playMovie() {
+        if (this.playingMovie) return;
         if (this.gameEnded() && this.frames.length == 0 && this.gameState != MyGameOrchestrator.states.moving) {
+            this.prepMovie = true;
             this.gameboard.setState(this.initialGameboard);
             this.reapplyTheme();
             
             this.frames = this.gameSequence.reverse();
             this.gameSequence = new MyGameSequence();
         }
+
+        this.prepMovie = false;
+        this.playingMovie = true;
+        this.movieCanMove = true;
     }
 
     gameEnded() {
