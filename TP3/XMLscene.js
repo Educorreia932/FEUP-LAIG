@@ -57,8 +57,8 @@ class XMLscene extends CGFscene {
         this.selectedTheme = 0;
 
         this.themes = {
-            0: 'scene.xml',
-            1: 'test.xml'
+            0: 'home.xml',
+            1: 'tatooine.xml'
         };
 
         this.selectedDimension = MyGameOrchestrator.dimensions.small;

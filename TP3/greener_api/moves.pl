@@ -62,17 +62,17 @@ valid_move(Player, BoardIn, [I0, J0, I1, J1]) :-
 
 % Choose move
 
-choose_move(GameState, Player, _, Move) :-
+choose_move(GameState, Player, _, _) :-
     valid_moves(GameState, Player, []).              % There are no valid moves          
 
-choose_move(GameState, Player, randomAI, Move) :-    % Random AI Strategy
+choose_move(GameState, Player, 'Random', Move) :-    % Random AI Strategy
     valid_moves(GameState, Player, ListOfMoves),     % Calculates valid moves
     print(ListOfMoves), nl,
     length(ListOfMoves, NumberOfMoves),              % Gets number of valid moves
     random(0, NumberOfMoves, R),                     % Choose a random number
     nth0(R, ListOfMoves, Move).                      % Choose a random move
 
-choose_move(GameState, Player, smartAI, Move) :-     % Smart AI Strategy
+choose_move(GameState, Player, 'Smart', Move) :-     % Smart AI Strategy
     valid_moves(GameState, Player, ListOfMoves),     % Calculates valid moves
     moves_values(GameState, ListOfMoves, Player, MovesValues),  % Calculate value for each move
     max_list(MovesValues, _, Index),                 % Get the highest value move

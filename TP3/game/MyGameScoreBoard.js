@@ -4,8 +4,10 @@ class MyGameScoreBoard extends CGFobject {
         this.orchestrator = orchestrator;
         this.scene = orchestrator.scene;
 
-        this.whiteScore = new MySpriteText(this.scene, "0");
-        this.blackScore = new MySpriteText(this.scene, "0");
+        // this.background = new Rectangle(this.scene, )
+        this.whiteScore = new MySpriteText(this.scene, "White: 0");
+        this.blackScore = new MySpriteText(this.scene, "Black: 0");
+        this.timeElapsed = new MySpriteText(this.scene, "Time elapsed: 0 seconds");
     }
 
     display() {
@@ -18,7 +20,7 @@ class MyGameScoreBoard extends CGFobject {
 
         this.scene.pushMatrix();
 
-        this.scene.translate(3, 0, 0);
+        this.scene.translate(1, 0, 0);
 
         this.whiteScore.display();
 
@@ -28,17 +30,28 @@ class MyGameScoreBoard extends CGFobject {
 
         this.scene.pushMatrix();
 
-        this.scene.translate(-3, 0, 0)
+        this.scene.translate(-4.5, 0, 0);
 
         this.blackScore.display();
+
+        this.scene.popMatrix();
+
+        // Time elapsed
+
+        this.scene.pushMatrix();
+
+        this.scene.translate(-this.timeElapsed.getLength() / 4, -3, 0);
+
+        this.timeElapsed.display();
 
         this.scene.popMatrix();
 
         this.scene.popMatrix();
     }
 
-    update(time) {
-        this.whiteScore.setText(this.orchestrator.scores["w"]);
-        this.blackScore.setText(this.orchestrator.scores["b"]);
+    update() {
+        this.whiteScore.setText("White: " + this.orchestrator.scores["w"]);
+        this.blackScore.setText("Black: " + this.orchestrator.scores["b"]);
+        this.timeElapsed.setText("Time elapsed: " + this.orchestrator.elapsedTime + " seconds");
     }
 }

@@ -1,6 +1,6 @@
 class MyGameOrchestrator {
     static dimensions = {
-        small: "3 x 3",
+        small: "2 x 2",
         medium: "6 x 6",
         large: "9 x 9"
     };
@@ -26,7 +26,7 @@ class MyGameOrchestrator {
 
     constructor(scene) {
         this.scene = scene;
-        this.gameSequence = new MyGameSequence(scene);
+        this.gameSequence = new MyGameSequence();
         this.animator = new MyAnimator(this);
         this.prolog = new MyPrologInterface();
         this.gameboard = new MyGameBoard(this);
@@ -42,9 +42,10 @@ class MyGameOrchestrator {
             "b": false
         };
 
-        this.gameState = MyGameOrchestrator.states.menu;
-
         this.movingPiece = null;
+        this.frames = [];
+
+        this.gameState = MyGameOrchestrator.states.menu;
     }
 
     reapplyTheme() {
@@ -54,32 +55,59 @@ class MyGameOrchestrator {
     async newGame(boardDimensions, gamemode, difficulty) {
         this.gamemode = gamemode;
         this.gameDifficulty = difficulty;
-        this.gameboard.setState(await this.prolog.generateBoard(boardDimensions));
+        this.initialGameboard = await this.prolog.generateBoard(boardDimensions)
+        this.gameboard.setState(this.initialGameboard);
         this.setTheme(this.scene.graph);
         this.gameState = MyGameOrchestrator.states.blackTurn;
         this.lastPlayer = MyGameOrchestrator.states.whiteTurn;
+        
+        this.startedTime = Date.now() / 1000;
+        this.elapsedTime = 0;
+
+        this.scores = {
+            "w": "0",
+            "b": "0"
+        };
+
+        this.ended = {
+            "w": false,
+            "b": false
+        };
+
+        this.movingPiece = null;
+        this.frames = [];
     }
 
     update(time) {
+        this.elapsedTime = Math.floor(time - this.startedTime);
+
         this.scoreboard.update(time);
         this.animator.update(time);
-
 
         if (this.movingPiece != null) {
             if (this.movingPiece.animation.ended) {
                 this.animator.animations.pop();
+
                 let move = this.gameSequence.moves[this.gameSequence.moves.length - 1];
                 this.gameboard.moveStack(move);
                 this.movingPiece = null;
                 this.changePlayerTurn();
                 this.updateScore();
             }
-        } else if (this.isPlayerTurn() && !this.ended[this.gameState]) {
+        } 
+        
+        else if (this.isPlayerTurn() && !this.ended[this.gameState]) {
             if (this.gamemode == MyGameOrchestrator.modes.EvE)
                 this.computerPlay();
 
             else 
                 this.managePick(this.scene.pickMode, this.scene.pickResults);
+        }
+
+        else if (this.frames.length != 0) {
+            let move = this.frames.pop();
+
+            this.makeMove(move);
         }
     }
 
@@ -89,7 +117,8 @@ class MyGameOrchestrator {
     }
 
     async updateScore() {
-        this.scores[this.gameState] = await this.prolog.getScore(this.gameState, this.gameboard);
+        this.scores["w"] = await this.prolog.getScore("w", this.gameboard);
+        this.scores["b"] = await this.prolog.getScore("b", this.gameboard);
     }
 
     display() {
@@ -191,9 +220,11 @@ class MyGameOrchestrator {
         this.gameState = MyGameOrchestrator.states.waitingForAI;
         let moveCoordinates = await this.prolog.getMove(turn, this.gameboard, this.gameDifficulty);
 
-        if (moveCoordinates == null)
-            this.ended[this.gameState] = true;
-    
+        if (moveCoordinates == null || this.ended[turn]) {
+            this.ended[turn] = true;
+            this.changePlayerTurn();
+        }
+
         else {
             let stackSize = this.gameboard.getStack(moveCoordinates[0], moveCoordinates[1]).getSize();
             let computerMove = new MyGameMove(this.gameState, moveCoordinates, stackSize);
@@ -217,20 +248,46 @@ class MyGameOrchestrator {
         this.lastPlayer = (this.gameState == MyGameOrchestrator.states.whiteTurn) ? MyGameOrchestrator.states.blackTurn : MyGameOrchestrator.states.whiteTurn;
     }
 
+    undo() {
+        if (this.isPlayerTurn() && !this.gameEnded()) {
+            if (this.gamemode == MyGameOrchestrator.modes.PvP)
+                this.undoMove();
+    
+            // May only undo move on human player turn
+            else if (this.gamemode == MyGameOrchestrator.modes.PvE && this.gameState == MyGameOrchestrator.states.blackTurn) {
+                this.undoMove();
+                
+                if (this.gameSequence.moves.length > 1) // Undo computer move
+                    this.undoMove();
+            }
+
+            this.updateScore();
+        }
+    }
+
     /**
      *  Undo the last move
      */
-    undo() {
-        let lastMove = this.gameSequence.removeLastMove();
+    undoMove() {
+        let lastMove = this.gameSequence.undo();
         this.gameboard.moveStack(lastMove);
         this.changePlayerTurn();
-        this.updateScore();
     }
 
     /**
      *  Play movie
      */
     playMovie() {
-        console.log("Not implemented yet");
+        if (this.gameEnded() && this.frames.length == 0) {
+            this.gameboard.setState(this.initialGameboard);
+            this.reapplyTheme();
+            
+            this.frames = this.gameSequence.reverse();
+            this.gameSequence = new MyGameSequence();
+        }
+    }
+
+    gameEnded() {
+        return this.ended["w"] && this.ended["b"];
     }
 }

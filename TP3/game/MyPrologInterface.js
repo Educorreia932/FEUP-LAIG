@@ -81,18 +81,11 @@ class MyPrologInterface {
     async getMove(player, gameboard, difficulty) {
         let gameboardIn = MyPrologInterface.serializeGameBoard(gameboard);
 
-        let aiStrategies = {
-            "Random": "randomAI",
-            "Smart": "smartAI"
-        };
-
-        difficulty = aiStrategies[difficulty];
-
         const requestData = `choose_move(${gameboardIn},${player},${difficulty})`;
         
         let response = await this.sendRequest(requestData);
 
-        if (response[0] == "_")
+        if (response[0] == "_" || response == "0")
             return null;
 
         return JSON.parse(response);

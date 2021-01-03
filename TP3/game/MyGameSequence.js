@@ -1,6 +1,5 @@
 class MyGameSequence {
-    constructor(orchestrator) {
-        this.orchestrator = orchestrator;
+    constructor() {
         this.moves = [];
     }   
 
@@ -8,15 +7,15 @@ class MyGameSequence {
         this.moves.push(move);
     }
 
-    removeLastMove() {
+    undo() {
         return this.moves.pop().swap();
     }
 
     reset() {
-
+        this.moves = [];
     }
 
-    undo() {
-
+    reverse() {
+        return this.moves.reverse();
     }
 }
