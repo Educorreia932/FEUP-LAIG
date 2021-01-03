@@ -42,10 +42,10 @@ class MyGameOrchestrator {
             "b": false
         };
 
-        this.gameState = MyGameOrchestrator.states.menu;
-
         this.movingPiece = null;
         this.frames = [];
+
+        this.gameState = MyGameOrchestrator.states.menu;
     }
 
     reapplyTheme() {
@@ -60,6 +60,19 @@ class MyGameOrchestrator {
         this.setTheme(this.scene.graph);
         this.gameState = MyGameOrchestrator.states.blackTurn;
         this.lastPlayer = MyGameOrchestrator.states.whiteTurn;
+
+        this.scores = {
+            "w": "0",
+            "b": "0"
+        };
+
+        this.ended = {
+            "w": false,
+            "b": false
+        };
+
+        this.movingPiece = null;
+        this.frames = [];
     }
 
     update(time) {
@@ -87,7 +100,6 @@ class MyGameOrchestrator {
         }
 
         else if (this.frames.length != 0) {
-            console.log(this.frames)
             let move = this.frames.pop();
 
             this.makeMove(move);
@@ -100,7 +112,8 @@ class MyGameOrchestrator {
     }
 
     async updateScore() {
-        this.scores[this.gameState] = await this.prolog.getScore(this.gameState, this.gameboard);
+        this.scores["w"] = await this.prolog.getScore("w", this.gameboard);
+        this.scores["b"] = await this.prolog.getScore("b", this.gameboard);
     }
 
     display() {
@@ -231,14 +244,16 @@ class MyGameOrchestrator {
     }
 
     undo() {
-        if (this.isPlayerTurn() && this.gameEnded()) {
-            if (this.gamemode == MyGameOrchestrator.modes.PvP) {
+        if (this.isPlayerTurn() && !this.gameEnded()) {
+            if (this.gamemode == MyGameOrchestrator.modes.PvP)
                 this.undoMove();
-            }
     
+            // May only undo move on human player turn
             else if (this.gamemode == MyGameOrchestrator.modes.PvE && this.gameState == MyGameOrchestrator.states.blackTurn) {
                 this.undoMove();
-                this.undoMove();
+                
+                if (this.gameSequence.moves.length > 1) // Undo computer move
+                    this.undoMove();
             }
 
             this.updateScore();
