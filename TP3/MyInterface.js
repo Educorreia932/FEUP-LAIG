@@ -85,7 +85,7 @@ class MyInterface extends CGFinterface {
 
     /** Theme Changing */
     game_options() {
-        this.gui.add(this.scene, 'selectedTheme', {'Home' : 0, 'Test' : 1})
+        this.gui.add(this.scene, 'selectedTheme', {'Home' : 0, 'Tatooine' : 1})
                 .name('Theme ')
                 .onChange(this.scene.changeTheme.bind(this.scene));
     }

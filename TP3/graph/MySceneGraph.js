@@ -650,7 +650,7 @@ class MySceneGraph {
                     a_i++;
             }
 
-            let animation = new KeyframeAnimation(this.scene, keyframes);
+            let animation = new MyKeyframeAnimation(this.scene, keyframes);
 
             this.animations[animationID] = animation;
         }

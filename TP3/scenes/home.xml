@@ -46,9 +46,9 @@
 
     <!-- Textures -->
     <textures>
-        <texture id="wood" path="./scenes/scene_home/wood.png"/>
-        <texture id="wood_table" path="./scenes/scene_home/wood_table.jpg"/>
-        <texture id="metal" path="./scenes/scene_home/metal.jpg"/>
+        <texture id="wood" path="./scenes/home_textures/wood.png"/>
+        <texture id="wood_table" path="./scenes/home_textures/wood_table.jpg"/>
+        <texture id="metal" path="./scenes/home_textures/metal.jpg"/>
         <texture id="debug" path="./scenes/debug_textures/debug.jpg"/>
     </textures>
 
